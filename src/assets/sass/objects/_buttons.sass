@@ -1,0 +1,20 @@
+@import "../settings/_variables.sass"
+
+.btn
+  cursor: pointer
+  appearance: none
+  outline: none
+  &--regular
+    padding: 0.8rem 2rem
+    box-sizing: border-box
+    font:
+      size: var(--fs-regular)
+  &__default
+    font-weight: 500
+    color: var(--color2)
+    background-color: var(--c-inactive-button-bg)
+    border-radius: 2rem
+    border: none
+    &:hover
+      background-color: var(--c-active-button-bg)
+    

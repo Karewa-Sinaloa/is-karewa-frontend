@@ -4,15 +4,26 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 192.168.1.67",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.3.4"
+    "axios": "^1.4.0",
+    "vee-validate": "^4.11.1",
+    "vue": "^3.3.4",
+    "vue-axios": "^3.5.2",
+    "vue-router": "^4.2.4",
+    "vuex": "^4.1.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "eslint": "^8.46.0",
+    "node-sass": "^9.0.0",
+    "prettier": "^3.0.1",
+    "sass": "^1.65.1",
+    "sass-loader": "^13.3.2",
     "vite": "^4.4.5"
   }
 }

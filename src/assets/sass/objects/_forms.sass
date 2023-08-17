@@ -1,0 +1,48 @@
+@import "../settings/_variables.sass"
+@import "../mixins/_mixins.sass"
+
+.form
+  padding: 2rem 0
+  &__fieldset
+    border: none
+    padding: 0
+  &__input
+    appearance: none
+    background-color: transparent
+    border: 1px solid var(--c-inactive-input-border)
+    display: block
+    padding: 0.8rem
+    box-sizing: border-box
+    border-radius: 0.5rem
+    width: 100%
+    color: var(--color2)
+    outline: none
+    &:active,
+    &:focus
+      border-color: var(--c-active-input-border)
+    font:
+      size: var(--fs-regular)
+      weight: 400
+    &--email
+      @include input-icon('/src/assets/icons/email-white.png')
+    &--password
+      @include input-icon('/src/assets/icons/padlock-white.png')
+  &__label
+    font:
+      size: var(--fs-smaller)
+      weight: 300
+    color: var(--color2)
+  &__container
+    padding: 0.4rem 0
+  &__submit
+    width: 100%
+    display: block
+    margin-top: 2rem
+  &__alert
+    font:
+      weight: 400
+      size: var(--fs-smaller)
+    color: var(--c-form-alert)
+    display: block
+    padding: 0.2rem
+    box-sizing: border-box

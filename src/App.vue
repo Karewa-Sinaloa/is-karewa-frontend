@@ -1,10 +1,11 @@
-<script setup>
-import Home from './components/home.vue'
-</script>
-
 <template>
-  <Home />
+  <router-view />
 </template>
 
-<style scoped>
+<script setup>
+
+</script>
+
+<style lang="sass">
+@import "./assets/sass/base/_base.sass"
 </style>
