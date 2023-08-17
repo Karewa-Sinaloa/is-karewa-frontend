@@ -1,0 +1,39 @@
+@import "../settings/_variables.sass"
+@import "../objects/_forms.sass"
+@import "../objects/_buttons.sass"
+.access
+  &__column
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 100vh
+    &--left
+      background-image: linear-gradient(45deg, hsl(338deg 57% 3%) 0%,hsl(323deg 62% 4%) 8%,hsl(303deg 70% 5%) 16%,hsl(284deg 76% 7%) 23%,hsl(266deg 85% 8%) 31%,hsl(254deg 81% 8%) 39%,hsl(246deg 71% 8%) 46%,hsl(240deg 63% 8%) 54%,hsl(232deg 53% 8%) 61%,hsl(229deg 49% 8%) 69%,hsl(235deg 52% 8%) 76%,hsl(240deg 52% 8%) 84%,hsl(248deg 56% 8%) 92%,hsl(253deg 56% 8%) 100%)
+      background:
+        color: #0B0306
+        size: 100% 100%
+        repeat: no-repeat
+      color: #fff
+  &__hub
+    width: 100%
+    padding: 1rem 0.5rem
+    box-sizing: border-box
+@media all and (min-width: $bp5)
+  .access
+    &__hub
+      max-width: 480px
+@media all and (max-width: $bp5)
+  .access
+    &__hub
+      max-width: var(--bp8)
+    &__subtitle
+      margin: auto auto 1rem auto
+      font:
+        size: var(--fs-mid)
+        weight: 600
+    &__welcome
+      display: block
+      color: #FFF
+      font:
+        size: var(--fs-small)
+        weight: 300

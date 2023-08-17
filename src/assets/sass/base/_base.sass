@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@600;700;800;900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&display=swap')
+@import "../settings/_variables.sass"
+
+\:root
+  font-size: 16px
+  --ff1: #{$ff1}
+  --ff2: #{$ff2}
+  --fs-smaller: #{$fs-smaller}
+  --fs-small: #{$fs-small}
+  --fs-regular: #{$fs-regular}
+  --fs-mid: #{$fs-mid}
+  --fs-large: #{$fs-large}
+  --fs-xl: #{$fs-xl}
+  --color1: #{$color1}
+  --color2: #{$color2}
+  --color3: #{$color3}
+  --c-inactive-input-border: #{$c-inactive-input-border}
+  --c-active-input-border: #{$c-active-input-border}
+  --c-inactive-button-bg: #{$c-inactive-button-bg}
+  --c-active-button-bg: #{$c-active-button-bg}
+  --c-form-alert: #{$c-form-alert}
+  --bp1: #{$bp1}
+  --bp2: #{$bp2}
+  --bp3: #{$bp3}
+  --bp4: #{$bp4}
+  --bp5: #{$bp5}
+  --bp6: #{$bp6}
+  --bp7: #{$bp7}
+  --bp8: #{$bp8}
+html
+  padding: 0
+  margin: 0
+body
+  padding: 0
+  margin: 0
+  min-height: 100vh
+h1,h2,h3,h4,h5,h6,p,span,li,a,button,input,option,select,textarea,b,u,i,code,legend,strong,label
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  -webkit-text-stroke: 0.45px
+  text-rendering: optimizeLegibility
+h1,h2,h3,h4,h5,h6,b,strong
+  font-family: var(--ff1)
+p,li,a,span,button,input,label,select,textarea,option,select,code,legend
+  font-family: var(--ff2)
+@media all and (min-width: $bp5)
+  .desktop-view
+    display: block
+@media all and (max-width: $bp5)
+  .desktop-view
+    display: none
