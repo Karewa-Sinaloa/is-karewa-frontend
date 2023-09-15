@@ -1,7 +1,9 @@
 import { apiInstance } from './axios.js'
-import { store } from '../store/index.js'
+import { useAppStore } from '../store/index.js'
 //import logOutMixin from '../helpers/logout.vue'
-export class api {
+
+
+export class apiRequest {
 	constructor() {
 		this.instance = new apiInstance().init()
 	}
@@ -34,7 +36,8 @@ export class api {
 		})
 	}
 	processResponse(method, params, id = null) {
-		store.commit('loading', true)
+		const store = useAppStore()
+		store.loading(true)
 		return new Promise((resolve, reject) => {
 			let uri = params.params !== undefined && params.params ? params.params : ''
 			id = id && !isNaN(id) && id > 0 ? `/${id}` : ''
@@ -55,11 +58,11 @@ export class api {
 			}
 			request
 				.then(response => {
-					store.commit('loading', false)
+					store.loading(false)
 					resolve(response)
 				})
 				.catch(error => {
-					store.commit('loading', false)
+					store.loading(false)
 					if (error.request.status === 401) {
 						//this.logOut()
 					}

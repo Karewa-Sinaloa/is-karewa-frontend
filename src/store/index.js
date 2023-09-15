@@ -1,38 +1,44 @@
-import { createStore } from 'vuex'
-import { alertData } from '../resources/errors.js'
+import { defineStore } from 'pinia'
+import { serverMessages } from '../resources/errors.js'
 
-export const store = createStore({
-	state: {
-		siteConfig: null,
-		userData: null,
-		alerts: [],
-		loading: false,
-		newElements: null
+export const useAppStore = defineStore('cfdiAppStore', {
+	state: () => {
+		return {
+			siteConfig: null,
+			userData: null,
+			alerts: [],
+			processing: false,
+			newElements: null
+		}
 	},
-	mutations: {
+	getters: {},
+	actions: {
 		addSiteConfig(state, data) {
 			state.siteConfig = data
 		},
 		setUserData(state, data) {
 			state.userData = data
 		},
-		pushAlert(state, alert) {
-			if (alert.code !== undefined && alert.code) {
-				alert = alertData[alert.code]
+		push_alert(notification) {
+			let message = {
+				time: null,
+				title: null,
+				text: null
 			}
-			alert.time = Date.now()
-			state.alerts.push(alert)
+			if (notification.code !== undefined && notification.code) {
+				message = serverMessages(notification.code)
+				this.alerts.push(message)
+			}
 		},
-		updateAlerts(state, alerts) {
-			state.alerts = alerts
+		update_alerts(notifications) {
+			this.alerts = notifications
 		},
-		loading(state, loading) {
-			state.loading = loading
+		loading(loading) {
+			this.processing = loading
 		},
 		newElements(state, data) {
 			state.newElements = data
 		}
 	},
-	actions: {},
 	modules: {}
 })

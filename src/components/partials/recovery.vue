@@ -1,0 +1,60 @@
+<template>
+	<h2 class="access__subtitle">Recupera tu acceso</h2>
+	<span class="access__welcome">Proporcionanos tu dirección de correo electrónico y te enviaremos los pasos a seguir para que puedas recuerar el acceso a tu cuenta</span>
+	<Form class="form" @Submit="onSubmit" :validation-schema="recoveryValidateSchema" ref="recoveryForm" v-slot="{setErrors, handleSubmit, values}">
+		<fieldset class="form__fieldset">
+			<div class="form__container">
+				<label class="form__label" for="email">Correo electrónico</label>
+				<Field class="form__input form__input--email" type="email" name="email" placeholder="usuario@dominio.tld"/>
+				<ErrorMessage name="email" class="form__alert" data-field="email"/>
+			</div>
+			
+			<Field type="hidden" name="reset_url" v-model="resetUrl"/>
+			<Field type="hidden" name="hcaptcha_data" v-model="hcaptchaData"/>
+
+			<router-link class="access__form-link" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi contraseña</router-link>
+			<hcaptcha-component v-if="showCaptcha" @hideCaptcha="showCaptcha = false" @releaseForm="(string) => {hcaptchaData = string, handleSubmit(onSubmit)}"></hcaptcha-component>
+
+			<input class="form__submit btn btn__default btn--regular" type="submit" @click.prevent="showCaptcha = true" value="Recuperar acceso" />
+		</fieldset>
+	</Form>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import * as yup from 'yup'
+import { Form, Field, ErrorMessage } from 'vee-validate'
+import { setFieldMessages }  from '../../helpers/yup.locale.js'
+import { apiRequest } from '../../api/requests.js'
+import { useAppStore } from '../../store/index.js'
+import hcaptchaComponent from './hcaptcha.vue'
+
+const recoveryForm = ref(null)
+const hcaptchaData = ref(null)
+const showCaptcha = ref(false)
+const resetUrl = import.meta.env.VITE_PASS_RESET_URL
+const store = useAppStore()
+const recoveryValidateSchema = yup.object().shape({
+	email: yup.string().required().email().label('correo electrónico')
+})
+
+//onMounted(() => console.log(recoveryForm))
+
+function onSubmit(values, action) {
+	setTimeout(() => {
+		new apiRequest().Post({
+			'module': 'access/recovery',
+			'data': values
+		}).then(response => {
+			store.push_alert(response.data)
+		}).catch(error => {
+			if(error.status === 400) {
+				let errors = setFieldMessages(error.data.errors)
+				actions.setErrors(errors)
+			} else {
+				store.push_alert(error.data)
+			}
+		})
+	}, 0)
+}
+</script>

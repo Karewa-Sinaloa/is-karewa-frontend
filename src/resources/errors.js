@@ -1,4 +1,4 @@
-export const alertData = {
+const alertData = {
 	NOTFOUND: {
 		type: 'error',
 		title: 'SIN RESULTADOS',
@@ -122,5 +122,20 @@ export const alertData = {
 		type: 'error',
 		title: 'CONTRASEÑA INCORRECTA',
 		text: 'La contraseña de tu CSD no es correcta, por favor verificala.'
+	},
+	'CAPTCHA-001': {
+		type: 'warning',
+		title: 'Error completando la captcha',
+		text: 'No completaste el reto captcha correctamente, vuelve a intentar'
+	}
+}
+
+export function serverMessages(code = 'SERVER-ERROR') {
+	let error = alertData[code]
+	return {
+		type: error.type,
+		title: error.title,
+		text: error.text,
+		time: Date.now()
 	}
 }
