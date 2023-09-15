@@ -17,14 +17,13 @@ setLocale({
 	date: errorMessages
 })
 
-export const setFieldMessages = function(data) {
+export const setFieldMessages = function(errors) {
 	let fieldErrors = {}
-	for(let field in data) {
-		for(let error in data[field]) {
-			if(error in errorMessages) {
-				fieldErrors[field] = errorMessages[error]
-			}
+	errors.forEach(error => {
+		if(error.rule in errorMessages) {
+			fieldErrors[error.field] = errorMessages[error.rule]
 		}
-	}
+	})
+	console.log(fieldErrors)
 	return fieldErrors
 }
