@@ -1,7 +1,7 @@
 <template>
 	<h2 class="access__subtitle">Recupera tu acceso</h2>
 	<span class="access__welcome">Proporcionanos tu dirección de correo electrónico y te enviaremos los pasos a seguir para que puedas recuerar el acceso a tu cuenta</span>
-	<Form class="form" @Submit="onSubmit" :validation-schema="recoveryValidateSchema" ref="recoveryForm" v-slot="{setErrors, handleSubmit, values}">
+	<Form class="form" @Submit="onSubmit" :validation-schema="recoveryValidateSchema" v-slot="{setErrors, handleSubmit, values}" ref="recoveryForm">
 		<fieldset class="form__fieldset">
 			<div class="form__container">
 				<label class="form__label" for="email">Correo electrónico</label>
@@ -29,7 +29,7 @@ import { apiRequest } from '../../api/requests.js'
 import { useAppStore } from '../../store/index.js'
 import hcaptchaComponent from './hcaptcha.vue'
 
-const recoveryForm = ref(null)
+const recoveryForm = ref()
 const hcaptchaData = ref(null)
 const showCaptcha = ref(false)
 const resetUrl = import.meta.env.VITE_PASS_RESET_URL
@@ -38,16 +38,21 @@ const recoveryValidateSchema = yup.object().shape({
 	email: yup.string().required().email().label('correo electrónico')
 })
 
-//onMounted(() => console.log(recoveryForm))
-
 function onSubmit(values, action) {
 	setTimeout(() => {
 		new apiRequest().Post({
 			'module': 'access/recovery',
 			'data': values
 		}).then(response => {
-			store.push_alert(response.data)
+			showCaptcha.value = false
+			recoveryForm.value.resetForm()
+			console.log(response)
+			store.push_alert({
+				code: response.data.code
+			})
 		}).catch(error => {
+			console.log(error)
+			showCaptcha.value = false
 			if(error.status === 400) {
 				let errors = setFieldMessages(error.data.errors)
 				actions.setErrors(errors)

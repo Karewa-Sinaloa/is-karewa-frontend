@@ -29,22 +29,27 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import { useAppStore } from '../../store/index.js'
+import { userSession } from '../../helpers/set.session.js'
+import { useRouter } from 'vue-router'
+
 const loginForm = ref(null)
-
-onMounted(() => console.log(loginForm.value.outerHTML))
-
 const store = useAppStore()
+const router = useRouter()
 
-let loginValidateSchema = yup.object().shape({
+const loginValidateSchema = yup.object().shape({
 	password: yup.string().required().min(8).label('contraseña'),
 	email: yup.string().required().email().label('correo electrónico')
 })
+
 function onSubmit(values) {
 	new apiRequest().Post({
 		'module': 'access/login',
 		'data': values
 	}).then(response => {
+		loginForm.value.resetForm()
+		new userSession().set(response.data.data.bearer)
 		store.push_alert(response.data)
+		router.push({name: 'homeView'})
 	}).catch(error => {
 		if(error.status === 400) {
 			let errors = setFieldMessages(error.data.errors)

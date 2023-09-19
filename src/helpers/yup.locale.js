@@ -8,7 +8,8 @@ const errorMessages = {
 	url: 'Esto no parece ser un tipo de enlace válido',
 	unique: 'Ya existe un elemento ${lable} con el mismo valor. El valor en este campo debe ser único',
 	exist: 'El valor seleccionado no existe, por favor verifica haber seleccionado el valor correcto',
-	date: 'El campo ${label} no tiene un formato de fecha válido'
+	date: 'El campo ${label} no tiene un formato de fecha válido',
+	oneOf: 'El valor de ${label} debe coincidir en ambos campos, por favor verifica'
 }
 
 setLocale({
