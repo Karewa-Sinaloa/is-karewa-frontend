@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAppStore } from '../store/index.js'
+import { userSession } from '../helpers/set.session.js'
 
 import HomeView from '../components/views/home.vue'
 import AccessView from '../components/views/access.vue'
 import accessViewLogin from '../components/partials/login.vue'
 import accessViewRecovery from '../components/partials/recovery.vue'
+import accessViewReset from '../components/partials/reset.vue'
 
 const routes = [
 	{
@@ -33,6 +35,11 @@ const routes = [
 				path: "olvide-mi-contrasena",
 				component: accessViewRecovery,
 				name: "accessViewRecovery"
+			},
+			{
+				path: "cambiar-contrasena",
+				component: accessViewReset,
+				name: "accessViewReset"
 			}
 		]
 	},
@@ -50,8 +57,21 @@ const router = createRouter({
 	}
 })
 
-router.beforeEach((to) => {
+router.beforeEach((to, from, next) => {
 	const store = useAppStore()
+	const session = new userSession()
+	let auth = session.verify()
+	console.log(auth)
+	console.log(to.meta.login)
+	if(to.meta.login && auth) {
+		next()
+	} else if(['accessViewLogin', 'accessViewRecovery', 'accessViewReset'].indexOf(to.name) != -1 && auth) {
+		next({name: 'homeView'})
+	} else if(!auth && to.meta.login) {
+		next({name: 'accessViewLogin'})
+	} else {
+		next()
+	}
 })
 
 export default router

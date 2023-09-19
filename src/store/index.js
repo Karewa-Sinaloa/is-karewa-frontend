@@ -16,8 +16,8 @@ export const useAppStore = defineStore('cfdiAppStore', {
 		addSiteConfig(state, data) {
 			state.siteConfig = data
 		},
-		setUserData(state, data) {
-			state.userData = data
+		setUserData(data) {
+			this.userData = data
 		},
 		push_alert(notification) {
 			let message = {
