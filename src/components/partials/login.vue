@@ -4,14 +4,14 @@
 	<Form class="form" @Submit="onSubmit" :validation-schema="loginValidateSchema" ref="loginForm">
 		<fieldset class="form__fieldset">
 			<div class="form__container">
-				<label class="form__label" for="email">Correo electrónico</label>
-				<Field class="form__input form__input--email" type="email" name="email" placeholder="usuario@dominio.tld"/>
+				<label class="form__label form__label--inverted" for="email">Correo electrónico</label>
+				<Field class="form__input form__input--inverted form__input--access form__input--email" type="email" name="email" placeholder="usuario@dominio.tld"/>
 				<ErrorMessage name="email" class="form__alert" data-field="email"/>
 			</div>
 
 			<div class="form__container">
-				<label class="form__label" for="password">Contraseña</label>
-				<Field class="form__input form__input--password" type="password" name="password" id="password" placeholder="************" />
+				<label class="form__label form__label--inverted" for="password">Contraseña</label>
+				<Field class="form__input form__input--inverted form__input--access form__input--password" type="password" name="password" id="password" placeholder="************" />
 				<ErrorMessage name="password" class="form__alert" data-field="password"/>
 			</div>
 
@@ -20,6 +20,7 @@
 			<input class="form__submit btn btn__default btn--regular" type="submit" value="Iniciar sesión" />
 		</fieldset>
 	</Form>
+	<router-link class="btn btn__transparent btn__transparent--inverted btn--regular" :to="{name: 'accessViewRegistration'}">¿No tienes una cuenta?, ¡créala ahora!</router-link>
 </template>
 
 <script setup>
@@ -47,9 +48,12 @@ function onSubmit(values) {
 		'data': values
 	}).then(response => {
 		loginForm.value.resetForm()
-		new userSession().set(response.data.data.bearer)
-		store.push_alert(response.data)
-		router.push({name: 'homeView'})
+		new userSession().set(response.data.data.bearer).then(() => {
+			store.push_alert(response.data)
+			router.push({name: 'homeView'})
+		}).catch(() => {
+			store.push_alert({code: 'SERVER-ERROR'})
+		})
 	}).catch(error => {
 		if(error.status === 400) {
 			let errors = setFieldMessages(error.data.errors)

@@ -1,6 +1,6 @@
 import { apiInstance } from './axios.js'
 import { useAppStore } from '../store/index.js'
-//import logOutMixin from '../helpers/logout.vue'
+import { userSession } from '../helpers/set.session.js'
 
 
 export class apiRequest {
@@ -25,7 +25,9 @@ export class apiRequest {
 		return new Promise((resolve, reject) => {
 			this.processResponse('post', _params)
 				.then(response => resolve(response))
-				.catch(error => reject(error))
+				.catch(error => {
+					reject(error)
+				})
 		})
 	}
 	Delete(_params, id = null) {
@@ -64,7 +66,7 @@ export class apiRequest {
 				.catch(error => {
 					store.loading(false)
 					if (error.request.status === 401) {
-						//this.logOut()
+						new userSession().unSet()
 					}
 					reject({
 						status: error.request.status,

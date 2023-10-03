@@ -1,21 +1,27 @@
 import jwt_decode from "jwt-decode"
 import { useAppStore } from '../store/index.js'
 import { apiRequest } from '../api/requests'
+import { frontEndLogs } from '../helpers/frontend.logs.js'
+import { useRouter } from 'vue-router'
 
 export class userSession {
 	constructor() {
 		this.store = useAppStore()
 	}
 	set(bearer) {
-		let isLoggendIn = false
-		if(bearer) {
-			let userData = jwt_decode(bearer)
-			if(this.validateSession(userData, bearer)) {
-				this.store.setUserData(userData)
-				isLoggendIn = userData
+		return new Promise((resolve, reject) => {
+			if(bearer) {
+				let userData = jwt_decode(bearer)
+				this.validateSession(userData, bearer).then(() => {
+					this.store.setUserData(userData)
+					resolve(userData)
+				}).catch(() => {
+					reject(false)
+				})
+			} else {
+				reject(false)
 			}
-		}
-		return isLoggendIn
+		})
 	}
 	verify() {
 		let bearer = localStorage.getItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
@@ -33,16 +39,23 @@ export class userSession {
 		}
 	}
 	validateSession(userData, bearer, stored = false) {
-		if(!userData || this.sessionExpired(userData.exp) || userData.role > 3 || !userData.role || userData.role === undefined) {
-			localStorage.removeItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
-			this.store.setUserData(null)
-			return false
-		} else {
-			if(!stored) {
-				localStorage.setItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`, bearer)
+		return new Promise((resolve, reject) => {
+			if(!userData || this.sessionExpired(userData.exp) || userData.role > 5 || !userData.role || userData.role === undefined) {
+				localStorage.removeItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
+				console.log(userData)
+				this.store.setUserData(null)
+				frontEndLogs({
+					message: 'No se pudo registrar el inicio de sesión por lo que el usuario no pudo continuar',
+					data: userData
+				})
+				reject(false)
+			} else {
+				if(!stored) {
+					localStorage.setItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`, bearer)
+				}
+				resolve(true)
 			}
-			return true
-		}
+		})
 	}
 	sessionExpired(exp) {
 		let now = Math.round(Date.now() / 1000)
@@ -56,6 +69,8 @@ export class userSession {
 				localStorage.removeItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
 				this.store.setUserData(null)
 				this.store.push_alert(response.data.code)
+				const router = useRouter()
+				router.push({name: 'accessViewLogin'})
 				resolve(true)
 			}).catch(error => {
 				this.store.push_alert(error.data.code)

@@ -11,12 +11,17 @@
     background-color: transparent
     border: 1px solid var(--c-inactive-input-border)
     display: block
-    padding: 0.8rem
     box-sizing: border-box
-    border-radius: 0.5rem
+    border-radius: 0.3rem
     width: 100%
-    color: var(--color2)
+    color: var(--color3)
     outline: none
+    padding: 0.3rem 0.8rem
+    &--inverted
+      color: var(--color2)
+      border: 1px solid var(--c-inactive-input-border-inverted)
+    &--access
+      padding: 0.8rem
     &:active,
     &:focus
       border-color: var(--c-active-input-border)
@@ -30,10 +35,20 @@
   &__label
     font:
       size: var(--fs-smaller)
-      weight: 300
-    color: var(--color2)
+      weight: 600
+    color: var(--color4)
+    &--inverted
+      color: var(--color2)
   &__container
     padding: 0.4rem 0
+    &--full
+      width: 100%
+    &--half
+      width: 48%
+      min-width: 350px
+    &--small
+      width: 33%
+      min-width: 250px
   &__submit
     width: 100%
     display: block
@@ -52,3 +67,24 @@
     width: max-content
     z-index: 9999
     position: relative
+  &__select
+    background-color: transparent
+    color: var(--color1)
+    cursor: pointer
+    appearance: none
+    border: 1px solid var(--c-inactive-input-border)
+    display: block
+    border-radius: 0.2rem
+    width: 100%
+    padding: 0.3rem 0.8rem
+    position: relative
+    background:
+      image: url(/src/assets/icons/select_triangle.png)
+      repeat: no-repeat
+      size: 1rem 1rem
+      position: calc(100% - 0.5rem) center
+      color: transparent
+    font:
+      size: var(--fs-regular)
+      weight: 400
+      family: var(--ff2)

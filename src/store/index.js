@@ -8,7 +8,9 @@ export const useAppStore = defineStore('cfdiAppStore', {
 			userData: null,
 			alerts: [],
 			processing: false,
-			newElements: null
+			newElements: null,
+			popup: null,
+			company: null
 		}
 	},
 	getters: {},
@@ -38,6 +40,12 @@ export const useAppStore = defineStore('cfdiAppStore', {
 		},
 		newElements(state, data) {
 			state.newElements = data
+		},
+		showPopup(data) {
+			this.popup = data
+		},
+		setCompany(info) {
+			this.company = info
 		}
 	},
 	modules: {}

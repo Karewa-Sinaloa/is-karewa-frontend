@@ -4,14 +4,14 @@
 	<Form class="form" @Submit="onSubmit" :validation-schema="resetValidateSchema" ref="resetForm">
 		<fieldset class="form__fieldset">
 			<div class="form__container">
-				<label class="form__label" for="password">Nueva contraseña</label>
-				<Field class="form__input form__input--password" type="password" name="password" placeholder="***************"/>
+				<label class="form__label form__label--inverted" for="password">Nueva contraseña</label>
+				<Field class="form__input form__input--access form__input--inverted form__input--password" type="password" name="password" placeholder="***************"/>
 				<ErrorMessage name="password" class="form__alert" data-field="password"/>
 			</div>
 
 			<div class="form__container">
 				<label class="form__label" for="repeat_password">repetir la contraseña</label>
-				<Field class="form__input form__input--password" type="password" name="repeat_password" placeholder="***************"/>
+				<Field class="form__input form__input--access form__input--password" type="password" name="repeat_password" placeholder="***************"/>
 			</div>
 
 			<Field type="hidden" name="hash_string" v-model="hashString"/>

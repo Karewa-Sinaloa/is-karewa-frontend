@@ -31,8 +31,8 @@ const alertData = {
 	},
 	ACCESS005: {
 		type: 'error',
-		title: 'SESIÓN EXPIRADA',
-		text: 'El tiempo de tu sesión ha expirado, por favor, vuelve a iniciarla con tus datos de acceso.'
+		title: 'TOKEN EXPIRADO',
+		text: 'El token para realizar el cambio de contraseña o validacion de usuario ha expirado.'
 	},
 	ACCESS006: {
 		type: 'error',
@@ -123,10 +123,15 @@ const alertData = {
 		title: 'CONTRASEÑA INCORRECTA',
 		text: 'La contraseña de tu CSD no es correcta, por favor verificala.'
 	},
-	'CAPTCHA-001': {
+	'HCAPTCHA-001': {
 		type: 'warning',
 		title: 'Error completando la captcha',
-		text: 'No completaste el reto captcha correctamente, vuelve a intentar'
+		text: 'Ha ocurrido un error al procesar la validación por Captcha'
+	},
+	'HCAPTCHA-002': {
+		type: 'warning',
+		title: 'Error completando la captcha',
+		text: 'Ha ocurrido un error al procesar la validacion por Captcha'
 	}
 }
 

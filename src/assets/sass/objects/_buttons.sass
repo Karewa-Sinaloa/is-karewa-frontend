@@ -1,5 +1,4 @@
 @import "../settings/_variables.sass"
-
 .btn
   cursor: pointer
   appearance: none
@@ -9,14 +8,28 @@
     box-sizing: border-box
     font:
       size: var(--fs-regular)
+  &--small
+    padding: 0.5rem 1.5rem
+    box-sizing: border-box
+    font-size: var(--fs-small)
   &__default
     font-weight: 500
     color: var(--color2)
     background-color: var(--c-inactive-button-bg)
     border-radius: 2rem
     border: none
+    text-align: center
+    text-decoration: none
     &:hover
       background-color: var(--c-active-button-bg)
+  &__transparent
+    text-decoration: underline
+    color: var(--color1)
+    text-align: center
+    border: none
+    font-weight: 500
+    &--inverted
+      filter: invert(1)
   &__icon
     padding: 0
     border: none

@@ -22,12 +22,17 @@
   --color7: #{$color7}
   --color8: #{$color8}
   --c-inactive-input-border: #{$c-inactive-input-border}
+  --c-inactive-input-border-inverted: #{$c-inactive-input-border-inverted}
   --c-active-input-border: #{$c-active-input-border}
+  --c-active-input-border-inverted: #{$c-active-input-border-inverted}
   --c-inactive-button-bg: #{$c-inactive-button-bg}
   --c-active-button-bg: #{$c-active-button-bg}
   --c-form-alert: #{$c-form-alert}
   --c-opaque-light-background: #{$c-opaque-light-background}
   --c-light-background: #{$c-light-background}
+  --c-dash-bg1: #{$c-dash-bg1}
+  --c-dash-bg2: #{$c-dash-bg2}
+  --c-dash-shadow: #{$c-dash-shadow}
   --bp1: #{$bp1}
   --bp2: #{$bp2}
   --bp3: #{$bp3}
@@ -69,6 +74,23 @@ p,li,a,span,button,input,label,select,textarea,option,select,code,legend
     height: 7rem
     display: block
     object-fit: contain
+.dash
+  width: 100vw
+  height: max-content
+  min-height: 100vh
+  background-color: var(--c-dash-bg1)
+  display: flex 
+.header
+  width: 100%
+  height: auto
+.content
+  width: calc(100vw - 220px)
+  height: max-content
+  min-height: 100vh
+  display: block
+.main
+  padding: 2rem
+  box-sizing: border-box
 @media all and (min-width: $bp5)
   .desktop-view
     display: block

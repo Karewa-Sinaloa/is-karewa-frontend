@@ -1,15 +1,42 @@
 <script setup>
-import popupComponent from './components/partials/popup.vue'
-import notificationComponent from './components/partials/loading.vue'
+	import { onMounted } from 'vue'
+	import notificationComponent from './components/partials/notifications.vue'
+	import loadingComponent from './components/partials/loading.vue'
+	import popupComponent from './components/partials/popups.vue'
+	import { getCompany } from './mixins/company.js'
 
+	const registerServiceWorker = async () => {
+		if ('serviceWorker' in navigator) {
+			try {
+				const registration = await navigator.serviceWorker.register('/sw.js', {
+					scope: '/'
+				})
+				if (registration.installing) {
+					console.log('Service worker installing')
+				} else if (registration.waiting) {
+					console.log('Service worker installed')
+				} else if (registration.active) {
+					console.log('Service worker active')
+				}
+			} catch (error) {
+				console.error(`Registration failed with ${error}`)
+			}
+		}
+	}
+
+	onMounted(() => {
+		getCompany()
+	})
+	registerServiceWorker()
 </script>
 
 <template>
-  <router-view />
-	<popup-component/>
-	<notification-component></notification-component>
+	<router-view />
+	<notification-component />
+	<loading-component />
+	<popup-component />
 </template>
 
 <style lang="sass">
-@import "./assets/sass/base/_base.sass"
+	@import "./assets/sass/base/_base.sass"
 </style>

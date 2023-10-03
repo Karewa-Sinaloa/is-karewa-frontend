@@ -7,6 +7,9 @@ import AccessView from '../components/views/access.vue'
 import accessViewLogin from '../components/partials/login.vue'
 import accessViewRecovery from '../components/partials/recovery.vue'
 import accessViewReset from '../components/partials/reset.vue'
+import accessViewRegistration from '../components/partials/registration.vue'
+import accessViewValidation from '../components/partials/verification.vue'
+import CompanyView from '../components/views/company.vue'
 
 const routes = [
 	{
@@ -14,8 +17,15 @@ const routes = [
 		name: 'homeView',
 		component: HomeView,
 		meta: {
-			login: true,
-			component: 'homeView'
+			login: true
+		}
+	},
+	{
+		path: '/empresas/nueva-empresa',
+		component: CompanyView,
+		name: 'companyViewNew',
+		meta: {
+			login: true
 		}
 	},
 	{
@@ -23,7 +33,6 @@ const routes = [
 		component: AccessView,
 		meta: {
 			login: false,
-			component: 'accessViewLogin'
 		},
 		children: [
 			{
@@ -40,6 +49,16 @@ const routes = [
 				path: "cambiar-contrasena",
 				component: accessViewReset,
 				name: "accessViewReset"
+			},
+			{
+				path: 'crear-cuenta',
+				component: accessViewRegistration,
+				name: 'accessViewRegistration'
+			},
+			{
+				path: 'verificacion-de-usuario',
+				component: accessViewValidation,
+				name: 'accessViewValidation'
 			}
 		]
 	},
@@ -61,9 +80,8 @@ router.beforeEach((to, from, next) => {
 	const store = useAppStore()
 	const session = new userSession()
 	let auth = session.verify()
-	console.log(auth)
-	console.log(to.meta.login)
 	if(to.meta.login && auth) {
+		console.log(to)
 		next()
 	} else if(['accessViewLogin', 'accessViewRecovery', 'accessViewReset'].indexOf(to.name) != -1 && auth) {
 		next({name: 'homeView'})

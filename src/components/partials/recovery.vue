@@ -1,11 +1,11 @@
 <template>
 	<h2 class="access__subtitle">Recupera tu acceso</h2>
 	<span class="access__welcome">Proporcionanos tu dirección de correo electrónico y te enviaremos los pasos a seguir para que puedas recuerar el acceso a tu cuenta</span>
-	<Form class="form" @Submit="onSubmit" :validation-schema="recoveryValidateSchema" v-slot="{setErrors, handleSubmit, values}" ref="recoveryForm">
+	<Form class="form" @Submit="onSubmit" :validation-schema="recoveryValidateSchema" v-slot="{setErrors, handleSubmit, values, validate}" ref="recoveryForm">
 		<fieldset class="form__fieldset">
 			<div class="form__container">
-				<label class="form__label" for="email">Correo electrónico</label>
-				<Field class="form__input form__input--email" type="email" name="email" placeholder="usuario@dominio.tld"/>
+				<label class="form__label form__label--inverted" for="email">Correo electrónico</label>
+				<Field class="form__input form__input--inverted form__input--access form__input--email" type="email" name="email" placeholder="usuario@dominio.tld"/>
 				<ErrorMessage name="email" class="form__alert" data-field="email"/>
 			</div>
 			
@@ -15,7 +15,7 @@
 			<router-link class="access__form-link" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi contraseña</router-link>
 			<hcaptcha-component v-if="showCaptcha" @hideCaptcha="showCaptcha = false" @releaseForm="(string) => {hcaptchaData = string, handleSubmit(onSubmit)}"></hcaptcha-component>
 
-			<input class="form__submit btn btn__default btn--regular" type="submit" @click.prevent="showCaptcha = true" value="Recuperar acceso" />
+			<input class="form__submit btn btn__default btn--regular" type="submit" @click.prevent="validate().then(r => formValidation(r))" value="Recuperar acceso" />
 		</fieldset>
 	</Form>
 </template>
@@ -44,15 +44,21 @@ function onSubmit(values, action) {
 			'module': 'access/recovery',
 			'data': values
 		}).then(response => {
-			showCaptcha.value = false
 			recoveryForm.value.resetForm()
-			console.log(response)
 			store.push_alert({
 				code: response.data.code
 			})
+			store.showPopup({
+				title: "Revisa tu correo",
+				text: "Hemos enviado un mensaje a tu correo, sigue los pasos que se indican para cambiar tu contraseña y recuperar tu acceso a la cuenta.",
+				button_text: "ENTERADO",
+				type: "route",
+				route: {
+					name: "accessViewLogin"
+				},
+				icon: "email_open.png"
+			})
 		}).catch(error => {
-			console.log(error)
-			showCaptcha.value = false
 			if(error.status === 400) {
 				let errors = setFieldMessages(error.data.errors)
 				actions.setErrors(errors)
@@ -61,5 +67,11 @@ function onSubmit(values, action) {
 			}
 		})
 	}, 0)
+}
+
+function formValidation(response) {
+	if(response.valid) {
+		this.showCaptcha = true
+	}
 }
 </script>
