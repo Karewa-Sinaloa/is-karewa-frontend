@@ -4,8 +4,8 @@ import { userSession } from '../helpers/set.session.js'
 
 
 export class apiRequest {
-	constructor() {
-		this.instance = new apiInstance().init()
+	constructor(contentType = 'application/json') {
+		this.instance = new apiInstance().init(contentType)
 	}
 	Get(_params, id = null) {
 		return new Promise((resolve, reject) => {
@@ -37,6 +37,13 @@ export class apiRequest {
 				.catch(error => reject(error))
 		})
 	}
+	Upload(_params, _files) {
+		return new Promise((resolve, reject) => {
+			this.processResponse('upload', _params)
+				.then(response =>resolve(response))
+				.catch(error => reject(error))
+		})
+	}
 	processResponse(method, params, id = null) {
 		const store = useAppStore()
 		store.loading(true)
@@ -57,6 +64,13 @@ export class apiRequest {
 				case 'delete':
 					request = this.instance.delete(`${params.module}${id}${uri}`)
 					break
+				case 'upload':
+					var formData = new FormData()
+					for(var key in params.files) {
+						formData.append(params.files[key].name, params.files[key].file)
+					}
+					request = this.instance.post(`${params.module}${id}${uri}`, formData)
+					break
 			}
 			request
 				.then(response => {
@@ -66,6 +80,16 @@ export class apiRequest {
 				.catch(error => {
 					store.loading(false)
 					if (error.request.status === 401) {
+						store.showPopup({
+							title: "SESIÓN FINALIZADA",
+							text: "Su sesión ha sido cerrada, esto puede deberse a diversos factores, como por ejemplo, que el token expiró o alguién mas inicio sesión en otro dispositivo con sus credenciales",
+							type: "route",
+							route: {
+								name: 'accessViewLogin'
+							},
+							button_text: 'ENTENDIDO',
+							icon: 'expired.png'
+						})
 						new userSession().unSet()
 					}
 					reject({

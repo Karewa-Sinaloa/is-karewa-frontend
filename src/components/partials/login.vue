@@ -20,7 +20,7 @@
 			<input class="form__submit btn btn__default btn--regular" type="submit" value="Iniciar sesión" />
 		</fieldset>
 	</Form>
-	<router-link class="btn btn__transparent btn__transparent--inverted btn--regular" :to="{name: 'accessViewRegistration'}">¿No tienes una cuenta?, ¡créala ahora!</router-link>
+	<router-link class="btn btn__transparent btn__transparent--inverted btn--regular form__btn--centered" :to="{name: 'accessViewRegistration'}">¿No tienes una cuenta?, ¡créala ahora!</router-link>
 </template>
 
 <script setup>

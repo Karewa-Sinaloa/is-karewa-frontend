@@ -23,7 +23,17 @@
 							</div>
 							<span v-if="companyCreated" class="material-symbols-outlined progress-list__icon progress-list__icon--checked">check_circle</span>
 							<span v-else class="material-symbols-outlined progress-list__icon progress-list__icon--unchecked">radio_button_unchecked</span>
-							<router-link v-if="!companyCreated" class="btn btn__default btn--small" :to="{name: 'companyViewNew'}">Configurar mi empresa</router-link>
+							<router-link v-if="!companyCreated" class="btn btn__default btn--small" :to="{name: 'newCompanyView'}">Configurar mi empresa</router-link>
+						</div>
+
+						<div class="progress-list__element">
+							<div class="progress-list__text-container">
+								<h4 class="progress-list__title">Configurar dirección</h4>
+								<p class="progress-list__text">Agrega la información de la dirección de fiscal de tu empresa, recuerda que el código postal debe coincidir con el registrado en tu constancia de situación fiscal</p>
+							</div>
+							<span v-if="companyCreated" class="material-symbols-outlined progress-list__icon progress-list__icon--checked">check_circle</span>
+							<span v-else class="material-symbols-outlined progress-list__icon progress-list__icon--unchecked">radio_button_unchecked</span>
+							<router-link v-if="!companyCreated" class="btn btn__default btn--small" :to="{name: 'newCompanyView'}">Configurar dirección</router-link>
 						</div>
 					</div>
 				</div>
@@ -33,16 +43,15 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { computed, ref } from 'vue'
 import { useAppStore } from '../../store/index.js'
 import sidebarComponent from '../partials/sidebar.vue'
 import contentHeader from '../partials/content_header.vue'
 
-let companyCreated = false
 const store = useAppStore()
 
-onMounted(() => {
-	companyCreated = store.company != null ? true : false
+const companyCreated = computed(() => {
+	return store.company != null ? true : false
 })
 
 </script>

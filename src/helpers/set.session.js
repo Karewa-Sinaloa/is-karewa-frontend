@@ -2,7 +2,6 @@ import jwt_decode from "jwt-decode"
 import { useAppStore } from '../store/index.js'
 import { apiRequest } from '../api/requests'
 import { frontEndLogs } from '../helpers/frontend.logs.js'
-import { useRouter } from 'vue-router'
 
 export class userSession {
 	constructor() {
@@ -69,8 +68,6 @@ export class userSession {
 				localStorage.removeItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
 				this.store.setUserData(null)
 				this.store.push_alert(response.data.code)
-				const router = useRouter()
-				router.push({name: 'accessViewLogin'})
 				resolve(true)
 			}).catch(error => {
 				this.store.push_alert(error.data.code)

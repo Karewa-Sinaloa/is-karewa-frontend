@@ -132,6 +132,11 @@ const alertData = {
 		type: 'warning',
 		title: 'Error completando la captcha',
 		text: 'Ha ocurrido un error al procesar la validacion por Captcha'
+	},
+	'MEDIA-TYPE-UNSUPPORTED': {
+		type: 'error',
+		title: 'Formato de archivo no valido',
+		text: 'El formato del archivo proporcionado no es válido, por favor, sigue las instrucciones y vuelve a intentar'
 	}
 }
 

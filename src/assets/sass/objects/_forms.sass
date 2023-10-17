@@ -14,9 +14,11 @@
     box-sizing: border-box
     border-radius: 0.3rem
     width: 100%
-    color: var(--color3)
+    color: var(--color1)
     outline: none
     padding: 0.3rem 0.8rem
+    &--disabled
+      border-color: var(--c-dash-shadow)
     &--inverted
       color: var(--color2)
       border: 1px solid var(--c-inactive-input-border-inverted)
@@ -88,3 +90,125 @@
       size: var(--fs-regular)
       weight: 400
       family: var(--ff2)
+    &--disabled
+      border-color: var(--c-dash-shadow)
+      background-image: none
+  &__section
+    padding: 1rem 0
+  &__grid
+    display: flex
+    justify-content: flex-start
+    flex-wrap: wrap
+    padding: 1rem 0
+    div
+      margin: 0.5rem 0.5rem 0 0
+  &__head2
+    margin: auto
+    width: 100%
+    color: var(--color4)
+    font:
+      weight: 600
+      size: var(--fs-regular)
+      family: var(--ff1)
+  &__checkbox
+    display: block
+    border: 1px solid var(--c-inactive-input-border)
+    width: 1rem
+    height: 1rem
+    padding: 0
+    cursor: pointer
+    &-label
+      display: flex
+      align-items: center
+      color: var(--color1)
+      margin: 0
+      padding: 0.2rem 0
+      font:
+        weight: 400
+        size: var(--fs-small)
+        family: var(--ff2)
+  &__drag-drop
+    width: 15rem
+    margin: 1rem 0
+  &__btn
+    &--centered
+      margin: auto
+.drag-drop
+  width: 100%
+  padding: 1.6rem 1rem
+  box-sizing: border-box
+  border: 1px dashed var(--color3)
+  background-color: var(--c-dash-bg1)
+  border-radius: 0.3rem
+  &--in
+    background-color: var(--color12)
+  &__label
+    display: block
+    color: var(--color4)
+    text-align: center
+    margin: auto
+    font:
+      weight: 600
+      size: var(--fs-regular)
+      family: var(--ff1)
+  &__help
+    color: var(--color3)
+    text-align: center
+    display: block
+    margin: auto
+    font:
+      weight: 400
+      size: var(--fs-small)
+      family: var(--ff2)
+  .btn
+    display: block
+    margin: 1rem auto 0 auto
+    position: relative
+    overflow: hidden
+    cursor: pointer
+  &__input
+    cursor: pointer
+    position: absolute
+    opacity: 0
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    z-index: 0
+    background-color: transparent
+  &__success
+    display: block
+    color: var(--color5)
+    font-size: var(--fs-xxxl)
+    margin: 0.5rem auto auto
+    text-align: center
+  &__remove
+    display: block
+    color: var(--color3)
+    font-size: var(--fs-mid)
+    margin: 0.5rem auto auto
+    text-align: center
+    cursor: pointer
+.certificate
+  display: flex
+  align-items: center
+  padding: 1rem 0
+  &__icon
+    display: block
+    width: 5rem
+    height: 5rem
+    object-fit: contain
+    margin-right: 1rem
+  &__text
+    display: block
+    color: var(--color1)
+    margin: 0
+    padding: 0.1rem 0
+    font:
+      size: var(--fs-small)
+      weight: 400
+      family: var(--ff2)
+    &--strong
+      font:
+        weight: 600
+        family: var(--ff1)
