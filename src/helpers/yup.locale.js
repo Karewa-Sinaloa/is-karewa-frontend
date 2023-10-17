@@ -9,7 +9,9 @@ const errorMessages = {
 	unique: 'Ya existe un elemento ${label} con el mismo valor. El valor en este campo debe ser único',
 	exist: 'El valor seleccionado no existe, por favor verifica haber seleccionado el valor correcto',
 	date: 'El campo ${label} no tiene un formato de fecha válido',
-	oneOf: 'El valor de ${label} debe coincidir en ambos campos, por favor verifica'
+	oneOf: 'El valor de ${label} debe coincidir en ambos campos, por favor verifica',
+	matches: 'El valor del campo ${label} no coincide con el formato requerido',
+	length: 'La longitud del campo ${label} debe ser extrictamente de ${length} caracteres'
 }
 
 setLocale({

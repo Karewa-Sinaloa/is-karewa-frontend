@@ -10,7 +10,7 @@
 				<span class="nav__element-text">Dashboard</span>
 			</router-link>
 
-			<router-link class="nav__element" :to="{name: 'homeView'}">
+			<router-link class="nav__element" :to="{name: 'companyView'}">
 				<span class="material-symbols-outlined nav__element-icon">store</span>
 				<span class="nav__element-text">Empresa</span>
 			</router-link>
