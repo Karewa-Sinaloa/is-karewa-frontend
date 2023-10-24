@@ -79,22 +79,26 @@ export class apiRequest {
 				})
 				.catch(error => {
 					store.loading(false)
+					let closedSessionCodes = ['ACCESS003', 'ACCESS006']
+					let errorResponse = JSON.parse(error.request.response)
 					if (error.request.status === 401) {
-						store.showPopup({
-							title: "SESIÓN FINALIZADA",
-							text: "Su sesión ha sido cerrada, esto puede deberse a diversos factores, como por ejemplo, que el token expiró o alguién mas inicio sesión en otro dispositivo con sus credenciales",
-							type: "route",
-							route: {
-								name: 'accessViewLogin'
-							},
-							button_text: 'ENTENDIDO',
-							icon: 'expired.png'
-						})
+						if(closedSessionCodes.indexOf(errorResponse.code) != -1) {
+							store.showPopup({
+								title: "SESIÓN FINALIZADA",
+								text: "Su sesión ha sido cerrada, esto puede deberse a diversos factores, como por ejemplo, que el token expiró o alguién mas inicio sesión en otro dispositivo con sus credenciales",
+								type: "route",
+								route: {
+									name: 'accessViewLogin'
+								},
+								button_text: 'ENTENDIDO',
+								icon: 'expired.png'
+							})
+						}
 						new userSession().unSet()
 					}
 					reject({
 						status: error.request.status,
-						data: JSON.parse(error.request.response)
+						data: errorResponse
 					})
 				})
 		})

@@ -1,5 +1,5 @@
 <script setup>
-import { watch, computed } from 'vue'
+import { watch, computed, onMounted } from 'vue'
 import notificationComponent from './components/partials/notifications.vue'
 import loadingComponent from './components/partials/loading.vue'
 import popupComponent from './components/partials/popups.vue'
@@ -26,7 +26,13 @@ const registerServiceWorker = async () => {
 	}
 }
 const isLoggedIn = computed(() => {
-	return route.meta.login
+	return route.meta.login === true ? true : false
+})
+
+onMounted(() => {
+	if(isLoggedIn.value) {
+		getCompany()
+	}
 })
 
 watch(isLoggedIn, () => {

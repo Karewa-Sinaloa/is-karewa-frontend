@@ -88,22 +88,28 @@
 						<input v-if="!companyEditBlocked" class="btn btn__default btn--regular" type="submit" value="Actualizar contribuyente">
 					</Form>
 				</section>
+				<section class="section section--wide" v-if="myCompany">
+					<h2 class="section__title">Dirección de facturación</h2>
+					<span class="section__help-text">Los datos de la dirección de facturación deben ser los mismo registrados en to comprobante de identificación fiscal vigente.</span>
+					<tax-payer-address></tax-payer-address>
+				</section>
 			</main>
 		</div>
 	</div>
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from 'vue'
-import { useAppStore } from '../../store/index.js'
 import sidebarComponent from '../partials/sidebar.vue'
 import contentHeader from '../partials/content_header.vue'
+import { onMounted, ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import * as yup from 'yup'
+import { useAppStore } from '../../store/index.js'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import dragDrop from '../../components/partials/drag_drop_file.vue'
+import taxPayerAddress from '../partials/tax_payer_address.vue'
 
 const store = useAppStore()
 const router = useRouter()
@@ -187,7 +193,7 @@ function togglePassword() {
 	showPassword.value = !showPassword.value
 	csdPass.value = showPassword.value ? 'text' : 'password'
 }
-
+// TODO: AGREGAR NOTIFICACION AL CREAR LA EMPRESA O BIEN AL HABER UN ERROR AL CREARLA
 function onSubmit(values, action) {
 	new apiRequest().Put({
 		module: 'tax-payers',
