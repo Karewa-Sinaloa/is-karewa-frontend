@@ -41,8 +41,16 @@
     color: var(--color4)
     &--inverted
       color: var(--color2)
+    &--required
+      &::after
+        content: "\2731"
+        display: inline-block
+        color: var(--color8)
+        margin-left: 0.1rem
+        font-weight: 100
   &__container
     padding: 0.4rem 0
+    position: relative
     &--full
       width: 100%
     &--half
@@ -51,6 +59,11 @@
     &--small
       width: 33%
       min-width: 250px
+  &__container-group
+    display: flex
+    align-items: center
+    .form__container
+      margin-right: 1rem
   &__submit
     width: 100%
     display: block
@@ -212,3 +225,26 @@
       font:
         weight: 600
         family: var(--ff1)
+.autocomplete
+  display: block
+  position: absolute
+  z-index: 100
+  top: 4.1rem
+  left: 0
+  background-color: var(--color2)
+  width: 100%
+  border: 1px solid var(--c-opaque-light-background)
+  border-radius: 0.3rem
+  box-shadow: 0 0 0.5rem var(--c-opaque-light-background)
+  overflow: hidden
+  &__option
+    display: block
+    padding: 0.3rem
+    box-sizing: border-box
+    cursor: pointer
+    &:hover,
+    &:focus
+      background-color: var(--color5)
+      color: var(--color2)
+    &:not(:last-child)
+      border-bottom: 1px solid var(--c-opaque-light-background)

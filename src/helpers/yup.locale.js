@@ -27,6 +27,5 @@ export const setFieldMessages = function(errors) {
 			fieldErrors[error.field] = errorMessages[error.rule]
 		}
 	})
-	console.log(fieldErrors)
 	return fieldErrors
 }

@@ -52,7 +52,7 @@
 
 							<div class="form__container form__container--small">
 								<label class="form__label" for="password" id="password">Contraseña de tu CSD</label>
-								<Field class="form__input" type="password" id="password" name="password" placeholder="*************" ref="csdPass" />
+								<Field class="form__input" :type="csdPass" id="password" name="password" placeholder="*************" />
 								<label class="form__checkbox-label" for="show_password">
 									<input class="form__checkbox" type="checkbox" id="show_password" name="show_password" @change="togglePassword" value="1">
 									<span>Mostrar la contraseña</span>
@@ -82,6 +82,7 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import dragDrop from '../../components/partials/drag_drop_file.vue'
+import { getCompany } from '../../mixins/company.js'
 
 const store = useAppStore()
 const router = useRouter()
@@ -110,7 +111,7 @@ const tpt = ref(null)
 const taxpayerType = ref(null)
 const regimenesFiscales = ref(null)
 const showPassword = ref(false)
-const csdPass = ref(null)
+const csdPass = ref('password')
 const companyValidateSchema = yup.object().shape({
 	password: yup.string().required().label('contraseña'),
 	rfc: yup.string().required().label('RFC').min(12).max(13).matches(/^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$/i),
@@ -120,6 +121,10 @@ const companyValidateSchema = yup.object().shape({
 	cer: yup.string().required().label('archivo de clave privada .key'),
 	key: yup.string().required().label('archivo de certificado .CER')
 })
+const companyCreated = computed(() => {
+	return store.company != null ? true : false
+})
+
 watch(tpt, () => {
 	getRegimenFiscal()
 })
@@ -130,18 +135,17 @@ function getTaxpayerType() {
 	}).then(response => {
 		taxpayerType.value = response.data.data
 	}).catch(error => {
-		console.log(error)
+		store.push(error.data)
+		router.push({
+			name: 'homeView'
+		})
 	})
 }
 
 onMounted(() => {
-	if(companyCreated) {
-		router.push({name: 'homeView'})
+	if(companyCreated.value) {
+		router.push({name: 'companyView'})
 	}
-})
-
-const companyCreated = computed(() => {
-	return store.company != null ? true : false
 })
 
 getTaxpayerType()
@@ -154,7 +158,10 @@ function getRegimenFiscal() {
 	}).then(response => {
 		regimenesFiscales.value = response.data.data
 	}).catch(error => {
-		console.log(error)
+		store.push_alert(error.data)
+		router.push({
+			name: 'homeView'
+		})
 	})
 }
 
@@ -168,14 +175,28 @@ function setKey(filename) {
 
 function togglePassword() {
 	showPassword.value = !showPassword.value
-	csdPass.value.type = showPassword.value ? 'text' : 'password'
+	csdPass.value = showPassword.value ? 'text' : 'password'
 }
 
 function onSubmit(values, action) {
 	new apiRequest().Post({
 		module: 'tax-payers',
 		data: values
-	}).then(response => console.log(response)).catch(error => console.warn(error))
+	}).then(response => {
+		getCompany()
+			.then(() => {
+				router.push({
+					name: "companyView"
+				})
+			})
+			.catch(() => {
+				route.push({
+					name: 'homeView'
+				})
+			})
+	}).catch(error => {
+		store.push_alert(error.data)
+	})
 }
 </script>
 

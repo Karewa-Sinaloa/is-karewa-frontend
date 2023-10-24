@@ -90,7 +90,6 @@ router.beforeEach((to, from, next) => {
 	const session = new userSession()
 	let auth = session.verify()
 	if(to.meta.login && auth) {
-		console.log(to)
 		next()
 	} else if(['accessViewLogin', 'accessViewRecovery', 'accessViewReset'].indexOf(to.name) != -1 && auth) {
 		next({name: 'homeView'})

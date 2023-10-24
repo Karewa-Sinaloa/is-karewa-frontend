@@ -41,7 +41,6 @@ export class userSession {
 		return new Promise((resolve, reject) => {
 			if(!userData || this.sessionExpired(userData.exp) || userData.role > 5 || !userData.role || userData.role === undefined) {
 				localStorage.removeItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
-				console.log(userData)
 				this.store.setUserData(null)
 				frontEndLogs({
 					message: 'No se pudo registrar el inicio de sesión por lo que el usuario no pudo continuar',
