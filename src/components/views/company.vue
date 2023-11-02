@@ -6,21 +6,23 @@
 			<main class="main">
 				<section class="section section--wide" v-if="myCompany">
 					<h1 class="section__title">{{myCompany.razon_social}}</h1>
+					<span class="section__help-text">No se puede cambiar el RFC o el tipo de contribuyente, para esto deberá borrar el actual y volver a darlo de alta.</span>
 					<div class="section__options">
 						<button class="btn btn__transparent btn--small" @click.prevent="companyEditBlocked = false">
 							<span class="material-symbols-outlined">edit_square</span>
 							Editar empresa
 						</button>
 
-						<button class="btn btn__transparent btn--small" @click.prevent="companyDelete">
+						<button class="btn btn__transparent btn--small" @click.prevent="confirmDelete = true">
 							<span class="material-symbols-outlined">delete</span>
 							Eliminar empresa
 						</button>
 					</div>
+					<confirmation-popup :data="companyDeleteConfirmationData" @confirmed="companyDelete" @declined="confirmDelete = false" v-if="confirmDelete"></confirmation-popup>
 					<Form @submit="onSubmit" class="form" :initial-values="myCompany" :validation-schema="companyValidateSchema" v-slot="{ values, setErrors }">
 						<div class="form__container form__container--half">
 							<label class="form__label" for="taxpayer_type">Tipo de contribuyente</label>
-							<Field as="select" class="form__select" id="taxpayer_type" name="taxpayer_type" :disabled="companyEditBlocked" :class="{'form__select--disabled': companyEditBlocked}">
+							<Field as="select" class="form__select form__select--disabled" id="taxpayer_type" name="taxpayer_type" disabled>
 								<option disabled value="">Selecciona el tipo de contribuyente</option>
 								<option v-for="tptype in taxpayerType" :value="tptype.id">{{ tptype.name }}</option>
 							</Field>
@@ -28,19 +30,19 @@
 						</div>
 						<div>
 							<div class="form__container form__container--full">
-								<label class="form__label" for="razon_social" id="razon_social">Razón social</label>
+								<label class="form__label form__label--required" for="razon_social" id="razon_social">Razón social</label>
 								<Field id="razon_social" name="razon_social" placeholder="Razón social de tu empresa" class="form__input" :disabled="companyEditBlocked" :class="{'form__input--disabled': companyEditBlocked}"/>
 							<ErrorMessage name="razon_social" class="form__alert" data-field="razon_social"/>
 							</div>
 
 							<div class="form__container form__container--small">
 								<label class="form__label" for="rfc" id="rfc">RFC</label>
-								<Field class="form__input" type="text" id="rfc" name="rfc" placeholder="XXXX010101XXX" :class="{'form__input--disabled': companyEditBlocked}" disabled=""/>
+								<Field class="form__input form__input--disabled" type="text" id="rfc" name="rfc" placeholder="XXXX010101XXX" disabled/>
 								<ErrorMessage name="rfc" class="form__alert" data-field="rfc"/>
 							</div>
 
 							<div class="form__container form__container--half">
-								<label class="form__label" for="regimen_fiscal">Régimen fiscal</label>
+								<label class="form__label form__label--required" for="regimen_fiscal">Régimen fiscal</label>
 								<Field as="select" class="form__select" id="regimen_fiscal" name="regimen_fiscal" v-if="regimenesFiscales" :class="{'form__select--disabled': companyEditBlocked}" :disabled="companyEditBlocked">
 									<option disabled value="">Selecciona el régimen fiscal</option>
 									<option v-for="rf in regimenesFiscales" :value="rf.code">{{rf.code}} - {{ rf.description }}</option>
@@ -91,7 +93,7 @@
 				<section class="section section--wide" v-if="myCompany">
 					<h2 class="section__title">Dirección de facturación</h2>
 					<span class="section__help-text">Los datos de la dirección de facturación deben ser los mismo registrados en to comprobante de identificación fiscal vigente.</span>
-					<tax-payer-address></tax-payer-address>
+					<tax-payer-address :taxpayerid="myCompany.id"></tax-payer-address>
 				</section>
 			</main>
 		</div>
@@ -110,9 +112,19 @@ import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import dragDrop from '../../components/partials/drag_drop_file.vue'
 import taxPayerAddress from '../partials/tax_payer_address.vue'
+import confirmationPopup from '../partials/confirmation_popup.vue'
+import { getCompany } from '../../mixins/company.js'
 
 const store = useAppStore()
 const router = useRouter()
+const companyDeleteConfirmationData = {
+	title: "Confirma tu solicitud",
+	text: "¿Realmente desea borrar este contribuyente? Esta acción es definitiva y no se puede deshacer",
+	btn_confirmation_text: "Si, borrar ahora",
+	btn_declination_text: "Cancelar",
+	icon: "attention.png"
+}
+const confirmDelete = ref(false)
 const cert = ref(null)
 const key = ref(null)
 const dragDropCERTexts = {
@@ -193,12 +205,17 @@ function togglePassword() {
 	showPassword.value = !showPassword.value
 	csdPass.value = showPassword.value ? 'text' : 'password'
 }
-// TODO: AGREGAR NOTIFICACION AL CREAR LA EMPRESA O BIEN AL HABER UN ERROR AL CREARLA
 function onSubmit(values, action) {
 	new apiRequest().Put({
 		module: 'tax-payers',
 		data: values
-	}, myCompany.value.id).then(response => console.log(response)).catch(error => console.warn(error))
+	}, myCompany.value.id).then(response => {
+		store.push_alert(response.data)
+		companyEditBlocked.value = true
+		getCompany()
+	}).catch(error => {
+		store.push_alert(error.data)
+	})
 }
 
 function companyDelete() {
@@ -206,9 +223,12 @@ function companyDelete() {
 		module: 'tax-payers'
 	}, myCompany.value.id)
 		.then(response => {
-			console.log(response)
+			confirmDelete.value = false
+			store.push_alert(response.data)
 		}).catch(error => {
-			console.log(error)
+			confirmDelete.value = false
+			error.data.help = "Debe borrar primero las direcciones asociadas al contribuyente"
+			store.push_alert(error.data)
 		})
 }
 
@@ -218,6 +238,6 @@ function humanReadDate(dateString) {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 	@import "../../assets/sass/components/_section.sass"
 </style>

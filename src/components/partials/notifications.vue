@@ -32,7 +32,7 @@ let myInterval = setInterval(() => {
 			<span class="material-symbols-outlined" v-if="alert.type == 'error'">report</span>
 			<span class="material-symbols-outlined" v-else-if="alert.type == 'success'">check_circle</span>
 			<span class="material-symbols-outlined" v-else-if="alert.type == 'warning'">warning</span>
-			<p class="alert__description">{{ alert.text }}</p>
+			<p class="alert__description">{{ alert.text }}<br>{{ alert.help }}</p>
 			<button class="alert__close btn btn__icon" @click="closeNotification(key)">
 				<span class="material-symbols-outlined">close</span>
 			</button>

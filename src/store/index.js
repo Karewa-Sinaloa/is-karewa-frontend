@@ -25,10 +25,12 @@ export const useAppStore = defineStore('cfdiAppStore', {
 			let message = {
 				time: null,
 				title: null,
-				text: null
+				text: null,
+				help: null
 			}
 			if (notification.code !== undefined && notification.code) {
 				message = serverMessages(notification.code)
+				message.help = notification.help
 				this.alerts.push(message)
 			}
 		},
