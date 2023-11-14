@@ -3,6 +3,22 @@
 
 .form
   padding: 2rem 0
+  &__section-title
+    padding: 0.2rem 0
+    color: var(--color3)
+    font:
+      size: var(--fs-mid)
+      weight: 700
+      family: var(--ff1)
+    border-bottom: 1px dashed var(--c-inactive-input-border)
+  &__help-text
+    color: var(--color3)
+    font:
+      weight: 400
+      size: var(--fs-smaller)
+      family: var(--ff2)
+    line-height: 1rem
+    display: block
   &__fieldset
     border: none
     padding: 0
@@ -34,10 +50,20 @@
       @include input-icon('/src/assets/icons/email-white.png')
     &--password
       @include input-icon('/src/assets/icons/padlock-white.png')
+  &__help-icon
+    color: var(--color3)
+    font-size: var(--fs-mid)
+    cursor: pointer
+    position: absolute
+    right: 0
+    top: 0
   &__label
+    position: relative
     font:
       size: var(--fs-smaller)
       weight: 600
+    display: flex
+    align-items: center
     color: var(--color4)
     &--inverted
       color: var(--color2)
@@ -51,6 +77,8 @@
   &__container
     padding: 0.4rem 0
     position: relative
+    &--checkbox
+      padding: 1rem 0
     &--full
       width: 100%
     &--half
@@ -236,7 +264,9 @@
   border: 1px solid var(--c-opaque-light-background)
   border-radius: 0.3rem
   box-shadow: 0 0 0.5rem var(--c-opaque-light-background)
-  overflow: hidden
+  overflow-X: hidden
+  overflow-Y: scroll
+  max-height: 12rem
   &__option
     display: block
     padding: 0.3rem

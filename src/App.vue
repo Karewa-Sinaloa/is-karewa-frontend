@@ -5,6 +5,7 @@ import loadingComponent from './components/partials/loading.vue'
 import popupComponent from './components/partials/popups.vue'
 import { getCompany } from './mixins/company.js'
 import { useRoute } from 'vue-router'
+import helpPopup from './components/partials/help.popup.vue'
 
 const route = useRoute()
 const registerServiceWorker = async () => {
@@ -49,6 +50,7 @@ registerServiceWorker()
 	<notification-component />
 	<loading-component />
 	<popup-component />
+	<help-popup></help-popup>
 </template>
 
 <style lang="sass">

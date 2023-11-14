@@ -11,6 +11,7 @@ import accessViewRegistration from '../components/partials/registration.vue'
 import accessViewValidation from '../components/partials/verification.vue'
 import NewCompanyView from '../components/views/new_company.vue'
 import CompanyView from '../components/views/company.vue'
+import CustomerView from '../components/views/customer.vue'
 
 const routes = [
 	{
@@ -33,6 +34,22 @@ const routes = [
 		path: '/empresas/mi-empresa',
 		component: CompanyView,
 		name: 'companyView',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/clientes/nuevo-cliente',
+		component: CustomerView,
+		name: 'newCustomerView',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/clientes/:id',
+		component: CustomerView,
+		name: 'customerView',
 		meta: {
 			login: true
 		}

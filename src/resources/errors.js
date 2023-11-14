@@ -137,6 +137,11 @@ const alertData = {
 		type: 'error',
 		title: 'Formato de archivo no valido',
 		text: 'El formato del archivo proporcionado no es válido, por favor, sigue las instrucciones y vuelve a intentar'
+	},
+	'DUPLICATED': {
+		type: 'error',
+		title: 'Entrada duplicada',
+		text: 'No se puede agregar o actualizar esta entrada, ya existe una en el sistema, verifica los datos ingresados'
 	}
 }
 
