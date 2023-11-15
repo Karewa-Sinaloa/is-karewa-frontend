@@ -15,7 +15,7 @@
 				<span class="nav__element-text">Empresa</span>
 			</router-link>
 			
-			<router-link class="nav__element" :to="{name: 'newCustomerView'}">
+			<router-link class="nav__element" :to="{name: 'customerListView'}">
 				<span class="material-symbols-outlined nav__element-icon">hail</span>
 				<span class="nav__element-text">Clientes</span>
 			</router-link>
