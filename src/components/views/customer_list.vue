@@ -48,13 +48,19 @@ const route = useRoute()
 
 const customers = ref([])
 const pagination = ref(null)
+const maxResults = ref(1)
 
 getCustomers()
+
+watch(() => route.path, () => {
+	customers.value = []
+	getCustomers()
+})
 
 function getCustomers() {
 	new apiRequest().Get({
 		module: 'customers',
-		params: '?page=1&limit=12'
+		params: `?page=${route.params.page}&limit=${maxResults.value}`
 	}).then(r => {
 		customers.value = r.data.data
 		pagination.value = r.data.pagination ? r.data.pagination : null
