@@ -32,3 +32,37 @@
     display: flex
   .btn
     margin-right: 0.8rem
+.results
+  padding: 2rem 0
+.result
+  padding: 0.5rem 0
+  box-sizing: border-box
+  display: flex
+  align-items: center
+  justify-content: space-between
+  &:not(:last-child)
+    border-bottom: 1px solid var(--c-opaque-light-background)
+  &__title
+    margin: auto
+    color: var(--color1)
+    font:
+      size: var(--fs-small)
+      weight: 600
+      family: var(--ff1)
+  &__description,
+  &__info
+    display: block
+    color: var(--color3)
+    margin: auto
+    font:
+      weight: 400
+      size: var(--fs-small)
+      family: var(--ff2)
+  &__actions
+    display: flex
+    align-items: center
+    justify-content: flex-end
+    .material-symbols-outlined
+      color: var(--color3)
+      &:hover
+        color: var(--color4)

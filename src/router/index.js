@@ -12,6 +12,7 @@ import accessViewValidation from '../components/partials/verification.vue'
 import NewCompanyView from '../components/views/new_company.vue'
 import CompanyView from '../components/views/company.vue'
 import CustomerView from '../components/views/customer.vue'
+import CustomerListView from '../components/views/customer_list.vue'
 
 const routes = [
 	{
@@ -47,9 +48,25 @@ const routes = [
 		}
 	},
 	{
-		path: '/clientes/:id',
+		path: '/clientes/:id(\\d+)',
 		component: CustomerView,
 		name: 'customerView',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/clientes/p/:page(\\d+)?',
+		component: CustomerListView,
+		name: 'customerListPaginateView',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/clientes',
+		component: CustomerListView,
+		name: 'customerListView',
 		meta: {
 			login: true
 		}
