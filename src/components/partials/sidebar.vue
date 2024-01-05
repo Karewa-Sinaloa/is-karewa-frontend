@@ -10,6 +10,11 @@
 				<span class="nav__element-text">Dashboard</span>
 			</router-link>
 
+			<router-link class="nav__element" :to="{name: 'cfdiView'}">
+				<span class="material-symbols-outlined nav__element-icon">request_quote</span>
+				<span class="nav__element-text">Factura</span>
+			</router-link>
+
 			<router-link class="nav__element" :to="{name: 'companyView'}">
 				<span class="material-symbols-outlined nav__element-icon">store</span>
 				<span class="nav__element-text">Empresa</span>

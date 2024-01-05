@@ -87,8 +87,8 @@
 	import { Form, Field, ErrorMessage } from 'vee-validate'
 	import { setFieldMessages } from '../../helpers/yup.locale.js'
 	import { apiRequest } from '../../api/requests.js'
-	import inputAutocomplete from '../partials/input-autocomplete.vue'
-	import confirmationPopup from '../partials/confirmation_popup.vue'
+	import inputAutocomplete from './address-input-autocomplete.vue'
+	import confirmationPopup from './confirmation_popup.vue'
 
 
 	const props = defineProps(['taxpayerid'])

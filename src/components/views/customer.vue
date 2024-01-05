@@ -4,7 +4,7 @@
 		<div class="content">
 			<content-header />
 			<main class="main">
-				<section class="section section--wide" v-if="taxpayerType">
+				<section class="section section--verywide" v-if="taxpayerType">
 					<h1 class="section__title" v-text="sectionTitle"></h1>
 					<span class="section__help-text">Solicita a tu cliente la constancia de situación fiscal para agregar de forma correcrta su información. Selecciona si es una persona física o una persona moral para iniciar el registro.</span>
 
@@ -218,7 +218,7 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import { getCompany } from '../../mixins/company.js'
-import inputAutocomplete from '../partials/input-autocomplete.vue'
+import inputAutocomplete from '../partials/address-input-autocomplete.vue'
 import confirmationPopup from '../partials/confirmation_popup.vue'
 
 const store = useAppStore()

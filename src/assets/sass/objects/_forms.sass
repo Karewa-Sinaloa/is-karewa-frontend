@@ -90,6 +90,7 @@
   &__container-group
     display: flex
     align-items: center
+    flex-wrap: wrap
     .form__container
       margin-right: 1rem
   &__submit
@@ -148,7 +149,7 @@
     width: 100%
     color: var(--color4)
     font:
-      weight: 600
+      weight: 500
       size: var(--fs-regular)
       family: var(--ff1)
   &__checkbox
@@ -189,7 +190,7 @@
     text-align: center
     margin: auto
     font:
-      weight: 600
+      weight: 500
       size: var(--fs-regular)
       family: var(--ff1)
   &__help
@@ -251,29 +252,31 @@
       family: var(--ff2)
     &--strong
       font:
-        weight: 600
+        weight: 500
         family: var(--ff1)
 .autocomplete
-  display: block
-  position: absolute
-  z-index: 100
-  top: 4.1rem
-  left: 0
-  background-color: var(--color2)
-  width: 100%
-  border: 1px solid var(--c-opaque-light-background)
-  border-radius: 0.3rem
-  box-shadow: 0 0 0.5rem var(--c-opaque-light-background)
-  overflow-X: hidden
-  overflow-Y: scroll
-  max-height: 12rem
+  &__options
+    display: block
+    position: absolute
+    z-index: 100
+    top: 4.1rem
+    left: 0
+    background-color: var(--color2)
+    width: 100%
+    border: 1px solid var(--c-opaque-light-background)
+    border-radius: 0.3rem
+    box-shadow: 0 0 0.5rem var(--c-opaque-light-background)
+    overflow-X: hidden
+    overflow-Y: scroll
+    max-height: 12rem
   &__option
     display: block
     padding: 0.3rem
     box-sizing: border-box
     cursor: pointer
     &:hover,
-    &:focus
+    &:focus,
+    &--focus
       background-color: var(--color5)
       color: var(--color2)
     &:not(:last-child)

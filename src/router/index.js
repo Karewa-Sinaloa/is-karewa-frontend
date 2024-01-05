@@ -13,6 +13,7 @@ import NewCompanyView from '../components/views/new_company.vue'
 import CompanyView from '../components/views/company.vue'
 import CustomerView from '../components/views/customer.vue'
 import CustomerListView from '../components/views/customer_list.vue'
+import CFDIView from '../components/views/cfdi.vue'
 
 const routes = [
 	{
@@ -67,6 +68,14 @@ const routes = [
 		path: '/clientes',
 		component: CustomerListView,
 		name: 'customerListView',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/nuevo-comprobante',
+		component: CFDIView,
+		name: 'cfdiView',
 		meta: {
 			login: true
 		}
