@@ -31,16 +31,16 @@
 
 							<div class="form__container-group" v-if="customerData.id">
 								<div class="form__container form__container--half">
-									<label class="form__label form__label--required" for="payment_method">Método de pago</label>
-									<Field class="form__select" as="select" id="payment_method" name="payment_method">
+									<label class="form__label form__label--required" for="MetodoPago">Método de pago</label>
+									<Field class="form__select" as="select" id="MetodoPago" name="MetodoPago" v-model="cfdi.MetodoPago">
 										<option hidden value="">Selecciona el método de pago</option>
 										<option v-for="pm in paymentMethods" :value="pm.code">{{pm.code}} - {{pm.description}}</option>
 									</Field>
 								</div>
 
 								<div class="form__container form__container--half">
-									<label class="form__label form__label--required" for="payment_type">Forma de pago</label>
-									<Field class="form__select" as="select" id="payment_type" name="payment_type">
+									<label class="form__label form__label--required" for="FormaPago">Forma de pago</label>
+									<Field class="form__select" as="select" id="FormaPago" name="FormaPago" v-model="cfdi.FormaPago">
 										<option hidden value="">Selecciona el tipo de pago</option>
 										<option v-for="pt in paymentTypes" :value="pt.code">{{pt.code}} - {{pt.name}}</option>
 									</Field>
@@ -48,12 +48,27 @@
 
 								<div class="form__container form__container--half">
 									<label class="form__label form__label--required" for="cfdi_usage">Uso del CFDI</label>
-									<Field class="form__select" as="select" id="cfdi_usage" name="cfdi_usage">
+									<Field class="form__select" as="select" id="cfdi_usage" name="cfdi_usage" v-model="cfdi.cfdi_usage">
 										<option hidden value="">Selecciona el uso del CFDI</option>
 										<option v-for="cu in cfdiUsage" :value="cu.code">{{cu.code}} - {{cu.name}}</option>
 									</Field>
 								</div>
+
+								<div class="form__container form__container--half">
+									<label class="form__label form__label--required" for="TipoRelacion">Tipo de relación del CFDI</label>
+									<Field class="form__select" as="select" id="TipoRelacion" name="TipoRelacion" v-model="cfdi.TipoRelacion">
+										<option hidden value="">Selecciona la relación del CFDI</option>
+										<option v-for="rt in relationTypes" :value="rt.code">{{rt.code}} - {{rt.name}}</option>
+									</Field>
+								</div>
+
+								<div class="form__container form__container--half" v-if="cfdi.TipoRelacion">
+									<label class="form__label form__label--required" for="UUID">UUID del comprobante relacionado</label>
+									<Field class="form__input" name="UUID" id="UUID" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
+								</div>
 							</div>
+							<h2 class="form__section-title">Datos del pago</h2>
+							<div class="form__container-group" v-if="customerData.id"></div>
 
 						</fieldset>
 					</Form>
@@ -80,6 +95,7 @@ const taxPayerId = ref(null)
 const paymentMethods = ref([])
 const paymentTypes = ref([])
 const cfdiUsage = ref([])
+const relationTypes = ref([])
 const customerRequestParams = ref({
 	module: 'customers',
 	params: `?fields=id,razon_social,tax_payer_type,regimen_fiscal,payment_type_id,payment_method_id,cfdi_usage_id` 
@@ -89,8 +105,10 @@ const cfdi = ref({
 	customer_id: null,
 	tax_payer_id: null,
 	cfdi_usage: null,
-	payment_method: null,
-	payment_type: null
+	MetodoPago: null,
+	FormaPago: null,
+	TipoRelacion: null,
+	UUID: null
 })
 const customerData = ref({
 	razon_social: null,
@@ -105,11 +123,20 @@ const contribuyentes = computed(() => {
 
 watch(customerData, () => {
 	if(customerData.value.id) {
-		cfdi.value.payment_type = customerData.value.payment_type_id
-		cfdi.value.payment_method = customerData.value.payment_method_id
+		cfdi.value.FormaPago = customerData.value.payment_type_id
+		cfdi.value.MetodoPago = customerData.value.payment_method_id
 		cfdi.value.cfdi_usage = customerData.value.cfdi_usage_id
 		getCFDIUsage()
 		getPaymentMethods()
+		getTipoRelacion()
+	}
+})
+
+watch(cfdi.value, () => {
+	if(cfdi.value.MetodoPago == 'PPD') {
+		cfdi.value.FormaPago = '99'
+		getPaymentTypes('PPD')
+	} else {
 		getPaymentTypes()
 	}
 })
@@ -125,9 +152,14 @@ function getPaymentMethods() {
 	})
 }
 
-function getPaymentTypes() {
+function getPaymentTypes(method = null) {
+	let params = ''
+	if(method == 'PPD') {
+		params = '?code=eq:99'
+	}
 	new apiRequest().Get({
-		module: 'cfdi/payment-types'
+		module: 'cfdi/payment-types',
+		params: params
 	}).then(response => {
 		paymentTypes.value = response.data.data
 	}).catch(error => {
@@ -148,6 +180,17 @@ function getCFDIUsage() {
 	}).catch(error => {
 		console.log(error)
 		cfdiUsage.value = []
+	})
+}
+
+function getTipoRelacion() {
+	new apiRequest().Get({
+		module: 'cfdi/relation-type'
+	}).then(response => {
+		relationTypes.value = response.data.data
+	}).catch(error => {
+		console.log(error.data)
+		relationTypes.value = []
 	})
 }
 
