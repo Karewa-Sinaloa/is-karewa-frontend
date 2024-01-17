@@ -21,8 +21,13 @@
 			</router-link>
 			
 			<router-link class="nav__element" :to="{name: 'customerListView'}">
-				<span class="material-symbols-outlined nav__element-icon">hail</span>
+				<span class="material-symbols-outlined nav__element-icon">group</span>
 				<span class="nav__element-text">Clientes</span>
+			</router-link>
+
+			<router-link class="nav__element" :to="{name: 'newProductView'}">
+				<span class="material-symbols-outlined nav__element-icon">storefront</span>
+				<span class="nav__element-text">Productos</span>
 			</router-link>
 		</div>
 	</div>

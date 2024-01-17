@@ -2,7 +2,7 @@
 	<div class="autocomplete">
 		<input class="form__input" type="text" id="search_string" name="search_string" :placeholder="props.placeholderText" v-model="searchString" @keyup="getOptions">
 		<div class="autocomplete__options" v-if="options.length > 0 && showOptions" ref="eList">
-			<span class="autocomplete__option" v-for="opt, key in options" @click.prevent="returnOption(key)">{{opt[props.textField]}}</span>
+			<span class="autocomplete__option" v-for="opt, key in options" @click.prevent="returnOption(key)">{{getOptionTexts(opt)}}</span>
 		</div>
 	</div>	
 </template>
@@ -15,7 +15,8 @@ import { useAppStore } from '../../store/index.js'
 const props = defineProps({
 	'textField': String,
 	'requestParams': Object,
-	'placeholderText': String
+	'placeholderText': String,
+	'optionText': []
 })
 const store = useAppStore()
 const options = ref([])
@@ -32,6 +33,14 @@ watch(() => eList.value, () => {
 		setArrowScroll()
 	}
 })
+
+function getOptionTexts(opt) {	
+	let str = ''
+	props.optionText.forEach(field => {
+		str += ` - ${opt[field]}`
+	})
+	return str.replace(/^\s\-\s/, '')
+}
 
 watch(() => props.requestParams, () => {
 	getOptions()
