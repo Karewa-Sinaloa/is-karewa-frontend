@@ -24,6 +24,3 @@ function logOut() {
 }
 </script>
 
-<style lang="sass" scoped>
-	@import  "../../assets/sass/components/_content_header.sass"
-</style>

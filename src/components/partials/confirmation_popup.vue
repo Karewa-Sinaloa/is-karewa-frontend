@@ -20,7 +20,3 @@
 const emit = defineEmits(['confirmed', 'declined'])
 const props = defineProps(['data'])
 </script>
-
-<style lang="sass" scoped>
-@import "../../assets/sass/components/_popups.sass"
-</style>
