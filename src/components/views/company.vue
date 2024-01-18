@@ -237,7 +237,3 @@ function humanReadDate(dateString) {
 	return `${d.toLocaleString()}`
 }
 </script>
-
-<style lang="sass">
-	@import "../../assets/sass/components/_section.sass"
-</style>

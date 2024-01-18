@@ -1,26 +1,36 @@
 <template>
-	<h2 class="access__subtitle">Bienvenido de vuelta a CFDI APP</h2>
-	<span class="access__welcome">Accede con tu correo electrónico y contraseña, si no estas registrado obtén una prueba gratuita registrándote ahora!</span>
-	<Form class="form" @Submit="onSubmit" :validation-schema="loginValidateSchema" ref="loginForm">
-		<fieldset class="form__fieldset">
-			<div class="form__container">
-				<label class="form__label form__label--inverted" for="email">Correo electrónico</label>
-				<Field class="form__input form__input--inverted form__input--access form__input--email" type="email" name="email" placeholder="usuario@dominio.tld"/>
-				<ErrorMessage name="email" class="form__alert" data-field="email"/>
+	<h2 class="ff-headings text-center fs-4 fw-bold text-light">Bienvenido de vuelta a CFDI APP</h2>
+	<span class="ff-content fw-light text-center d-block fs-6 text-light">Accede con tu correo electrónico y contraseña, si no estas registrado obtén una prueba gratuita registrándote ahora!</span>
+	<Form class="mt-4" @Submit="onSubmit" :validation-schema="loginValidateSchema" ref="loginForm">
+		<fieldset class="container">
+			<div class="mb-1">
+				<label class="form-label ff-headings text-light m-auto fw-light fs-small" for="email">Correo electrónico</label>
+				<div class="input-group">
+					<span class="input-group-text">
+						<i class="bi-envelope-fill fs-regular"></i>
+					</span>
+					<Field class="form-control" type="email" name="email" placeholder="usuario@dominio.tld"/>
+				</div>
+				<ErrorMessage name="email" class="p-1 d-block text-warning mt-1 fs-small ff-content" data-field="email"/>
 			</div>
 
-			<div class="form__container">
-				<label class="form__label form__label--inverted" for="password">Contraseña</label>
-				<Field class="form__input form__input--inverted form__input--access form__input--password" type="password" name="password" id="password" placeholder="************" />
-				<ErrorMessage name="password" class="form__alert" data-field="password"/>
+			<div class="mb-1">
+				<label class="form-label ff-headings m-auto text-light fw-light fs-small" for="password">Contraseña</label>
+				<div class="input-group">
+					<span class="input-group-text">
+						<i class="bi-key-fill fs-regular"></i>
+					</span>
+					<Field class="form-control" type="password" name="password" id="password" placeholder="************" />
+				</div>
+				<ErrorMessage name="password" class="p-1 d-block text-warning mt-1 fs-small ff-content" data-field="password"/>
 			</div>
 
-			<router-link class="access__form-link" :to="{name: 'accessViewRecovery'}">¡Olvide mi contraseña!</router-link>
+			<router-link class="btn btn-link btn-sm text-light float-end ff-content" :to="{name: 'accessViewRecovery'}">¡Olvide mi contraseña!</router-link>
 
-			<input class="form__submit btn btn__default btn--regular" type="submit" value="Iniciar sesión" />
+			<input class="btn btn-warning col-12 mb-1 mt-1 ff-headings" type="submit" value="Iniciar sesión" />
 		</fieldset>
 	</Form>
-	<router-link class="btn btn__transparent btn__transparent--inverted btn--regular form__btn--centered" :to="{name: 'accessViewRegistration'}">¿No tienes una cuenta?, ¡créala ahora!</router-link>
+	<router-link class="btn btn-link btn-sm m-auto d-table text-light ff-content" :to="{name: 'accessViewRegistration'}">¿No tienes una cuenta?, ¡créala ahora!</router-link>
 </template>
 
 <script setup>

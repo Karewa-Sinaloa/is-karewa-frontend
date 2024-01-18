@@ -1,35 +1,50 @@
 <template>
-	<h2 class="access__subtitle">Crear nueva cuenta</h2>
-	<span class="access__welcome">Gracias por optar por CFDI APP. Esta cuenta será tu cuenta principal, desde la misma podrás crear una o más empresas para facturar. Una vez registrado podrás continuar con la configuración de tu empresa.</span>
-	<Form class="form" @Submit="onSubmit" :validation-schema="registrationValidateSchema" ref="registrationForm" v-slot="{setErrors, handleSubmit, values, validate}">
-		<fieldset class="form__fieldset">
-			<div class="form__container">
-				<label class="form__label form__label--inverted" for="first_name">Nombre(s)</label>
-				<Field class="form__input form__input--access form__input--inverted" type="text" name="first_name" placeholder="Nombre(s)"/>
-				<ErrorMessage name="first_name" class="form__alert" data-field="first_name"/>
+	<h2 class="ff-headings text-center text-light fs-4 fw-bold">Crear nueva cuenta</h2>
+	<span class="ff-content text-center text-light fs-6 d-block">Gracias por optar por CFDI APP. Esta cuenta será tu cuenta principal, desde la misma podrás crear una o más empresas para facturar. Una vez registrado podrás continuar con la configuración de tu empresa.</span>
+	<Form class="mt-4" @Submit="onSubmit" :validation-schema="registrationValidateSchema" ref="registrationForm" v-slot="{setErrors, handleSubmit, values, validate}">
+		<fieldset class="container">
+			<div class="mb-1">
+				<label class="form-label text-light m-auto ff-headings fw-regular fs-small" for="first_name">Nombre(s)</label>
+				<Field class="form-control" type="text" name="first_name" placeholder="Nombre(s)"/>
+				<ErrorMessage name="first_name" class="p-1 d-block text-warning mt-1 fs-small ff-content" data-field="first_name"/>
 			</div>
 
-			<div class="form__container">
-				<label class="form__label form__label--inverted" for="last_name">Apellido(s)</label>
-				<Field class="form__input form__input--inverted form__input--access" type="text" name="last_name" placeholder="Apellido(s)"/>
-				<ErrorMessage name="last_name" class="form__alert" data-field="last_name"/>
+			<div class="mb-1">
+				<label class="form-label text-light fs-small fw-regular m-auto ff-headings" for="last_name">Apellido(s)</label>
+				<Field class="form-control" type="text" name="last_name" placeholder="Apellido(s)"/>
+				<ErrorMessage name="last_name" class="p-1 text-warning fs-small mt-1 d-block ff-content" data-field="last_name"/>
 			</div>
 
-			<div class="form__container">
-				<label class="form__label form__label--inverted" for="email">Correo electrónico</label>
-				<Field class="form__input form__input--inverted form__input--access form__input form__input--inverted--email" type="email" name="email" placeholder="usuario@dominio.tld"/>
-				<ErrorMessage name="email" class="form__alert" data-field="email"/>
+			<div class="mb-1">
+				<label class="form-label text-light fs-small fw-regular ff-headings m-auto" for="email">Correo electrónico</label>
+				<div class="input-group">
+					<span class="input-group-text">
+						<i class="bi-envelope-fill"></i>
+					</span>
+					<Field class="form-control" type="email" name="email" placeholder="usuario@dominio.tld"/>
+				</div>
+				<ErrorMessage name="email" class="p-1 mt-1 d-block text-warning fs-small ff-content" data-field="email"/>
 			</div>
 
-			<div class="form__container">
-				<label class="form__label form__label--inverted" for="password">Contraseña</label>
-				<Field class="form__input form__input--inverted form__input--access form__input form__input--inverted--password" type="password" name="password" id="password" placeholder="************" />
-				<ErrorMessage name="password" class="form__alert" data-field="password"/>
+			<div class="mb-1">
+				<label class="form-label ff-headings text-light m-auto fw-regular fs-small" for="password">Contraseña</label>
+				<div class="input-group">
+					<span class="input-group-text">
+						<i class="bi-key-fill"></i>
+					</span>
+					<Field class="form-control" type="password" name="password" id="password" placeholder="************" />
+				</div>
+				<ErrorMessage name="password" class="p-1 mt-1 text-warning fs-small d-block ff-content" data-field="password"/>
 			</div>
 
-			<div class="form__container">
-				<label class="form__label form__label--inverted" for="repeat_password">Repetir contraseña</label>
-				<Field class="form__input form__input--inverted form__input form__input--access form__input--inverted--password" type="password" name="repeat_password" id="repeat_password" placeholder="************" />
+			<div class="mb-1">
+				<label class="form-label ff-headings fs-small text-light fw-regular m-auto" for="repeat_password">Repetir contraseña</label>
+				<div class="input-group">
+					<span class="input-group-text">
+						<i class="bi-key-fill"></i>
+					</span>
+					<Field class="form-control" type="password" name="repeat_password" id="repeat_password" placeholder="************" />
+				</div>
 			</div>
 
 			<Field type="hidden" name="hcaptcha_data" v-model="hcaptchaData"/>
@@ -37,9 +52,9 @@
 
 			<hcaptcha-component v-if="showCaptcha" @hideCaptcha="showCaptcha = false" @releaseForm="(string) => {hcaptchaData = string, handleSubmit(onSubmit)}"></hcaptcha-component>
 
-			<router-link class="access__form-link" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi cuenta</router-link>
+			<router-link class="text-light btn btn-sm btn-link ff-content float-end" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi cuenta</router-link>
 
-			<input class="form__submit btn btn__default btn--regular" type="submit" value="Crear cuenta ahora" @click.prevent="validate().then(r => validateForm(r))"/>
+			<input class="btn btn-warning col-12 mb1 mt-1 ff-headings" type="submit" value="Crear cuenta ahora" @click.prevent="validate().then(r => validateForm(r))"/>
 		</fieldset>
 	</Form>
 </template>
