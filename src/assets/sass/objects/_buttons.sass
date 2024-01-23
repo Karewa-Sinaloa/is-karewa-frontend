@@ -1,0 +1,72 @@
+@import "../settings/_variables.sass"
+.btn
+  cursor: pointer
+  appearance: none
+  outline: none
+  text-decoration: none
+  &--regular
+    text-transform: uppercase
+    padding: 0.8rem 2rem
+    box-sizing: border-box
+    font:
+      size: var(--fs-small)
+  &--small
+    padding: 0.5rem 1.5rem
+    box-sizing: border-box
+    font-size: var(--fs-smaller)
+    text-transform: uppercase
+    .material-symbols-outlined
+      font-size: var(--fs-mid)
+      margin-right: 0.2rem
+  &__default
+    font-weight: 500
+    color: var(--color2)
+    background-color: var(--c-inactive-button-bg)
+    border-radius: 0.3rem
+    border: none
+    text-align: center
+    text-decoration: none
+    &:hover
+      background-color: var(--c-active-button-bg)
+  &__transparent
+    color: var(--color1)
+    border: none
+    width: max-content
+    font-weight: 500
+    background-color: transparent
+    display: flex
+    align-items: center
+    justify-content: center
+    padding:
+      left: 0
+      right: 0
+    &--inverted
+      filter: invert(1)
+  &__minimal
+    border: 1px solid var(--color3)
+    font-weight: 500
+    text-decoration: none
+    text-align: center
+    color: var(--color3)
+    background-color: var(--color2)
+    border-radius: 0.3rem
+  &__icon
+    padding: 0
+    border: none
+    background-color: transparent
+  &__warning,
+  &__no-risk
+    font-weight: 500
+    color: var(--color2)
+    border-radius: 0.3rem
+    border: none
+    text-align: center
+    text-decoration: none
+    filter: brightness(100%)
+    transition: all 300ms ease-out 
+    &:hover
+      filter: brightness(130%) drop-shadow(0 0 0.5rem var(--c-dash-shadow))
+  &__warning
+    background-color: var(--color8)
+  &__no-risk
+    background-color: var(--color5)

@@ -1,0 +1,52 @@
+.pp
+  position: fixed
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  z-index: 900
+  background-color: var(--c-opaque-light-background)
+  display: flex
+  align-items: center
+  justify-content: center
+  &__container
+    border-radius: 1rem
+    width: 90%
+    max-width: 350px
+    background-color: var(--color2)
+    box-shadow: 0.4px 0.5rem 1rem rgba(0,0,0,0.5)
+  &__head
+    padding: 2rem
+    box-sizing: border-box
+  &__icon
+    display: block
+    width: 7rem
+    height: 7rem
+    object-fit: contain
+    margin: auto
+  &__content
+    padding: 0 2rem 2rem
+    box-sizing: border-box
+  &__title
+    text-align: center
+    color: var(--color4)
+    margin: auto auto 1rem auto
+    font:
+      weight: 700
+      size: var(--fs-large)
+      family: var(--ff1)
+  &__text
+    color: var(--color1)
+    text-align: center
+    margin: auto
+    font:
+      size: var(--fs-regular)
+      weight: 400
+      family: var(--ff2)
+  .btn
+    margin: 2rem auto auto
+    display: block
+  &__options
+    display: flex
+    align-items: center
+    justify-content: space-around

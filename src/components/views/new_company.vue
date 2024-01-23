@@ -199,3 +199,7 @@ function onSubmit(values, action) {
 	})
 }
 </script>
+
+<style lang="sass" scoped>
+	@import "../../assets/sass/components/_section.sass"
+</style>
