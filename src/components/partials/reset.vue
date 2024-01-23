@@ -1,25 +1,35 @@
 <template>
-	<h2 class="access__subtitle">Cambiar contraseña</h2>
-	<span class="access__welcome">Crea una nueva contraseña para tu cuenta, recuerda que debe ser de al menos 8 caracteres alfanuméricos</span>
-	<Form class="form" @Submit="onSubmit" :validation-schema="resetValidateSchema" ref="resetForm">
-		<fieldset class="form__fieldset">
-			<div class="form__container">
-				<label class="form__label form__label--inverted" for="password">Nueva contraseña</label>
-				<Field class="form__input form__input--access form__input--inverted form__input--password" type="password" name="password" placeholder="***************"/>
-				<ErrorMessage name="password" class="form__alert" data-field="password"/>
+	<h2 class="ff-headings text-light text-center fs-4 fw-bold">Cambiar contraseña</h2>
+	<span class="ff-content fs-6 text-center text-light fw-light d-block">Crea una nueva contraseña para tu cuenta, recuerda que debe ser de al menos 8 caracteres alfanuméricos</span>
+	<Form class="mt-4" @Submit="onSubmit" :validation-schema="resetValidateSchema" ref="resetForm">
+		<fieldset class="container">
+			<div class="mb-1">
+				<label class="ff-headings fw-light fs-small form-label text-light m-auto" for="password">Nueva contraseña</label>
+				<div class="input-group">
+					<span class="input-group-text">
+						<i class="bi-key-fill fs-regular"></i>
+					</span>
+					<Field class="form-control" type="password" name="password" placeholder="***************"/>
+				</div>
+				<ErrorMessage name="password" class="p-1 d-block text-warning mt-1 fs-small ff-content" data-field="password"/>
 			</div>
 
-			<div class="form__container">
-				<label class="form__label" for="repeat_password">repetir la contraseña</label>
-				<Field class="form__input form__input--access form__input--password" type="password" name="repeat_password" placeholder="***************"/>
+			<div class="mb-1">
+				<label class="ff-headings fw-light fs-small form-label text-light m-auto" for="repeat_password">repetir la contraseña</label>
+				<div class="input-group">
+					<span class="input-group-text">
+						<i class="bi-key-fill fs-regular"></i>
+					</span>
+					<Field class="form-control" type="password" name="repeat_password" placeholder="***************"/>
+				</div>
 			</div>
 
 			<Field type="hidden" name="hash_string" v-model="hashString"/>
 			<Field type="hidden" name="email" v-model="email"/>
 
-			<router-link class="access__form-link" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi contraseña</router-link>
+			<router-link class="btn btn-link text-light bt-sm float-end ff-content" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi contraseña</router-link>
 
-			<input class="form__submit btn btn__default btn--regular" type="submit" value="Cambiar contraseña" />
+			<input class="btn btn-warning col-12 mb-1 mt-1 ff-headings" type="submit" value="Cambiar contraseña" />
 		</fieldset>
 	</Form>
 </template>

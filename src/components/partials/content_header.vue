@@ -1,10 +1,17 @@
 <template>
-	<div class="content-top">
-		<div class="content-top__element">
-			<button class="user-actions" @click.prevet="logOut">
-				<span class="user-actions__text">Cerrar sesión</span>
-				<span class="material-symbols-outlined user-actions__icon">logout</span>
+	<div class="navbar bg-primary justify-content-end d-flex z-3">
+		<div class="dropdown dropdown-end">
+			<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				<i class="bi-person-circle fs-6"></i>
+				Usuario
 			</button>
+			<ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+				<li>
+					<button class="dropdown-item" @click.prevet="logOut">
+						<span class="ff-headings">Cerrar sesión</span>
+					</button>
+				</li>
+			</ul>	
 		</div>
 	</div>
 </template>

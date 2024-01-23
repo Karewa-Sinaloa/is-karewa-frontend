@@ -17,20 +17,25 @@ let myInterval = setInterval(() => {
 	let notifications = store.alerts
 	if(notifications.length > 0) {
 		notifications.forEach((notification, index) => {
-			if((notification.time + 500000) < now) {
+			if((notification.time + 5000) < now) {
 				closeNotification(index)
 			}
 		})
 	}
-}, 50000)
+}, 5000)
 
 </script>
 
 <template>
-	<div class="position-fixed top-0 end-0 col-3 z-3" style="height: 100vh">
-		<div class="alert m-1 fs-small d-flex align-items-center" :class="{'alert-danger': alert.type == 'error', 'alert-warning': alert.type == 'warning', 'alert-success': alert.type == 'success'}" v-for="(alert, key) in alerts">
-			<button class="btn-close d-block me-3" @click="closeNotification(key)"></button>
-			<p class="fs-small ff-content m-auto">{{ alert.text }}<br>{{ alert.help }}</p>
+	<div class="position-fixed top-0 end-0 col-3 z-3" style="height: 100vh" v-if="alerts.length > 0">
+		<div class="alert-custom" v-for="(alert, key) in alerts" :class="{'alert-custom-danger': alert.type == 'error', 'alert-custom-warning': alert.type == 'warning', 'alert-custom-success': alert.type == 'success'}">
+			<i v-if="alert.type == 'error'" class="bi-dash-circle-fill me-3 fs-3"></i>
+			<i v-else-if="alert.type == 'warning'" class="bi-exclamation-triangle-fill me-3 fs-3"></i>
+			<i v-else-if="alert.type == 'success'" class="bi-check-circle-fill me-3 fs-3"></i>
+			<p class="ff-headings fs-small m-auto">{{ alert.text }}<br>{{ alert.help }}</p>
+			<button class="btn d-block ms-3" style="color: inherit!important" @click="closeNotification(key)">
+				<i class="bi-x fs-4"></i>
+			</button>
 		</div>
 	</div>
 </template>
