@@ -17,20 +17,29 @@ let myInterval = setInterval(() => {
 	let notifications = store.alerts
 	if(notifications.length > 0) {
 		notifications.forEach((notification, index) => {
-			if((notification.time + 500000) < now) {
+			if((notification.time + 5000) < now) {
 				closeNotification(index)
 			}
 		})
 	}
-}, 50000)
+}, 500)
 
 </script>
 
 <template>
-	<div class="position-fixed top-0 end-0 col-3 z-3" style="height: 100vh">
-		<div class="alert m-1 fs-small d-flex align-items-center" :class="{'alert-danger': alert.type == 'error', 'alert-warning': alert.type == 'warning', 'alert-success': alert.type == 'success'}" v-for="(alert, key) in alerts">
-			<button class="btn-close d-block me-3" @click="closeNotification(key)"></button>
-			<p class="fs-small ff-content m-auto">{{ alert.text }}<br>{{ alert.help }}</p>
+	<div class="alert">
+		<div class="alert__container" :class="{'alert__container--error': alert.type == 'error', 'alert__container--warning': alert.type == 'warning', 'alert__container--success': alert.type == 'success'}" v-for="(alert, key) in alerts">
+			<span class="material-symbols-outlined" v-if="alert.type == 'error'">report</span>
+			<span class="material-symbols-outlined" v-else-if="alert.type == 'success'">check_circle</span>
+			<span class="material-symbols-outlined" v-else-if="alert.type == 'warning'">warning</span>
+			<p class="alert__description">{{ alert.text }}<br>{{ alert.help }}</p>
+			<button class="alert__close btn btn__icon" @click="closeNotification(key)">
+				<span class="material-symbols-outlined">close</span>
+			</button>
 		</div>
 	</div>
 </template>
+
+<style lang="sass" scoped>
+	@import "../../assets/sass/components/_alert.sass"
+</style>

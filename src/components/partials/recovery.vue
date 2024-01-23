@@ -1,26 +1,21 @@
 <template>
-	<h2 class="text-center fs-4 text-light ff-headdings fw-bold">Recupera tu acceso</h2>
-	<span class="text-light text-center d-block fw-light fs-6">Proporcionanos tu dirección de correo electrónico y te enviaremos los pasos a seguir para que puedas recuerar el acceso a tu cuenta</span>
-	<Form class="mt-4" @Submit="onSubmit" :validation-schema="recoveryValidateSchema" v-slot="{setErrors, handleSubmit, values, validate}" ref="recoveryForm">
-		<fieldset class="container">
-			<div class="mb-1">
-				<label class="form-label ff-headings text-light m-auto fw-light" for="email">Correo electrónico</label>
-				<div class="input-group">
-					<span class="input-group-text">
-						<i class="bi-envelope-fill fs-regular"></i>
-					</span>
-					<Field class="form-control" type="email" name="email" placeholder="usuario@dominio.tld"/>
-				</div>
-				<ErrorMessage name="email" class="p-1 d-block text-warning mt-1 fs-small ff-content" data-field="email"/>
+	<h2 class="access__subtitle">Recupera tu acceso</h2>
+	<span class="access__welcome">Proporcionanos tu dirección de correo electrónico y te enviaremos los pasos a seguir para que puedas recuerar el acceso a tu cuenta</span>
+	<Form class="form" @Submit="onSubmit" :validation-schema="recoveryValidateSchema" v-slot="{setErrors, handleSubmit, values, validate}" ref="recoveryForm">
+		<fieldset class="form__fieldset">
+			<div class="form__container">
+				<label class="form__label form__label--inverted" for="email">Correo electrónico</label>
+				<Field class="form__input form__input--inverted form__input--access form__input--email" type="email" name="email" placeholder="usuario@dominio.tld"/>
+				<ErrorMessage name="email" class="form__alert" data-field="email"/>
 			</div>
 			
 			<Field type="hidden" name="reset_url" v-model="resetUrl"/>
 			<Field type="hidden" name="hcaptcha_data" v-model="hcaptchaData"/>
 
-			<router-link class="btn btn-link float-end text-light btn-sm" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi contraseña</router-link>
+			<router-link class="access__form-link" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi contraseña</router-link>
 			<hcaptcha-component v-if="showCaptcha" @hideCaptcha="showCaptcha = false" @releaseForm="(string) => {hcaptchaData = string, handleSubmit(onSubmit)}"></hcaptcha-component>
 
-			<input class="btn btn-warning col-12 mb-1 mt-1 ff-headings" type="submit" @click.prevent="validate().then(r => formValidation(r))" value="Recuperar acceso" />
+			<input class="form__submit btn btn__default btn--regular" type="submit" @click.prevent="validate().then(r => formValidation(r))" value="Recuperar acceso" />
 		</fieldset>
 	</Form>
 </template>
