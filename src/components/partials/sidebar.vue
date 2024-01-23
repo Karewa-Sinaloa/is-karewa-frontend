@@ -1,33 +1,33 @@
 <template>
-	<div class="sidebar">
-		<div class="sidebar__logo">
-			<img class="sidebar__logo-image" src="../../assets/images/logo.png" alt="My company logo">
-			<span class="sidebar__company-name">CFDI App</span>
+	<div class="col-2 bg-primary" style="height: 100vh">
+		<div class="container py-3">
+			<img class="d-block m-auto w-25" src="../../assets/images/logo.png" alt="My company logo">
+			<span class="text-center text-light fw-bold ff-headings d-block">CFDI App</span>
 		</div>
-		<div class="nav">
-			<router-link class="nav__element" :to="{name: 'homeView'}">
-				<span class="material-symbols-outlined nav__element-icon">dashboard</span>
-				<span class="nav__element-text">Dashboard</span>
+		<div class="nav py-3 flex-column">
+			<router-link class="nav-item nav-link text-light" :to="{name: 'homeView'}">
+				<i class="bi-speedometer me-2"></i>
+				<span class="ff-headings">Dashboard</span>
 			</router-link>
 
-			<router-link class="nav__element" :to="{name: 'cfdiView'}">
-				<span class="material-symbols-outlined nav__element-icon">request_quote</span>
-				<span class="nav__element-text">Factura</span>
+			<router-link class="nav-item nav-link text-light" :to="{name: 'cfdiView'}">
+				<i class="bi-currency-dollar me-2"></i>
+				<span class="ff-headings">Factura</span>
 			</router-link>
 
-			<router-link class="nav__element" :to="{name: 'companyView'}">
-				<span class="material-symbols-outlined nav__element-icon">store</span>
-				<span class="nav__element-text">Empresa</span>
+			<router-link class="nav-item nav-link text-light" :to="{name: 'companyView'}">
+				<i class="bi-building-fill me-2"></i>
+				<span class="ff-headings">Empresa</span>
 			</router-link>
 			
-			<router-link class="nav__element" :to="{name: 'customerListView'}">
-				<span class="material-symbols-outlined nav__element-icon">group</span>
-				<span class="nav__element-text">Clientes</span>
+			<router-link class="nav-item nav-link text-light" :to="{name: 'customerListView'}">
+				<i class="bi-person-workspace me-2"></i>
+				<span class="ff-headings">Clientes</span>
 			</router-link>
 
-			<router-link class="nav__element" :to="{name: 'newProductView'}">
-				<span class="material-symbols-outlined nav__element-icon">storefront</span>
-				<span class="nav__element-text">Productos</span>
+			<router-link class="nav-item nav-link text-light" :to="{name: 'newProductView'}">
+				<i class="bi-bag-fill me-2"></i>
+				<span class="ff-headings">Productos</span>
 			</router-link>
 		</div>
 	</div>

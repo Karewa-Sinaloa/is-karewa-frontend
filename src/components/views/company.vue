@@ -1,14 +1,14 @@
 <template>
-	<div class="dash">
+	<div class="container-fluid d-flex p-0">
 		<sidebar-component />
-		<div class="content">
+		<div class="content col-10">
 			<content-header />
-			<main class="main">
-				<section class="section section--wide" v-if="myCompany">
-					<h1 class="section__title">{{myCompany.razon_social}}</h1>
-					<span class="section__help-text">No se puede cambiar el RFC o el tipo de contribuyente, para esto deberá borrar el actual y volver a darlo de alta.</span>
-					<div class="section__options">
-						<button class="btn btn__transparent btn--small" @click.prevent="companyEditBlocked = false">
+			<main class="main container bg-light">
+				<section class="col-6 p-3 bg-white rounded shadow-sm" v-if="myCompany">
+					<h1 class="h4 ff-headings fw-bold text-primary">{{myCompany.razon_social}}</h1>
+					<span class="ff-content text-secondary fs-small d-block">No se puede cambiar el RFC o el tipo de contribuyente, para esto deberá borrar el actual y volver a darlo de alta.</span>
+					<div class="btn-group">
+						<button class="btn btn__secondary btn-sm" @click.prevent="companyEditBlocked = false">
 							<span class="material-symbols-outlined">edit_square</span>
 							Editar empresa
 						</button>

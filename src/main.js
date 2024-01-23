@@ -3,6 +3,7 @@ import { useAppStore } from './store/index.js'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 import App from './App.vue'
+import * as bootstrap from 'bootstrap'
 
 const pinia = createPinia()
 const app = createApp(App)
