@@ -7,8 +7,8 @@
 			<div class="pp__content">
 				<h4 class="pp__title">{{ store.popup.title }}</h4>
 				<p class="pp__text">{{ store.popup.text }}</p>
-				<button v-if="store.popup.type == 'route'" class="btn btn__default btn--regular" @click="continueAction">{{store.popup.button_text}}</button>
-				<button v-else-if="store.popup.type == 'close'" class="btn btn__default btn--regular" @click="closePopup">{{store.popup.button_text}}</button>
+				<button v-if="store.popup.type == 'route'" class="btn btn__default btn--regular btn__default--danger" @click="continueAction">{{store.popup.button_text}}</button>
+				<button v-else-if="store.popup.type == 'close'" class="btn btn__default btn--regular btn__default--success" @click="closePopup">{{store.popup.button_text}}</button>
 			</div>
 		</div>
 	</div>

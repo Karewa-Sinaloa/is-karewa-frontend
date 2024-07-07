@@ -1,50 +1,26 @@
+@use "sass:map"
+@use "sass:color"
+@use "sass:math"
+@import "../mixins/_mixins.sass"
+
 $fs-default: 16px
-$fs-smaller: 0.75rem
-$fs-small: 0.85rem
-$fs-regular: 1rem
-$fs-mid: 1.26rem
-$fs-large: 1.6rem
-$fs-xl: 2.26rem
-$fs-xxl: 2.67rem
-$fs-xxxl: 3rem
+$ff1: 'Titillum Web', sans-serif
+$ff2: 'Arimo', sans-serif
 
-$ff1-name: 'Roboto'
-$ff2-name: 'Nunito Sans'
+$breakpoints: ("bp1": 120rem, "bp2": 100rem, "bp3": 90rem, "bp4": 80rem, "bp5": 64rem, "bp6": 48rem, "bp7": 40rem, "bp8": 23rem)
+$fs-map: ("smaller": 0.75rem, "small": 0.85rem, "regular": 1rem, "mid": 1.27rem, "large": 1.6rem, "xl": 2.26rem, "xxl": 2.67rem, "xxxl": 3rem)
+$main-color-list: ("primary": #492a9d, "secondary": #342C49, "success": #2B9E76, "warning": #e9c46a, "danger": #9E412B, "info": #9E952B)
 
-$ff1: #{$ff1-name}, Helvetica
-$ff2: #{$ff2-name}, Helvetica
+$main-colors-hue: ()
+$primary-colors: ()
+@each $key, $color in $main-color-list
+	$co: color.hue($color)
+	$main-colors-hue: map-merge($main-colors-hue, (#{$key}: round($co)))
+	$primary-colors: map-merge($primary-colors, ($key: #{$color}))
 
-$color1: #000000
-$color2: #FFFFFF
-$color3: #777777
-$color4: #38284f
-$color5: #077b8e
-$color6: #FF6C00
-$color7: rgba(226, 236, 240, 0.4)
-$color8: #ce1f50
-$color9: #fbfbfb
-$color10: #f0f0f0
-$color11: #ededed
-$color12: #e8e6f0
+$grey-hue: map-get($main-colors-hue, primary)
+$color-dark: hsl($grey-hue 0% 0%)
+$color-light: hsl($grey-hue 0% 100%)
 
-$c-inactive-input-border: #{$color3}
-$c-inactive-input-border-inverted: #{$color3}
-$c-active-input-border: #{$color5}
-$c-active-input-border-inverted: #{$color5}
-$c-inactive-button-bg: #{$color4}
-$c-active-button-bg: #{$color5}
-$c-form-alert: #{$color6}
-$c-opaque-light-background: #{$color7}
-$c-light-background: #{$color2}
-$c-dash-bg1: #{$color9}
-$c-dash-bg2: #{$color11}
-$c-dash-shadow: #{$color10}
-
-$bp1: 120rem
-$bp2: 100rem
-$bp3: 90rem
-$bp4: 80rem
-$bp5: 64rem
-$bp6: 48rem
-$bp7: 40rem
-$bp8: 23rem
+$color-primary: map-get($main-color-list, primary)
+$overall-opaque-bg: color.adjust($color-primary, $alpha: -0.85)

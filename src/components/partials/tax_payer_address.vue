@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<div class="section__options" v-if="disabledEdition">
-			<button class="btn btn__transparent btn--small" @click.prevent="disabledEdition = false">
+		<div class="section__options btn__grouped" v-if="disabledEdition">
+			<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="disabledEdition = false">
 				<span class="material-symbols-outlined">edit_square</span>
 				Editar dirección
 			</button>
 
-			<button class="btn btn__transparent btn--small" @click.prevent="confirmDelete = true">
+			<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
 				<span class="material-symbols-outlined">delete</span>
 				Eliminar dirección
 			</button>
@@ -73,7 +73,11 @@
 
 				<Field as="hidden" id="tax_payer_id" name="tax_payer_id" v-model="props.taxpayerid"/>
 			</div>
-			<input class="btn btn__default btn--regular" type="submit" :value="submitButtonText" v-if="!disabledEdition">
+			<input class="btn btn__default btn--regular btn__default--primary" type="submit" :value="submitButtonText" v-if="!disabledEdition">
+			<button class="btn btn__outlined btn--small  btn__outlined--primary" v-if="!disabledEdition" @click="disabledEdition = true">
+				<span class="material-symbols-outlined">cancel</span>
+				Cancelar
+			</button>
 		</Form>
 		<confirmation-popup :data="addrDeleteConfirmationData" @confirmed="addressDelete" @declined="confirmDelete = false" v-if="confirmDelete"></confirmation-popup>
 	</div>

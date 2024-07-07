@@ -1,65 +1,67 @@
+@use "sass:map"
+
 @import "../settings/_variables.sass"
+@import "../mixins/_mixins.sass"
 @import "../objects/_forms.sass"
 @import "../objects/_buttons.sass"
+
 .access
-  &__column
-    display: flex
-    align-items: center
-    justify-content: center
-    height: 100vh
-    &--left
-      background-image: linear-gradient(45deg, hsl(338deg 57% 3%) 0%,hsl(323deg 62% 4%) 8%,hsl(303deg 70% 5%) 16%,hsl(284deg 76% 7%) 23%,hsl(266deg 85% 8%) 31%,hsl(254deg 81% 8%) 39%,hsl(246deg 71% 8%) 46%,hsl(240deg 63% 8%) 54%,hsl(232deg 53% 8%) 61%,hsl(229deg 49% 8%) 69%,hsl(235deg 52% 8%) 76%,hsl(240deg 52% 8%) 84%,hsl(248deg 56% 8%) 92%,hsl(253deg 56% 8%) 100%)
-      background:
-        color: #0B0306
-        size: 100% 100%
-        repeat: no-repeat
-      color: #fff
-  &__hub
-    width: 100%
-    padding: 1rem 0.5rem
-    box-sizing: border-box
-  .btn__transparent
-    display: block
-  &__form-link
-    color: var(--color2)
-    display: block
-    text-decoration: none
-    font:
-      weight: 400
-      size: var(--fs-small)
-      family: var(--ff2)
-    width: max-content
-    margin: auto 0 auto auto
-@media all and (min-width: $bp5)
-  .access
-    display: flex
-    align-items: stretch
-    &__column
-      &--left
-        width: 50%
-      &--right
-        width: 50%
-    &__hub
-      max-width: 480px
-    &__banner
-      display: block
-      width: 100%
-      height: 100vh
-      object-fit: cover
-@media all and (max-width: $bp5)
-  .access
-    &__hub
-      max-width: var(--bp8)
-    &__subtitle
-      margin: auto auto 1rem auto
-      font:
-        size: var(--fs-mid)
-        weight: 500
-    &__welcome
-      display: block
-      color: #FFF
-      font:
-        size: var(--fs-small)
-        weight: 300
-    &__column--right
-      display: none
+	&__welcome
+		display: block
+		color: var(--color-light)
+		@include font-size(--fs-small)
+	&__column	
+		height: 100vh
+		&--left
+			display: flex
+			align-items: center
+			justify-content: center
+			background-image: linear-gradient(45deg, hsl(338deg 57% 3%) 0%,hsl(323deg 62% 4%) 8%,hsl(303deg 70% 5%) 16%,hsl(284deg 76% 7%) 23%,hsl(266deg 85% 8%) 31%,hsl(254deg 81% 8%) 39%,hsl(246deg 71% 8%) 46%,hsl(240deg 63% 8%) 54%,hsl(232deg 53% 8%) 61%,hsl(229deg 49% 8%) 69%,hsl(235deg 52% 8%) 76%,hsl(240deg 52% 8%) 84%,hsl(248deg 56% 8%) 92%,hsl(253deg 56% 8%) 100%)
+			background:
+				color: #0B0306
+				size: 100% 100%
+				repeat: no-repeat
+			color: var(--color-light)
+	&__hub
+		width: 100%
+		padding: 1rem 0.5rem
+		box-sizing: border-box
+	.btn__transparent
+		display: block
+	&__form-link
+		color: var(--color2)
+		display: block
+		text-decoration: none
+		@include font-size(--fs-small)
+		width: max-content
+		margin: auto 0 auto auto
+	.form
+		margin-top: 1rem
+@media all and (min-width: map-get($breakpoints, bp5))
+	.access
+		display: flex
+		align-items: stretch
+		&__subtitle
+			@include font-size(--fs-mid)
+			margin: auto auto 1rem auto
+		&__column
+			&--left
+				width: 50%
+			&--right
+				width: 50%
+		&__hub
+			max-width: 380px
+		&__banner
+			display: block
+			width: 100%
+			height: 100vh
+			object-fit: cover
+@media all and (max-width: map-get($breakpoints, bp5))
+	.access
+		&__hub
+			max-width: var(--bp8)
+		&__subtitle
+			margin: auto auto 1rem auto
+			@include font-size(--fs-mid)	
+		&__column--right
+			display: none

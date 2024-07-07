@@ -4,7 +4,7 @@
 		<div class="content">
 			<content-header />
 			<main class="main">
-				<section class="section section--wide">
+				<section class="section section--wide section--no-border">
 					<h1 class="section__title">Lista de clientes</h1>
 					<span class="section__help-text">Solicita a tu cliente la constancia de situación fiscal para agregar de forma correcrta su información. Selecciona si es una persona física o una persona moral para iniciar el registro.</span>	
 					<div class="results">
@@ -15,11 +15,11 @@
 								<span class="result__info" v-text="customer.alias"></span>
 							</div>
 							<div class="result__actions">
-								<router-link :to="{name: 'customerView', params: {id: customer.id}}" class="btn btn__transparent btn--small">
+								<router-link :to="{name: 'customerView', params: {id: customer.id}}" class="btn btn__icon btn__icon--regular">
 									<span class="material-symbols-outlined">page_info</span>
 								</router-link>
 
-								<button class="btn btn__transparent btn--small">
+								<button class="btn btn__transparent btn__icon btn__icon--small">
 									<span class="material-symbols-outlined">delete</span>
 								</button>
 							</div>
@@ -48,7 +48,7 @@ const route = useRoute()
 
 const customers = ref([])
 const pagination = ref(null)
-const maxResults = ref(1)
+const maxResults = ref(12)
 
 getCustomers()
 
@@ -71,4 +71,5 @@ function getCustomers() {
 </script>
 
 <style lang="sass" scoped>
+@import "../../assets/sass/components/_results.sass"
 </style>

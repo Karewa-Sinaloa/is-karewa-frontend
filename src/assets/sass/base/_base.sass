@@ -1,102 +1,100 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700;900&family=Nunito+Sans:wght@200;300;400;500;600&display=swap')
+@use "sass:map"
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500&family=Titillium+Web:wght@500;600;700;800;900&display=swap')
 @import "../settings/_variables.sass"
-
 \:root
-  font-size: 16px
-  --ff1: #{$ff1}
-  --ff2: #{$ff2}
-  --fs-smaller: #{$fs-smaller}
-  --fs-small: #{$fs-small}
-  --fs-regular: #{$fs-regular}
-  --fs-mid: #{$fs-mid}
-  --fs-large: #{$fs-large}
-  --fs-xl: #{$fs-xl}
-  --fs-xxl: #{$fs-xxl}
-  --fs-xxxl: #{$fs-xxxl}
-  --color1: #{$color1}
-  --color2: #{$color2}
-  --color3: #{$color3}
-  --color4: #{$color4}
-  --color5: #{$color5}
-  --color6: #{$color6}
-  --color7: #{$color7}
-  --color8: #{$color8}
-  --color12: #{$color12}
-  --c-inactive-input-border: #{$c-inactive-input-border}
-  --c-inactive-input-border-inverted: #{$c-inactive-input-border-inverted}
-  --c-active-input-border: #{$c-active-input-border}
-  --c-active-input-border-inverted: #{$c-active-input-border-inverted}
-  --c-inactive-button-bg: #{$c-inactive-button-bg}
-  --c-active-button-bg: #{$c-active-button-bg}
-  --c-form-alert: #{$c-form-alert}
-  --c-opaque-light-background: #{$c-opaque-light-background}
-  --c-light-background: #{$c-light-background}
-  --c-dash-bg1: #{$c-dash-bg1}
-  --c-dash-bg2: #{$c-dash-bg2}
-  --c-dash-shadow: #{$c-dash-shadow}
-  --bp1: #{$bp1}
-  --bp2: #{$bp2}
-  --bp3: #{$bp3}
-  --bp4: #{$bp4}
-  --bp5: #{$bp5}
-  --bp6: #{$bp6}
-  --bp7: #{$bp7}
-  --bp8: #{$bp8}
+	font-size: 16px
+	--ff1: #{$ff1}
+	--ff2: #{$ff2}
+	@each $name, $size in $fs-map
+		--fs-#{$name}: #{$size}
+	@each $name, $color in $main-color-list
+		--color-#{$name}: #{$color}
+	--color-dark: #{$color-dark}
+	--color-light: #{$color-light}
+	@include grayscale-pallete()
+	@include pallete-creator($main-colors-hue, primary, 100%)
+	@each $name, $bp in $breakpoints
+		--#{$name}: #{$bp}
+	--overall-opaque-bg: #{$overall-opaque-bg}
+	--inset-light-box-shadows: inset 0 0 1rem var(--color-grayscale-100)
+	--light-box-shadows: var(--color-grayscale-100)
+	--sidebar-bg: var(--color-grayscale-50)
+	--sidebar-bg-active: var(--color-grayscale-25)
+	--light-border-color: var(--color-grayscale-100)
+	--text-color-primary-dark: var(--color-grayscale-800)
+	--text-color-secondary-dark: var(--color-grayscale-700)
+	--text-color-primary-light: var(--color-light)
+	--text-color-secondary-light: var(--color-grayscale-200)
 html
-  padding: 0
-  margin: 0
+	padding: 0
+	margin: 0
 body
-  padding: 0
-  margin: 0
-  min-height: 100vh
-h1,h2,h3,h4,h5,h6,p,span,li,a,button,input,option,select,textarea,b,u,i,code,legend,strong,label
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  text-rendering: optimizeLegibility
+	padding: 0
+	margin: 0
+	min-height: 100vh
+	background-color: var(--color-grayscale-100)
+h1,h2,h3,h4,h5,h6,p,span,li,a,button,input,option,select,textarea,b,u,i,code,legend,strong,label, input,em,cite,blockquote
+	-webkit-font-smoothing: antialiased
+	-moz-osx-font-smoothing: grayscale
+	text-rendering: optimizeLegibility
+	-webkit-text-stroke: 0
+h1,h2,h3,h4,h5,h6,b,strong,label,button,legend,a
+	font-family: var(--ff1)
 h1,h2,h3,h4,h5,h6,b,strong
-  font-family: var(--ff1)
-p,li,a,span,button,input,label,select,textarea,option,select,code,legend
-  font-family: var(--ff2)
+	font-weight: 700
+label,button,legend
+	font-weight: 600
+a
+	font-weight: 400
+p,li,span,code
+	font-family: var(--ff2)
+	font-weight: 400
 .material-symbols-outlined
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
 .loading
-  position: fixed
-  top: 0
-  left: 0
-  width: 100vw
-  height: 100vh
-  z-index: 990
-  display: flex
-  align-items: center
-  justify-content: center
-  background-color: var(--c-opaque-light-background)
-  &__spinner
-    width: 7rem
-    height: 7rem
-    display: block
-    object-fit: contain
+	position: fixed
+	top: 0
+	left: 0
+	width: 100vw
+	height: 100vh
+	z-index: 990
+	display: flex
+	align-items: center
+	justify-content: center
+	background-color: var(--overall-opaque-bg)
+	&__spinner
+		width: 7rem
+		height: 7rem
+		display: block
+		object-fit: contain
 .dash
-  width: 100vw
-  height: max-content
-  min-height: 100vh
-  background-color: var(--c-dash-bg1)
-  display: flex 
+	width: 100vw
+	height: max-content
+	min-height: 100vh
+	background-color: var(--color-grayscale-100)
+	display: flex 
 .header
-  width: 100%
-  height: auto
+	width: 100%
+	height: auto
 .content
-  width: calc(100vw - 220px)
-  height: max-content
-  min-height: 100vh
-  display: block
+	width: calc(100vw - 220px)
+	height: max-content
+	min-height: 100vh
+	display: block
 .main
-  padding: 2rem
-  box-sizing: border-box
-  display: flex
-  justify-content: space-between
-@media all and (min-width: $bp5)
-  .desktop-view
-    display: block
-@media all and (max-width: $bp5)
-  .desktop-view
-    display: none
+	padding: 1rem
+	box-sizing: border-box
+	background-color: var(--color-light)
+	border-top-left-radius: 0.5rem
+	border: 1px solid var(--color-grayscale-100)
+	display: flex
+	justify-content: space-between
+	align-items: flex-start
+	height: auto
+	min-height: calc(100vh - 46px)
+@media all and (min-width: map-get($breakpoints, bp5))
+	.desktop-view
+		display: block
+@media all and (max-width: map-get($breakpoints, bp5))
+	.desktop-view
+		display: none

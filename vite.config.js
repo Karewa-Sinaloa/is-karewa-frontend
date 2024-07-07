@@ -7,6 +7,9 @@ export default defineConfig({
 		vue()
 	],
 	server: {
-		port: 5174
+		port: 5174,
+		watch: {
+			usePolling: true
+		}
 	},
 })

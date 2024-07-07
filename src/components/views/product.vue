@@ -8,13 +8,13 @@
 					<h1 class="section__title" v-text="sectionTitle"></h1>
 					<span class="section__help-text">Agrega los productos y servicios para tus comprobantes fiscales de ingresos en esta seccion, ya los tendrás listos al momento de generar tu comprobante fiscal</span>
 
-					<div class="section__options">
-						<button class="btn btn__transparent btn--small" @click.prevent="enableEdit = true">
+					<div class="section__options btn__grouped" v-if="!enableEdit">
+						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="enableEdit = true">
 							<span class="material-symbols-outlined">edit_square</span>
 							Editar producto/servicio
 						</button>
 
-						<button class="btn btn__transparent btn--small" @click.prevent="confirmDelete = true">
+						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
 							<span class="material-symbols-outlined">delete</span>
 							Eliminar producto/servicio
 						</button>
@@ -46,17 +46,27 @@
 
 							<div class="form__container form__container--small">
 								<label class="form__label form__label--required" for="code">Código SAT</label>
-								<input-autocomplete :requestParams="satCodesRequestParams" :textField="'code'" :optionText="['code', 'description']" placeholderText="Buscar código" @option="v => (satCode = v)"></input-autocomplete>
+								<div class="form__search">
+									<input class="form__input" type="text" id="code" placeholder="Código SAT" name="code">
+									<button class="form__search-button">
+										<span class="material-symbols-outlined">search</span>
+									</button>
+								</div>
 								<ErrorMessage name="code" class="form__alert" data-field="code"/>
 							</div>
 
 						</div>
 
-						<input v-if="enableEdit" class="btn btn__default btn--regular" type="submit" value="Agregar producto / servicio">
+						<input v-if="enableEdit" class="btn btn__default btn--regular btn__default--primary" type="submit" value="Agregar producto / servicio">
+						<button v-if="enableEdit" class="btn btn__outlined btn--small btn__outlined--primary">
+							<span class="material-symbols-outlined">cancel</span>
+							Cancelar
+						</button>
 					</Form>
 				</section>
 			</main>
 		</div>
+		<search-component></search-component>
 	</div>
 </template>
 
@@ -72,6 +82,7 @@ import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import inputAutocomplete from '../partials/input-autocomplete.vue'
 import confirmationPopup from '../partials/confirmation_popup.vue'
+import searchComponent from '../partials/search.vue'
 
 const store = useAppStore()
 const router = useRouter()

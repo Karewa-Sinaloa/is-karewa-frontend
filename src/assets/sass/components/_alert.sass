@@ -1,55 +1,55 @@
+@use "sass:color"
+@import "../settings/_variables.sass"
 @keyframes show-notification
-  0%
-    right: -100%!important
-  100%
-    right: 0!important
+	0%
+		right: -100%!important
+	100%
+		right: 0!important
 .alert
-  position: fixed
-  top: 0
-  right: 0
-  width: 90vw
-  max-width: 350px
-  height: max-content
-  background-color: transparent
-  z-index: 900
-  padding: 0.5rem
-  box-sizing: border-box
-  &__container
-    position: relative
-    background-color: var(--color6)
-    width: 100%
-    box-sizing: border-box
-    overflow: hidden
-    border-radius: 0.3rem
-    display: flex
-    align-items: center
-    justify-content: space-between
-    margin: 0.2rem 0 0.2rem auto
-    padding: 0.7rem 0.5rem
-    animation: show-notification 2s infinite
-    &--error
-      background-color: var(--color8)
-    &--success
-      background-color: var(--color5)
-    &--warning
-      background-color: var(--color6)
-  &__description
-    color: var(--color2)
-    margin: auto
-    line-height: 1rem
-    font:
-      weight: 500
-      size: var(--fs-small)
-      family: var(--ff2)
-  &__close
-    span
-      font-size: var(--fs-mid)
-      color: var(--color2)
-      margin: 0
-  &__container > .material-symbols-outlined
-    display: block
-    width: max-content
-    color: var(--color2)
-    margin: auto
-    font-size: var(--fs-xxxl)
-    margin-right: 1rem
+	position: fixed
+	top: 0
+	right: 0
+	width: 90vw
+	max-width: 350px
+	height: max-content
+	background-color: transparent
+	z-index: 900
+	padding: 0.5rem
+	box-sizing: border-box
+	&__container
+		position: relative
+		width: 100%
+		box-sizing: border-box
+		overflow: hidden
+		border-radius: 0.3rem
+		display: flex
+		align-items: center
+		justify-content: space-between
+		margin: 0.2rem 0 0.2rem auto
+		padding: 0.7rem 0.5rem
+		animation: show-notification 2s infinite
+		@each $name, $color in $main-color-list
+			&--#{$name}
+				background-color: var(--color-#{$name})
+				@if color.lightness($color) < 40
+					color: var(--color-light)
+				@else
+					color: var(--color-dark)
+		> .material-symbols-outlined
+			display: block
+			width: max-content
+			color: inherit
+			margin: auto 0.4rem auto auto
+			@include font-size(--fs-xxxl)
+			margin-left: 0.4rem
+	&__description
+		color: inherit
+		margin: auto
+		line-height: 1rem
+		@include font-size(--fs-small)
+	&__close
+		color: inherit
+		.material-symbols-outlined
+			color: inherit
+			margin: 0	
+			@include font-size(--fs-large)

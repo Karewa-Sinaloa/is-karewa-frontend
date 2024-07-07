@@ -15,7 +15,7 @@
 			<router-link class="access__form-link" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi contraseña</router-link>
 			<hcaptcha-component v-if="showCaptcha" @hideCaptcha="showCaptcha = false" @releaseForm="(string) => {hcaptchaData = string, handleSubmit(onSubmit)}"></hcaptcha-component>
 
-			<input class="form__submit btn btn__default btn--regular" type="submit" @click.prevent="validate().then(r => formValidation(r))" value="Recuperar acceso" />
+			<input class="form__submit btn btn__default btn--regular btn__default--warning" type="submit" @click.prevent="validate().then(r => formValidation(r))" value="Recuperar acceso" />
 		</fieldset>
 	</Form>
 </template>

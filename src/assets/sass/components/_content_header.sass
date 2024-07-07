@@ -1,26 +1,31 @@
+@import "../mixins/_mixins.sass"
 .content-top
-  width: 100%
-  padding: 0.5rem
-  box-sizing: border-box
-  background-color: var(--c-dash-bg1)
-  border-bottom: 1px solid var(--c-dash-shadow)
-  display: flex
-  justify-content: flex-end
+	width: 100%
+	padding: 0.5rem
+	box-sizing: border-box
+	background-color: var(--sidebar-bg)
+	display: flex
+	justify-content: flex-end
 .user-actions
-  border: none
-  cursor: pointer
-  margin: 0
-  padding: 0.2rem
-  text-align: center
-  display: flex
-  align-items: center
-  background-color: transparent
-  &__text
-    display: block
-    font:
-      family: var(--ff2)
-      weight: 600
-      size: var(--fs-small)
-    padding: 0 0.2rem
-  &__icon
-    font-size: var(--fs-regular)
+	border: none
+	cursor: pointer
+	margin: 0
+	padding: 0.3rem 0.5rem
+	text-align: center
+	display: flex
+	align-items: center
+	border-radius: 0.2rem
+	background-color: transparent
+	&:hover
+		background-color: var(--color-primary-100)
+	&__text
+		color: var(--text-color-primary-dark)
+		@include font-size(--fs-small)
+		display: block
+		font:
+			family: var(--ff1)
+			weight: 600
+		padding: 0.2rem 0.2rem 0 0
+	&__icon
+		color: var(--text-color-primary-dark)
+		@include font-size(--fs-regular)

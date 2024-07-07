@@ -2,282 +2,276 @@
 @import "../mixins/_mixins.sass"
 
 .form
-  padding: 2rem 0
-  &__section-title
-    padding: 0.2rem 0
-    color: var(--color3)
-    font:
-      size: var(--fs-mid)
-      weight: 700
-      family: var(--ff1)
-    border-bottom: 1px dashed var(--c-inactive-input-border)
-  &__help-text
-    color: var(--color3)
-    font:
-      weight: 400
-      size: var(--fs-smaller)
-      family: var(--ff2)
-    line-height: 1rem
-    display: block
-  &__fieldset
-    border: none
-    padding: 0
-  &__input
-    appearance: none
-    background-color: transparent
-    border: 1px solid var(--c-inactive-input-border)
-    display: block
-    box-sizing: border-box
-    border-radius: 0.3rem
-    width: 100%
-    color: var(--color1)
-    outline: none
-    padding: 0.3rem 0.8rem
-    &--disabled
-      border-color: var(--c-dash-shadow)
-    &--inverted
-      color: var(--color2)
-      border: 1px solid var(--c-inactive-input-border-inverted)
-    &--access
-      padding: 0.8rem
-    &:active,
-    &:focus
-      border-color: var(--c-active-input-border)
-    font:
-      size: var(--fs-regular)
-      weight: 400
-    &--email
-      @include input-icon('/src/assets/icons/email-white.png')
-    &--password
-      @include input-icon('/src/assets/icons/padlock-white.png')
-  &__help-icon
-    color: var(--color3)
-    font-size: var(--fs-mid)
-    cursor: pointer
-    position: absolute
-    right: 0
-    top: 0
-  &__label
-    position: relative
-    font:
-      size: var(--fs-smaller)
-      weight: 600
-    display: flex
-    align-items: center
-    color: var(--color4)
-    &--inverted
-      color: var(--color2)
-    &--required
-      &::after
-        content: "\2731"
-        display: inline-block
-        color: var(--color8)
-        margin-left: 0.1rem
-        font-weight: 100
-  &__container
-    padding: 0.4rem 0
-    position: relative
-    &--checkbox
-      padding: 1rem 0
-    &--full
-      width: 100%
-    &--half
-      width: 48%
-      min-width: 350px
-    &--small
-      width: 33%
-      min-width: 250px
-  &__container-group
-    display: flex
-    align-items: center
-    flex-wrap: wrap
-    .form__container
-      margin-right: 1rem
-  &__submit
-    width: 100%
-    display: block
-    margin-top: 2rem
-  &__alert
-    font:
-      weight: 400
-      size: var(--fs-smaller)
-    color: var(--c-form-alert)
-    display: block
-    padding: 0.2rem
-    box-sizing: border-box
-  &__captcha
-    margin: 1rem auto 0 auto
-    display: block
-    width: max-content
-    z-index: 9999
-    position: relative
-  &__select
-    background-color: transparent
-    color: var(--color1)
-    cursor: pointer
-    appearance: none
-    border: 1px solid var(--c-inactive-input-border)
-    display: block
-    border-radius: 0.2rem
-    width: 100%
-    padding: 0.3rem 0.8rem
-    position: relative
-    background:
-      image: url(/src/assets/icons/select_triangle.png)
-      repeat: no-repeat
-      size: 1rem 1rem
-      position: calc(100% - 0.5rem) center
-      color: transparent
-    font:
-      size: var(--fs-regular)
-      weight: 400
-      family: var(--ff2)
-    &--disabled
-      border-color: var(--c-dash-shadow)
-      background-image: none
-  &__section
-    padding: 1rem 0
-  &__grid
-    display: flex
-    justify-content: flex-start
-    flex-wrap: wrap
-    padding: 1rem 0
-    div
-      margin: 0.5rem 0.5rem 0 0
-  &__head2
-    margin: auto
-    width: 100%
-    color: var(--color4)
-    font:
-      weight: 500
-      size: var(--fs-regular)
-      family: var(--ff1)
-  &__checkbox
-    display: block
-    border: 1px solid var(--c-inactive-input-border)
-    width: 1rem
-    height: 1rem
-    padding: 0
-    cursor: pointer
-    &-label
-      display: flex
-      align-items: center
-      color: var(--color1)
-      margin: 0
-      padding: 0.2rem 0
-      font:
-        weight: 400
-        size: var(--fs-small)
-        family: var(--ff2)
-  &__drag-drop
-    width: 15rem
-    margin: 1rem 0
-  &__btn
-    &--centered
-      margin: auto
+	&__input,
+	&__select
+		font-family: var(--ff1)
+	&__section-title
+		padding: 0.2rem 0
+		color: var(--text-color-primary-dark)
+		@include font-size(--fs-mid)
+		border-bottom: 1px dashed var(--color-primary)
+	&__help-text
+		color: var(--text-color-primary-dark)
+		@include font-size(--fs-smaller)
+		display: block
+	&__fieldset
+		border: none
+		padding: 0
+	&__input
+		appearance: none
+		background-color: var(--color-light)
+		border: 1px solid var(--color-grayscale-200)
+		display: block
+		box-sizing: border-box
+		border-radius: 0.2rem
+		width: 100%
+		color: var(--text-color-primary-dark)
+		outline: none
+		padding: 0.3rem 0.8rem
+		@include font-size(--fs-regular)
+		&--disabled
+			border-color: var(--color-grayscale-50)
+			background-color: var(--color-grayscale-50)
+		&--access
+			padding: 0.5rem 0.8rem
+		&:active,
+		&:focus
+			background-color: var(--color-light)
+			border-bottom-color: var(--color-success)
+		&--email
+			@include input-icon('/src/assets/icons/email.png')
+		&--password
+			@include input-icon('/src/assets/icons/padlock.png')
+	&__help-icon
+		color: var(--color-primary)
+		@include font-size(--fs-mid)
+		cursor: pointer
+		position: absolute
+		right: 0
+		top: 0
+	&__label
+		position: relative
+		padding: 0 0 0.4rem 0
+		@include font-size(--fs-small)
+		display: flex
+		align-items: center
+		color: var(--text-color-primary-dark)
+		&--inverted
+			color: var(--text-color-primary-light)
+		&--required
+			&::after
+				content: "\2731"
+				display: inline-block
+				color: var(--color-danger)
+				margin-left: 0.1rem
+				font-weight: 100
+	&__container
+		padding: 0.3rem 0
+		position: relative
+		&--checkbox
+			padding: 1rem 0
+		&--full
+			width: 100%
+		&--half
+			width: 48%
+			min-width: 350px
+		&--small
+			width: 33%
+			min-width: 250px
+	&__container-group
+		display: flex
+		align-items: center
+		flex-wrap: wrap
+		.form__container
+			margin-right: 1rem
+	&__submit
+		width: 100%
+		display: block
+		margin-top: 1rem
+	&__alert
+		@include font-size(--fs-small)
+		color: var(--color-warning)
+		display: block
+		padding: 0.4rem 0 0 0
+		box-sizing: border-box
+	&__captcha
+		margin: 1rem auto 0 auto
+		display: block
+		width: max-content
+		z-index: 9999
+		position: relative
+	&__search
+		display: flex
+		align-items: center
+		.form__input
+			border:
+				top-right-radius: 0
+				bottom-right-radius: 0
+				right: none
+		&-button
+			padding: 0.2rem 0.5rem
+			border: 1px solid var(--color-grayscale-200)
+			background-color: var(--color-grayscale-50)
+			cursor: pointer
+			border:
+				top-right-radius: 0.2rem
+				bottom-right-radius: 0.2rem
+			.material-symbols-outlined
+				font-size: 20px
+	&__select
+		color: var(--text-color-primary-dark)
+		cursor: pointer
+		appearance: none
+		border: 1px solid var(--color-grayscale-200)
+		display: block
+		border-radius: 0.2rem
+		width: 100%
+		padding: 0.3rem 0.8rem
+		position: relative
+		@include font-size(--fs-regular)
+		background:
+			image: url(/src/assets/icons/select_triangle.png)
+			repeat: no-repeat
+			size: 1rem 1rem
+			position: calc(100% - 0.5rem) center
+			color: var(--color-light)
+		&--disabled
+			color: var(--text-color-primary-dark)
+			border-color: var(--color-grayscale-50)
+			background:
+				image: none
+				color: var(--color-grayscale-50)
+	&__section
+		padding: 1rem 0
+	&__grid
+		display: flex
+		justify-content: flex-start
+		flex-wrap: wrap
+		padding: 1rem 0
+		div
+			margin: 0.5rem 0.5rem 0 0
+	&__head2
+		margin: auto
+		width: 100%
+		color: var(--color-secondary)
+		@include font-size(--fs-regular)
+	&__checkbox
+		display: block
+		border: 1px solid var(--color-grayscale-100)
+		width: 1rem
+		height: 1rem
+		padding: 0
+		cursor: pointer
+		&-label
+			display: flex
+			align-items: center
+			color: var(--color-dark)
+			margin: 0
+			padding: 0.2rem 0
+			@include font-size(--fs-small)
+	&__drag-drop
+		width: 15rem
+		margin: 1rem 0
+	&__btn
+		&--centered
+			margin: auto
 .drag-drop
-  width: 100%
-  padding: 1.6rem 1rem
-  box-sizing: border-box
-  border: 1px dashed var(--color3)
-  background-color: var(--c-dash-bg1)
-  border-radius: 0.3rem
-  &--in
-    background-color: var(--color12)
-  &__label
-    display: block
-    color: var(--color4)
-    text-align: center
-    margin: auto
-    font:
-      weight: 500
-      size: var(--fs-regular)
-      family: var(--ff1)
-  &__help
-    color: var(--color3)
-    text-align: center
-    display: block
-    margin: auto
-    font:
-      weight: 400
-      size: var(--fs-small)
-      family: var(--ff2)
-  .btn
-    display: block
-    margin: 1rem auto 0 auto
-    position: relative
-    overflow: hidden
-    cursor: pointer
-  &__input
-    cursor: pointer
-    position: absolute
-    opacity: 0
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    z-index: 0
-    background-color: transparent
-  &__success
-    display: block
-    color: var(--color5)
-    font-size: var(--fs-xxxl)
-    margin: 0.5rem auto auto
-    text-align: center
-  &__remove
-    display: block
-    color: var(--color3)
-    font-size: var(--fs-mid)
-    margin: 0.5rem auto auto
-    text-align: center
-    cursor: pointer
+	width: 100%
+	padding: 1.6rem 1rem
+	box-sizing: border-box
+	border: 1px dashed var(--color-grayscale-200)
+	background-color: var(--color-grayscale-25)
+	border-radius: 0.3rem
+	&--in
+		background-color: var(--primary-color)
+	&__label
+		display: block
+		color: var(--coloe-dark)
+		text-align: center
+		margin: auto
+		@include font-size(--fs-regular)
+		font:
+			weight: 500
+			family: var(--ff1)
+	&__help
+		color: var(--color-secondary)
+		text-align: center
+		display: block
+		margin: auto
+		@include font-size(--fs-small)
+	.btn
+		display: block
+		margin: 1rem auto 0 auto
+		position: relative
+		overflow: hidden
+		cursor: pointer
+		span
+			font:
+				weight: 600
+				family: var(--ff1)!important
+	&__input
+		cursor: pointer
+		position: absolute
+		opacity: 0
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		z-index: 0
+		background-color: transparent	
+	&__success
+		@include font-size(--fs-xxxl)
+		display: block
+		color: var(--color-success)
+		margin: 0.5rem auto auto
+		text-align: center
+	&__remove
+		@include font-size(--fs-mid)
+		display: block
+		color: var(--color-dark)
+		margin: 0.5rem auto auto
+		text-align: center
+		cursor: pointer
 .certificate
-  display: flex
-  align-items: center
-  padding: 1rem 0
-  &__icon
-    display: block
-    width: 5rem
-    height: 5rem
-    object-fit: contain
-    margin-right: 1rem
-  &__text
-    display: block
-    color: var(--color1)
-    margin: 0
-    padding: 0.1rem 0
-    font:
-      size: var(--fs-small)
-      weight: 400
-      family: var(--ff2)
-    &--strong
-      font:
-        weight: 500
-        family: var(--ff1)
+	display: flex
+	align-items: center
+	padding: 1rem 0
+	&__icon
+		display: block
+		width: 5rem
+		height: 5rem
+		object-fit: contain
+		margin-right: 1rem
+	&__text
+		display: block
+		color: var(--color-dark)
+		margin: 0
+		padding: 0.1rem 0
+		@include font-size(--fs-small)
 .autocomplete
-  &__options
-    display: block
-    position: absolute
-    z-index: 100
-    top: 4.1rem
-    left: 0
-    background-color: var(--color2)
-    width: 100%
-    border: 1px solid var(--c-opaque-light-background)
-    border-radius: 0.3rem
-    box-shadow: 0 0 0.5rem var(--c-opaque-light-background)
-    overflow-X: hidden
-    overflow-Y: scroll
-    max-height: 12rem
-  &__option
-    display: block
-    padding: 0.3rem
-    box-sizing: border-box
-    cursor: pointer
-    &:hover,
-    &:focus,
-    &--focus
-      background-color: var(--color5)
-      color: var(--color2)
-    &:not(:last-child)
-      border-bottom: 1px solid var(--c-opaque-light-background)
+	&__options
+		display: block
+		position: absolute
+		z-index: 100
+		top: 4.1rem
+		left: 0
+		background-color: var(--color-light)
+		width: 100%
+		border: 1px solid var(--color-grayscale-200)
+		border-radius: 0.3rem
+		box-shadow: 0 0 0.5rem var(--color-grayscale-100)
+		overflow-X: hidden
+		overflow-Y: scroll
+		max-height: 12rem
+	&__option
+		display: block
+		padding: 0.3rem
+		box-sizing: border-box
+		cursor: pointer
+		&:hover,
+		&:focus,
+		&--focus
+			background-color: var(--color-warning)
+			color: var(--color-light)
+		&:not(:last-child)
+			border-bottom: 1px solid var(--color-grayscale-100)

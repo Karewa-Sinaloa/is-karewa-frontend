@@ -28,7 +28,7 @@ let myInterval = setInterval(() => {
 
 <template>
 	<div class="alert">
-		<div class="alert__container" :class="{'alert__container--error': alert.type == 'error', 'alert__container--warning': alert.type == 'warning', 'alert__container--success': alert.type == 'success'}" v-for="(alert, key) in alerts">
+		<div class="alert__container" :class="{'alert__container--danger': alert.type == 'error', 'alert__container--warning': alert.type == 'warning', 'alert__container--success': alert.type == 'success', 'alert__container--info': alert.type == 'info'}" v-for="(alert, key) in alerts">
 			<span class="material-symbols-outlined" v-if="alert.type == 'error'">report</span>
 			<span class="material-symbols-outlined" v-else-if="alert.type == 'success'">check_circle</span>
 			<span class="material-symbols-outlined" v-else-if="alert.type == 'warning'">warning</span>

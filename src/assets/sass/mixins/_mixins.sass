@@ -1,7 +1,33 @@
+@use "sass:color"
 @mixin input-icon($icon)
-  background:
-    image: url($icon)
-    repeat: no-repeat
-    size: 1rem 1rem
-    position: 0.9rem 1.1rem
-  padding-left: 2.5rem
+	background:
+		image: url($icon)
+		repeat: no-repeat
+		size: 1rem 1rem
+		position: 0.9rem 0.75rem
+	padding-left: 2.5rem
+
+@mixin font-size($fs)
+	line-height: calc(var(#{$fs}) * 1.27)
+	font-size: var(#{$fs})
+	letter-spacing: calc(var(#{$fs}) * -0.05)
+
+@mixin set-button($fs)
+	line-height: calc(var(#{$fs}) * 1.27)
+	font-size: var(#{$fs})
+	padding: calc(var(#{$fs}) * 0.7) calc(var(#{$fs}) * 2) calc(var(#{$fs}) * 0.5) calc(var(#{$fs}) * 2)
+	border-radius: calc(var(#{$fs}) * 0.2)
+
+@mixin pallete-creator($hue, $name, $saturation)
+	$x: map-get($hue, $name)
+	$color-pallete-list: ("50": 95% ,"100": 90%, "200": 80%, "300": 70%, "400": 60%, "500": 50%, "600": 40%, "700": 30%, "800": 20%, "900": 10%, "950": 5%)
+	@each $key, $value in $color-pallete-list
+		--color-#{$name}-#{$key}: hsl(#{$x} #{$saturation} #{$value})
+
+@mixin grayscale-pallete()
+	$color-pallete-list: ("15": 98.5, "25": 97.5, "50": 95% ,"100": 90%, "200": 80%, "300": 70%, "400": 60%, "500": 50%, "600": 40%, "700": 30%, "800": 20%, "900": 10%, "950": 5%)
+	@each $key, $value in $color-pallete-list
+		--color-grayscale-#{$key}: hsl(210 0% #{$value})
+
+@function color-lightness($color, $lightness)
+	@return color.adjust($color, $lightness)

@@ -7,13 +7,13 @@
 				<section class="section section--wide" v-if="myCompany">
 					<h1 class="section__title">{{myCompany.razon_social}}</h1>
 					<span class="section__help-text">No se puede cambiar el RFC o el tipo de contribuyente, para esto deberá borrar el actual y volver a darlo de alta.</span>
-					<div class="section__options">
-						<button class="btn btn__transparent btn--small" @click.prevent="companyEditBlocked = false">
+					<div class="section__options btn__grouped" v-if="companyEditBlocked" >
+						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="companyEditBlocked = false">
 							<span class="material-symbols-outlined">edit_square</span>
 							Editar empresa
 						</button>
 
-						<button class="btn btn__transparent btn--small" @click.prevent="confirmDelete = true">
+						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
 							<span class="material-symbols-outlined">delete</span>
 							Eliminar empresa
 						</button>
@@ -87,7 +87,10 @@
 							<Field name="cer" v-model="cert" as="hidden" />
 							<Field name="key" v-model="key" as="hidden" />
 						</div>
-						<input v-if="!companyEditBlocked" class="btn btn__default btn--regular" type="submit" value="Actualizar contribuyente">
+						<input v-if="!companyEditBlocked" class="btn btn__default btn--regular btn__default--primary" type="submit" value="Actualizar contribuyente">
+						<button v-if="!companyEditBlocked" class="btn btn__outlined btn--small btn__outlined--primary" @click="companyEditBlocked = true">
+							<span class="material-symbols-outlined">cancel</span>
+							Cancelar</button>
 					</Form>
 				</section>
 				<section class="section section--wide" v-if="myCompany">
