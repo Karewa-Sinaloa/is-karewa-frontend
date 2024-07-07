@@ -39,7 +39,7 @@
 
 			<router-link class="access__form-link" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi cuenta</router-link>
 
-			<input class="form__submit btn btn__default btn--regular" type="submit" value="Crear cuenta ahora" @click.prevent="validate().then(r => validateForm(r))"/>
+			<input class="form__submit btn btn__default btn--regular btn__default--warning" type="submit" value="Crear cuenta ahora" @click.prevent="validate().then(r => validateForm(r))"/>
 		</fieldset>
 	</Form>
 </template>

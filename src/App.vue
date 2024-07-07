@@ -8,6 +8,7 @@ import { useRoute } from 'vue-router'
 import helpPopup from './components/partials/help.popup.vue'
 
 const route = useRoute()
+/*--
 const registerServiceWorker = async () => {
 	if ('serviceWorker' in navigator) {
 		try {
@@ -26,6 +27,7 @@ const registerServiceWorker = async () => {
 		}
 	}
 }
+--*/
 const isLoggedIn = computed(() => {
 	return route.meta.login === true ? true : false
 })
@@ -42,7 +44,7 @@ watch(isLoggedIn, () => {
 	}
 })
 
-registerServiceWorker()
+//registerServiceWorker()
 </script>
 
 <template>

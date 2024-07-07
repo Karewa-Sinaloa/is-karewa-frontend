@@ -17,10 +17,10 @@
 
 			<router-link class="access__form-link" :to="{name: 'accessViewRecovery'}">¡Olvide mi contraseña!</router-link>
 
-			<input class="form__submit btn btn__default btn--regular" type="submit" value="Iniciar sesión" />
+			<input class="form__submit btn btn__default btn--regular btn__default--warning" type="submit" value="Iniciar sesión" />
 		</fieldset>
 	</Form>
-	<router-link class="btn btn__transparent btn__transparent--inverted btn--regular form__btn--centered" :to="{name: 'accessViewRegistration'}">¿No tienes una cuenta?, ¡créala ahora!</router-link>
+	<router-link class="btn btn__transparent btn__transparent--light btn--regular" :to="{name: 'accessViewRegistration'}">¿No tienes una cuenta?, ¡créala ahora!</router-link>
 </template>
 
 <script setup>
@@ -57,7 +57,7 @@ function onSubmit(values) {
 	}).catch(error => {
 		if(error.status === 400) {
 			let errors = setFieldMessages(error.data.errors)
-			this.$refs.loginForm.setErrors(errors)
+			loginForm.value.setErrors(errors)
 		} else {
 			store.push_alert(error.data)
 		}

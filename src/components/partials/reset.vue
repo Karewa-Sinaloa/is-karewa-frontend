@@ -19,7 +19,7 @@
 
 			<router-link class="access__form-link" :to="{name: 'accessViewLogin'}">Iniciar sesión con mi contraseña</router-link>
 
-			<input class="form__submit btn btn__default btn--regular" type="submit" value="Cambiar contraseña" />
+			<input class="form__submit btn btn__default btn--regular btn__default--warning" type="submit" value="Cambiar contraseña" />
 		</fieldset>
 	</Form>
 </template>

@@ -2,10 +2,10 @@
 	<div class="drag-drop" :class="[{'drag-drop--out': fileIsOut}, {'drag-drop--in': fileIsIn}]" @dragleave.prevent="setDragLeave" @dragover.prevent="setDragOver" @drop.prevent="dropFile" draggable="true">
 		<label class="drag-drop__label" :for="props.id" :id="props.id" v-text="props.texts.title"></label>
 		<span class="drag-drop__help" v-text="props.texts.text"></span>
-		<span class="btn btn__default btn--small" v-if="!responseData">
+		<button class="btn btn__outlined btn--small btn__outlined--primary" v-if="!responseData">
 			<span v-text="props.texts.button_text"></span>
 			<input class="drag-drop__input" type="file" :id="props.id" :name="props.id" :accept="props.accept" @change="setFile"/>
-		</span>
+		</button>
 		<div v-else>
 			<span class="drag-drop__success material-symbols-outlined">cloud_done</span>
 			<span class="drag-drop__remove material-symbols-outlined" @click="removeFile">delete</span>

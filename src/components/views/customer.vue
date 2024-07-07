@@ -8,13 +8,13 @@
 					<h1 class="section__title" v-text="sectionTitle"></h1>
 					<span class="section__help-text">Solicita a tu cliente la constancia de situación fiscal para agregar de forma correcrta su información. Selecciona si es una persona física o una persona moral para iniciar el registro.</span>
 
-					<div class="section__options">
-						<button class="btn btn__transparent btn--small" @click.prevent="enableEdit = true">
+					<div class="section__options btn__grouped">
+						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="enableEdit = true">
 							<span class="material-symbols-outlined">edit_square</span>
 							Editar cliente
 						</button>
 
-						<button class="btn btn__transparent btn--small" @click.prevent="confirmDelete = true">
+						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
 							<span class="material-symbols-outlined">delete</span>
 							Eliminar cliente
 						</button>
@@ -199,7 +199,11 @@
 							</div>
 						</div>
 
-						<input v-if="tpt && enableEdit" class="btn btn__default btn--regular" type="submit" value="Agregar cliente">
+						<input v-if="tpt && enableEdit" class="btn btn__default btn--regular btn__default--primary" type="submit" value="Agregar cliente">
+						<button v-if="tpt && enableEdit" class="btn btn__outlined btn--small btn__outlined--primary" @click="enableEdit = false">
+							<span class="material-symbols-outlined">cancel</span>
+							Cancelar
+						</button>
 					</Form>
 				</section>
 			</main>

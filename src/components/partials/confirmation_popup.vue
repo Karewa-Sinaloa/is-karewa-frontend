@@ -8,8 +8,8 @@
 				<h4 class="pp__title" v-text="props.data.title"></h4>
 				<p class="pp__text" v-text="props.data.text"></p>
 				<div class="pp__options">
-					<button class="btn btn__warning btn--small" @click.prevent="emit('confirmed')">{{props.data.btn_confirmation_text}}</button>
-					<button class="btn btn__no-risk btn--small" @click.prevent="emit('declined')">{{props.data.btn_declination_text}}</button>
+					<button class="btn btn__default btn--small btn__default--danger" @click.prevent="emit('confirmed')">{{props.data.btn_confirmation_text}}</button>
+					<button class="btn btn__default btn--small btn__default--success" @click.prevent="emit('declined')">{{props.data.btn_declination_text}}</button>
 				</div>
 			</div>
 		</div>

@@ -1,67 +1,53 @@
+@import "../mixins/_mixins.sass"
 .widget
-  background-color: var(--color2)
-  padding: 2rem
-  box-sizing: border-box
-  border: 1px solid var(--c-dash-shadow)
-  box-shadow: 0 0 1rem var(--c-dash-shadow)
-  border-radius: 0.5rem
-  &--full
-    width: 100%
-  &--wide
-    width: 50%
-    min-width: 350px
-  &--default
-    width: 33%
-    min-width: 350px
-  &__heading2
-    margin: 0 0 0.5rem 0
-    color: var(--color4)
-    font:
-      size: var(--fs-regular)
-      weight: 500
-      family: var(--ff1)
-  &__help
-    color: var(--color1)
-    margin: auto
-    display: block
-    font:
-      family: var(--ff2)
-      weight: 400
-      size: var(--fs-small)
-    line-height: 1.2rem
+	background-color: var(--color-light)
+	padding: 2rem
+	box-sizing: border-box
+	border: 1px solid var(--light-border-color)
+	border-radius: 0.5rem
+	&--full
+		width: 100%
+	&--wide
+		width: 50%
+		min-width: 350px
+	&--default
+		width: 33%
+		min-width: 350px
+	&__heading2
+		margin: 0 0 0.5rem 0
+		color: var(--color-dark)
+		@include font-size(--fs-mid)
+	&__help
+		color: var(--color-dark)
+		margin: auto
+		display: block
+		@include font-size(--fs-small)
 .progress-list
-  padding: 1rem 0
-  &__element
-    padding: 0.6rem 0
-    display: flex
-    align-items: center
-    flex-wrap: wrap
-    &:not(:last-child)
-      border-bottom: 1px dotted var(--color3)
-    .btn
-      margin: 1rem 0 0 0
-  &__text-container
-    width: calc(100% - 3rem)
-  &__title
-    margin: auto
-    color: var(--color1)
-    font:
-      weight: 500
-      size: var(--fs-small)
-      family: var(--ff1)
-  &__text
-    color: var(--color3)
-    margin: auto
-    line-height: 1.2rem
-    font:
-      size: var(--fs-small)
-      weight: 400
-      family: var(--ff2)
-  &__icon
-    font-size: 2rem
-    display: block
-    margin-left: 1rem
-    &--checked
-      color: var(--color5)
-    &--unchecked
-      color: var(--color6)
+	padding: 1rem 0
+	&__element
+		padding: 0.6rem 0
+		display: flex
+		align-items: center
+		flex-wrap: wrap
+		&:not(:last-child)
+			border-bottom: 1px dotted var(--color-grayscale-400)
+		.btn
+			margin: 1rem 0 0 0
+	&__text-container
+		width: calc(100% - var(--fs-xxl) - 1rem)
+	&__title
+		margin: auto auto 0.3rem auto
+		color: var(--color-dark)
+		@include font-size(--fs-regular)
+	&__text
+		@include font-size(--fs-small)
+		color: var(--color-dark)
+		margin: auto
+	&__icon
+		@include font-size(--fs-xxl)
+		display: block
+		margin-left: 1rem
+		&--checked
+			color: var(--color-success)
+		&--unchecked
+			color: var(--color-warning)
