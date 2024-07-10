@@ -1,8 +1,14 @@
 .section
-	background-color: var(--color-light)
-	padding: 1rem 0
-	box-sizing: border-box
-	border-radius: 0.3rem
+	background-color: var(--color-light)	
+	border-radius: 1rem
+	padding-bottom: 1.5rem
+	&__top
+		padding: 1.5rem
+		box-sizing: border-box
+		border-bottom: 1px solid var(--light-border-color)
+		margin-bottom: 1rem
+	&__content
+		padding: 0 1.5rem
 	&--full
 		width: 100%
 	&--verywide
@@ -15,9 +21,6 @@
 		min-width: 350px
 	&--no-border
 		border: 0
-		padding:
-			left: 0
-			right: 0
 	&__title
 		margin: auto
 		color: var(--text-color-primary-dark)
