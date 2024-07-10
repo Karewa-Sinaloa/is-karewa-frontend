@@ -32,29 +32,28 @@
 	top: 100%
 	right: 0
 	z-index: 1
-	border-radius: 0.3rem
 	background-color: var(--color-light)
 	border: 1px solid var(--light-border-color)
 	&__triangle
 		clip-path: polygon(evenodd, 12px 0, 16px 16px, 0 16px)
 		display: block
-		background-color: var(--light-border-color)
+		background-color: var(--color-dark)
 		width: 1rem
 		height: 1rem
 		position: absolute
-		top: -15px
+		top: -1rem
 		right: 1rem
 		z-index: 101
 		&::after
 			content: ""
-			clip-path: polygon(evenodd, 11.5px 2px, 15px 17px, 1px 17px)
+			clip-path: polygon(evenodd, 11.5px 2px, 14px 16.5px, 2px 16.5px)
 			background-color: var(--color-light)
 			display: block
 			width: 16px
 			height: 16px
 	&__option
-		cursor: pointer
 		appearance: none
+		border-radius: 0.2rem
 		border: none
 		&:not(:last-child)
 			border-bottom: 1px solid var(--light-border-color)

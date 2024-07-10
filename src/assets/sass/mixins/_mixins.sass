@@ -25,9 +25,9 @@
 		--color-#{$name}-#{$key}: hsl(#{$x} #{$saturation} #{$value})
 
 @mixin grayscale-pallete()
-	$color-pallete-list: ("15": 98.5, "25": 97.5, "50": 95% ,"100": 90%, "200": 80%, "300": 70%, "400": 60%, "500": 50%, "600": 40%, "700": 30%, "800": 20%, "900": 10%, "950": 5%)
+	$color-pallete-list: ("15": 98.5%, "25": 97.5%, "50": 95% ,"100": 90%, "200": 80%, "300": 70%, "400": 60%, "500": 50%, "600": 40%, "700": 30%, "800": 20%, "900": 10%, "950": 5%)
 	@each $key, $value in $color-pallete-list
-		--color-grayscale-#{$key}: hsl(210 0% #{$value})
+		--color-grayscale-#{$key}: hsl(214 37% #{$value})
 
 @function color-lightness($color, $lightness)
 	@return color.adjust($color, $lightness)

@@ -75,12 +75,24 @@
 	&__icon
 		padding: 0
 		border: none
+		position: relative
 		color: var(--text-color-primary-dark)
 		background-color: transparent
+		aspect-ratio: 1 / 1
+		width: max-content
+		height: auto
+		display: flex
+		align-items: center
+		justify-content: center
+		svg
+			width: 80%
 		&--small
 			font-size: var(--fs-small)
 		&--regular
 			font-size: var(--fs-regular)
+		&--rounded
+			border-radius: 50%
+			background-color: var(--color-grayscale-50)
 	&__grouped
 		.btn:first-child
 			border-top-right-radius: 0
