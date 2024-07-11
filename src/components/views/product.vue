@@ -5,68 +5,71 @@
 			<content-header />
 			<main class="main">
 				<section class="section section--verywide">
-					<h1 class="section__title" v-text="sectionTitle"></h1>
-					<span class="section__help-text">Agrega los productos y servicios para tus comprobantes fiscales de ingresos en esta seccion, ya los tendrás listos al momento de generar tu comprobante fiscal</span>
+					<div class="section__top">
+						<h1 class="section__title" v-text="sectionTitle"></h1>
+						<span class="section__help-text">Agrega los productos y servicios para tus comprobantes fiscales de ingresos en esta seccion, ya los tendrás listos al momento de generar tu comprobante fiscal</span>
 
-					<div class="section__options btn__grouped" v-if="!enableEdit">
-						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="enableEdit = true">
-							<span class="material-symbols-outlined">edit_square</span>
-							Editar producto/servicio
-						</button>
+						<div class="section__options btn__grouped" v-if="!enableEdit">
+							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="enableEdit = true">
+								<span class="material-symbols-outlined">edit_square</span>
+								Editar producto/servicio
+							</button>
 
-						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
-							<span class="material-symbols-outlined">delete</span>
-							Eliminar producto/servicio
-						</button>
+							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
+								<span class="material-symbols-outlined">delete</span>
+								Eliminar producto/servicio
+							</button>
+						</div>
 					</div>
 					<confirmation-popup :data="productDeleteConfirmationData" @confirmed="productDelete" @declined="confirmDelete = false" v-if="confirmDelete"></confirmation-popup>
-					
-					<Form @submit="onSubmit" class="form" :initial-values="productForm" :validation-schema="productValidateSchema" v-slot="{ values, setErrors }" v-if="productForm">
-						<h2 class="form__section-title">Datos generales</h2>
+					<div class="section__content">
+						<Form @submit="onSubmit" class="form" :initial-values="productForm" :validation-schema="productValidateSchema" v-slot="{ values, setErrors }" v-if="productForm">
+							<h2 class="form__section-title">Datos generales</h2>
 
-						<div class="form__container-group">
+							<div class="form__container-group">
 
-							<div class="form__container form__container--half">
-								<label class="form__label form__label--required" for="name">Nombre del producto o servicio</label>
-								<Field class="form__input" id="name" name="name" placeholder="Nombre del producto / servicio"/>
-								<ErrorMessage name="name" class="form__alert" data-field="name"/>
-							</div>
-
-							<div class="form__container form__container--small">
-								<label class="form__label" for="sku">SKU</label>
-								<Field class="form__input" id="sku" name="sku" placeholder="SKU del producto / servicio"/>
-								<ErrorMessage name="sku" class="form__alert" data-field="sku"/>
-							</div>
-
-							<div class="form__container form__container--half">
-								<label class="form__label form__label--required" for="description">Descripción del producto / servicio</label>
-								<Field class="form__input" id="description" name="description" placeholder="Descripción del producto / servicio"/>
-								<ErrorMessage name="description" class="form__alert" data-field="description"/>
-							</div>
-
-							<div class="form__container form__container--small">
-								<label class="form__label form__label--required" for="code">Código SAT</label>
-								<div class="form__search">
-									<input class="form__input" type="text" id="code" placeholder="Código SAT" name="code">
-									<button class="form__search-button">
-										<span class="material-symbols-outlined">search</span>
-									</button>
+								<div class="form__container form__container--half">
+									<label class="form__label form__label--required" for="name">Nombre del producto o servicio</label>
+									<Field class="form__input" id="name" name="name" placeholder="Nombre del producto / servicio"/>
+									<ErrorMessage name="name" class="form__alert" data-field="name"/>
 								</div>
-								<ErrorMessage name="code" class="form__alert" data-field="code"/>
+
+								<div class="form__container form__container--small">
+									<label class="form__label" for="sku">SKU</label>
+									<Field class="form__input" id="sku" name="sku" placeholder="SKU del producto / servicio"/>
+									<ErrorMessage name="sku" class="form__alert" data-field="sku"/>
+								</div>
+
+								<div class="form__container form__container--half">
+									<label class="form__label form__label--required" for="description">Descripción del producto / servicio</label>
+									<Field class="form__input" id="description" name="description" placeholder="Descripción del producto / servicio"/>
+									<ErrorMessage name="description" class="form__alert" data-field="description"/>
+								</div>
+
+								<div class="form__container form__container--small">
+									<label class="form__label form__label--required" for="code">Código SAT</label>
+									<div class="form__search">
+										<input class="form__input" type="text" id="code" placeholder="Código SAT" name="code">
+										<button class="form__search-button">
+											<span class="material-symbols-outlined">search</span>
+										</button>
+									</div>
+									<ErrorMessage name="code" class="form__alert" data-field="code"/>
+								</div>
+
 							</div>
 
-						</div>
-
-						<input v-if="enableEdit" class="btn btn__default btn--regular btn__default--primary" type="submit" value="Agregar producto / servicio">
-						<button v-if="enableEdit" class="btn btn__outlined btn--small btn__outlined--primary">
-							<span class="material-symbols-outlined">cancel</span>
-							Cancelar
-						</button>
-					</Form>
+							<input v-if="enableEdit" class="btn btn__default btn--regular btn__default--primary" type="submit" value="Agregar producto / servicio">
+							<button v-if="enableEdit" class="btn btn__outlined btn--small btn__outlined--primary">
+								<span class="material-symbols-outlined">cancel</span>
+								Cancelar
+							</button>
+						</Form>
+					</div>
 				</section>
 			</main>
 		</div>
-		<search-component></search-component>
+		<search-component :requestParams="satCodesRequestParams"></search-component>
 	</div>
 </template>
 

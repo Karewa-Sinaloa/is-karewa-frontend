@@ -15,8 +15,10 @@
 		align-items: center
 		justify-content: center
 		border-radius: 0.3rem
-		text-align: center
-		text-decoration: none
+		text:
+			align: center
+			decoration: none
+			transform: uppercase
 		box-sizing: border-box
 	@each $name, $fs in $fs-map
 		&--#{$name}
@@ -24,7 +26,6 @@
 			.material-symbols-outlined
 				font-size: calc(var(--fs-#{$name}) * 1.27)
 				margin-right: calc($fs * 0.2)
-				margin-top: calc($fs * -0.2)
 	&__outlined
 		border: 1px solid transparent
 		background-color: transparent

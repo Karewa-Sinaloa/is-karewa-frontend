@@ -5,98 +5,105 @@
 			<content-header />
 			<main class="main">
 				<section class="section section--wide" v-if="myCompany">
-					<h1 class="section__title">{{myCompany.razon_social}}</h1>
-					<span class="section__help-text">No se puede cambiar el RFC o el tipo de contribuyente, para esto deberá borrar el actual y volver a darlo de alta.</span>
-					<div class="section__options btn__grouped" v-if="companyEditBlocked" >
-						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="companyEditBlocked = false">
-							<span class="material-symbols-outlined">edit_square</span>
-							Editar empresa
-						</button>
-
-						<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
-							<span class="material-symbols-outlined">delete</span>
-							Eliminar empresa
-						</button>
+					<div class="section__top">
+						<h1 class="section__title">{{myCompany.razon_social}}</h1>
+						<span class="section__help-text">No se puede cambiar el RFC o el tipo de contribuyente, para esto deberá borrar el actual y volver a darlo de alta.</span>
+						<div class="section__options btn__grouped" v-if="companyEditBlocked" >
+							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="companyEditBlocked = false">
+								<span class="material-symbols-outlined">edit_square</span>
+								Editar empresa
+							</button>
+							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
+								<span class="material-symbols-outlined">delete</span>
+								Eliminar empresa
+							</button>
+						</div>
 					</div>
 					<confirmation-popup :data="companyDeleteConfirmationData" @confirmed="companyDelete" @declined="confirmDelete = false" v-if="confirmDelete"></confirmation-popup>
-					<Form @submit="onSubmit" class="form" :initial-values="myCompany" :validation-schema="companyValidateSchema" v-slot="{ values, setErrors }">
-						<div class="form__container form__container--half">
-							<label class="form__label" for="taxpayer_type">Tipo de contribuyente</label>
-							<Field as="select" class="form__select form__select--disabled" id="taxpayer_type" name="taxpayer_type" disabled>
-								<option disabled value="">Selecciona el tipo de contribuyente</option>
-								<option v-for="tptype in taxpayerType" :value="tptype.id">{{ tptype.name }}</option>
-							</Field>
-							<ErrorMessage name="taxpayer_type" class="form__alert" data-field="taxpayer_type"/>
-						</div>
-						<div>
-							<div class="form__container form__container--full">
-								<label class="form__label form__label--required" for="razon_social" id="razon_social">Razón social</label>
-								<Field id="razon_social" name="razon_social" placeholder="Razón social de tu empresa" class="form__input" :disabled="companyEditBlocked" :class="{'form__input--disabled': companyEditBlocked}"/>
-							<ErrorMessage name="razon_social" class="form__alert" data-field="razon_social"/>
-							</div>
-
-							<div class="form__container form__container--small">
-								<label class="form__label" for="rfc" id="rfc">RFC</label>
-								<Field class="form__input form__input--disabled" type="text" id="rfc" name="rfc" placeholder="XXXX010101XXX" disabled/>
-								<ErrorMessage name="rfc" class="form__alert" data-field="rfc"/>
-							</div>
-
+					<div class="section__content">
+						<Form @submit="onSubmit" class="form" :initial-values="myCompany" :validation-schema="companyValidateSchema" v-slot="{ values, setErrors }">
 							<div class="form__container form__container--half">
-								<label class="form__label form__label--required" for="regimen_fiscal">Régimen fiscal</label>
-								<Field as="select" class="form__select" id="regimen_fiscal" name="regimen_fiscal" v-if="regimenesFiscales" :class="{'form__select--disabled': companyEditBlocked}" :disabled="companyEditBlocked">
-									<option disabled value="">Selecciona el régimen fiscal</option>
-									<option v-for="rf in regimenesFiscales" :value="rf.code">{{rf.code}} - {{ rf.description }}</option>
+								<label class="form__label" for="taxpayer_type">Tipo de contribuyente</label>
+								<Field as="select" class="form__select form__select--disabled" id="taxpayer_type" name="taxpayer_type" disabled>
+									<option disabled value="">Selecciona el tipo de contribuyente</option>
+									<option v-for="tptype in taxpayerType" :value="tptype.id">{{ tptype.name }}</option>
 								</Field>
-								<ErrorMessage name="regimen_fiscal" class="form__alert" data-field="regimen_fiscal"/>
+								<ErrorMessage name="taxpayer_type" class="form__alert" data-field="taxpayer_type"/>
 							</div>
+							<div>
+								<div class="form__container form__container--full">
+									<label class="form__label form__label--required" for="razon_social" id="razon_social">Razón social</label>
+									<Field id="razon_social" name="razon_social" placeholder="Razón social de tu empresa" class="form__input" :disabled="companyEditBlocked" :class="{'form__input--disabled': companyEditBlocked}"/>
+								<ErrorMessage name="razon_social" class="form__alert" data-field="razon_social"/>
+								</div>
 
-							<div class="form__grid" v-if="!companyEditBlocked">
-								<h3 class="form__head2">Llave pública y privada de tu CSD</h3>
-								<span class="section__help-text">Recuerda que no es necesario que vuelvas a subir tus archivos, solo edita o actualiza los datos que creas que son necesarios.</span>
-								<div class="form__drag-drop">
-									<drag-drop :texts="dragDropCERTexts" @filename="setCert" accept=".cer" id="cer" module="tax-payers/csd/upload"></drag-drop>
-									<ErrorMessage name="cer" class="form__alert" data-field="cer"/>
+								<div class="form__container form__container--small">
+									<label class="form__label" for="rfc" id="rfc">RFC</label>
+									<Field class="form__input form__input--disabled" type="text" id="rfc" name="rfc" placeholder="XXXX010101XXX" disabled/>
+									<ErrorMessage name="rfc" class="form__alert" data-field="rfc"/>
 								</div>
-								<div class="form__drag-drop">
-									<drag-drop :texts="dragDropKEYTexts" @filename="setKey" accept=".key" id="key" module="tax-payers/csd/upload"></drag-drop>
-									<ErrorMessage name="key" class="form__alert" data-field="key"/>
+
+								<div class="form__container form__container--half">
+									<label class="form__label form__label--required" for="regimen_fiscal">Régimen fiscal</label>
+									<Field as="select" class="form__select" id="regimen_fiscal" name="regimen_fiscal" v-if="regimenesFiscales" :class="{'form__select--disabled': companyEditBlocked}" :disabled="companyEditBlocked">
+										<option disabled value="">Selecciona el régimen fiscal</option>
+										<option v-for="rf in regimenesFiscales" :value="rf.code">{{rf.code}} - {{ rf.description }}</option>
+									</Field>
+									<ErrorMessage name="regimen_fiscal" class="form__alert" data-field="regimen_fiscal"/>
 								</div>
-							</div>
-							<div class="form__section" v-if="companyEditBlocked">
-								<h3 class="form__head2">Llave pública y privada de tu CSD</h3>
-								<span class="section__help-text">Tus certificados se encuentran resguardados en nuestro servidor para agilizar el proceso de emisión de tus facturas. A continuación encontrarás la información de tus certificados.</span>
-								<div class="certificate">
-									<img class="certificate__icon" src="../../assets/icons/certificate.png" alt="Icono de certificado">
-									<div class="certificate__data">
-										<span class="certificate__text"><strong class="certificate__text--strong">Fecha de expiración:</strong> {{humanReadDate(myCompany.cert_expiration)}}</span>
-										<span class="certificate__text"><strong class="certificate__text--strong">Nº Certificado:</strong> {{myCompany.no_cer}}</span>
+
+								<div class="form__grid" v-if="!companyEditBlocked">
+									<h3 class="form__head2">Llave pública y privada de tu CSD</h3>
+									<span class="section__help-text">Recuerda que no es necesario que vuelvas a subir tus archivos, solo edita o actualiza los datos que creas que son necesarios.</span>
+									<div class="form__drag-drop">
+										<drag-drop :texts="dragDropCERTexts" @filename="setCert" accept=".cer" id="cer" module="tax-payers/csd/upload"></drag-drop>
+										<ErrorMessage name="cer" class="form__alert" data-field="cer"/>
+									</div>
+									<div class="form__drag-drop">
+										<drag-drop :texts="dragDropKEYTexts" @filename="setKey" accept=".key" id="key" module="tax-payers/csd/upload"></drag-drop>
+										<ErrorMessage name="key" class="form__alert" data-field="key"/>
 									</div>
 								</div>
-							</div>
+								<div class="form__section" v-if="companyEditBlocked">
+									<h3 class="form__head2">Llave pública y privada de tu CSD</h3>
+									<span class="section__help-text">Tus certificados se encuentran resguardados en nuestro servidor para agilizar el proceso de emisión de tus facturas. A continuación encontrarás la información de tus certificados.</span>
+									<div class="certificate">
+										<img class="certificate__icon" src="../../assets/icons/certificate.png" alt="Icono de certificado">
+										<div class="certificate__data">
+											<span class="certificate__text"><strong class="certificate__text--strong">Fecha de expiración:</strong> {{humanReadDate(myCompany.cert_expiration)}}</span>
+											<span class="certificate__text"><strong class="certificate__text--strong">Nº Certificado:</strong> {{myCompany.no_cer}}</span>
+										</div>
+									</div>
+								</div>
 
-							<div class="form__container form__container--small" v-if="!companyEditBlocked">
-								<label class="form__label" for="password" id="password">Contraseña de tu CSD</label>
-								<Field class="form__input" :type="csdPass" id="password" name="password" placeholder="*************" />
-								<label class="form__checkbox-label" for="show_password">
-									<input class="form__checkbox" type="checkbox" id="show_password" name="show_password" @change="togglePassword" value="1">
-									<span>Mostrar la contraseña</span>
-								</label>
-								<ErrorMessage name="password" class="form__alert" data-field="password"/>
-							</div>
+								<div class="form__container form__container--small" v-if="!companyEditBlocked">
+									<label class="form__label" for="password" id="password">Contraseña de tu CSD</label>
+									<Field class="form__input" :type="csdPass" id="password" name="password" placeholder="*************" />
+									<label class="form__checkbox-label" for="show_password">
+										<input class="form__checkbox" type="checkbox" id="show_password" name="show_password" @change="togglePassword" value="1">
+										<span>Mostrar la contraseña</span>
+									</label>
+									<ErrorMessage name="password" class="form__alert" data-field="password"/>
+								</div>
 
-							<Field name="cer" v-model="cert" as="hidden" />
-							<Field name="key" v-model="key" as="hidden" />
-						</div>
-						<input v-if="!companyEditBlocked" class="btn btn__default btn--regular btn__default--primary" type="submit" value="Actualizar contribuyente">
-						<button v-if="!companyEditBlocked" class="btn btn__outlined btn--small btn__outlined--primary" @click="companyEditBlocked = true">
-							<span class="material-symbols-outlined">cancel</span>
-							Cancelar</button>
-					</Form>
+								<Field name="cer" v-model="cert" as="hidden" />
+								<Field name="key" v-model="key" as="hidden" />
+							</div>
+							<input v-if="!companyEditBlocked" class="btn btn__default btn--regular btn__default--primary" type="submit" value="Actualizar contribuyente">
+							<button v-if="!companyEditBlocked" class="btn btn__outlined btn--small btn__outlined--primary" @click="companyEditBlocked = true">
+								<span class="material-symbols-outlined">cancel</span>
+								Cancelar</button>
+						</Form>
+					</div>
 				</section>
 				<section class="section section--wide" v-if="myCompany">
-					<h2 class="section__title">Dirección de facturación</h2>
-					<span class="section__help-text">Los datos de la dirección de facturación deben ser los mismo registrados en to comprobante de identificación fiscal vigente.</span>
-					<tax-payer-address :taxpayerid="myCompany.id"></tax-payer-address>
+					<div class="section__top">
+						<h2 class="section__title">Dirección de facturación</h2>
+						<span class="section__help-text">Los datos de la dirección de facturación deben ser los mismo registrados en to comprobante de identificación fiscal vigente.</span>
+					</div>
+					<div class="section__content">
+						<tax-payer-address :taxpayerid="myCompany.id"></tax-payer-address>
+					</div>
 				</section>
 			</main>
 		</div>
