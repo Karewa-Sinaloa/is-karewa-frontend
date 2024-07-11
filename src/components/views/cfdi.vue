@@ -5,73 +5,77 @@
 			<content-header />
 			<main class="main">
 				<section class="section section--verywide">
-					<h1 class="section__title">Crear nuevo comprobante</h1>
-					<span class="section__help-text">Quam. Fusce feugiat pede vel quam. In et augue. Lorem ipsum dolor sit amet, consectetuer adipiscing.</span>
-					<Form class="form" @submit="onSubmit" v-if="contribuyentes" :initial-values="cfdi" :validation-schema="cfdiValidateSchema" v-slot="{ values, setErrors }">
-						<fieldset class="form__fieldset">
+					<div class="section__top">
+						<h1 class="section__title">Crear nuevo comprobante</h1>
+						<span class="section__help-text">Quam. Fusce feugiat pede vel quam. In et augue. Lorem ipsum dolor sit amet, consectetuer adipiscing.</span>
+					</div>
+					<div class="section__content">
+						<Form class="form" @submit="onSubmit" v-if="contribuyentes" :initial-values="cfdi" :validation-schema="cfdiValidateSchema" v-slot="{ values, setErrors }">
+							<fieldset class="form__fieldset">
 
-							<div class="form__container-group">
-								<div class="form__container form__container--half">
-									<label class="form__label form__label--required" for="tax_payer_id">Contribuyente</label>
-									<Field class="form__select" as="select" id="tax_payer_id" name="tax_payer_id" v-model="taxPayerId">
-										<option value="" disabled>Selecciona la cuenta de facturación</option>
-										<option v-for="contribuyente in contribuyentes" :value="contribuyente.id">{{ contribuyente.rfc }} - {{ contribuyente.razon_social }}</option>
-									</Field>
-								</div>
+								<div class="form__container-group">
+									<div class="form__container form__container--half">
+										<label class="form__label form__label--required" for="tax_payer_id">Contribuyente</label>
+										<Field class="form__select" as="select" id="tax_payer_id" name="tax_payer_id" v-model="taxPayerId">
+											<option value="" disabled>Selecciona la cuenta de facturación</option>
+											<option v-for="contribuyente in contribuyentes" :value="contribuyente.id">{{ contribuyente.rfc }} - {{ contribuyente.razon_social }}</option>
+										</Field>
+									</div>
 
-								<div v-if="taxPayerId">
-									<div class="form__container form__container--half" @focusout="displayCustomerOptions = false" @focusin="displayCustomerOptions = true">
-										<label class="form__label form__label--required" for="razon_social">Cliente</label>
-										<input-autocomplete :requestParams="customerRequestParams" :textField="'razon_social'" placeholderText="Buscar cliente" @option="v => (customerData = v)"></input-autocomplete>
-										<Field id="customer_id" name="customer_id" type="hidden" v-model="customerData.id"/>
+									<div v-if="taxPayerId">
+										<div class="form__container form__container--half" @focusout="displayCustomerOptions = false" @focusin="displayCustomerOptions = true">
+											<label class="form__label form__label--required" for="razon_social">Cliente</label>
+											<input-autocomplete :requestParams="customerRequestParams" :textField="'razon_social'" placeholderText="Buscar cliente" @option="v => (customerData = v)"></input-autocomplete>
+											<Field id="customer_id" name="customer_id" type="hidden" v-model="customerData.id"/>
+										</div>
 									</div>
 								</div>
-							</div>
-							<h2 class="form__section-title">Datos fiscales</h2>
+								<h2 class="form__section-title">Datos fiscales</h2>
 
-							<div class="form__container-group" v-if="customerData.id">
-								<div class="form__container form__container--half">
-									<label class="form__label form__label--required" for="MetodoPago">Método de pago</label>
-									<Field class="form__select" as="select" id="MetodoPago" name="MetodoPago" v-model="cfdi.MetodoPago">
-										<option hidden value="">Selecciona el método de pago</option>
-										<option v-for="pm in paymentMethods" :value="pm.code">{{pm.code}} - {{pm.description}}</option>
-									</Field>
+								<div class="form__container-group" v-if="customerData.id">
+									<div class="form__container form__container--half">
+										<label class="form__label form__label--required" for="MetodoPago">Método de pago</label>
+										<Field class="form__select" as="select" id="MetodoPago" name="MetodoPago" v-model="cfdi.MetodoPago">
+											<option hidden value="">Selecciona el método de pago</option>
+											<option v-for="pm in paymentMethods" :value="pm.code">{{pm.code}} - {{pm.description}}</option>
+										</Field>
+									</div>
+
+									<div class="form__container form__container--half">
+										<label class="form__label form__label--required" for="FormaPago">Forma de pago</label>
+										<Field class="form__select" as="select" id="FormaPago" name="FormaPago" v-model="cfdi.FormaPago">
+											<option hidden value="">Selecciona el tipo de pago</option>
+											<option v-for="pt in paymentTypes" :value="pt.code">{{pt.code}} - {{pt.name}}</option>
+										</Field>
+									</div>
+
+									<div class="form__container form__container--half">
+										<label class="form__label form__label--required" for="cfdi_usage">Uso del CFDI</label>
+										<Field class="form__select" as="select" id="cfdi_usage" name="cfdi_usage" v-model="cfdi.cfdi_usage">
+											<option hidden value="">Selecciona el uso del CFDI</option>
+											<option v-for="cu in cfdiUsage" :value="cu.code">{{cu.code}} - {{cu.name}}</option>
+										</Field>
+									</div>
+
+									<div class="form__container form__container--half">
+										<label class="form__label form__label--required" for="TipoRelacion">Tipo de relación del CFDI</label>
+										<Field class="form__select" as="select" id="TipoRelacion" name="TipoRelacion" v-model="cfdi.TipoRelacion">
+											<option hidden value="">Selecciona la relación del CFDI</option>
+											<option v-for="rt in relationTypes" :value="rt.code">{{rt.code}} - {{rt.name}}</option>
+										</Field>
+									</div>
+
+									<div class="form__container form__container--half" v-if="cfdi.TipoRelacion">
+										<label class="form__label form__label--required" for="UUID">UUID del comprobante relacionado</label>
+										<Field class="form__input" name="UUID" id="UUID" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
+									</div>
 								</div>
+								<h2 class="form__section-title">Datos del pago</h2>
+								<div class="form__container-group" v-if="customerData.id"></div>
 
-								<div class="form__container form__container--half">
-									<label class="form__label form__label--required" for="FormaPago">Forma de pago</label>
-									<Field class="form__select" as="select" id="FormaPago" name="FormaPago" v-model="cfdi.FormaPago">
-										<option hidden value="">Selecciona el tipo de pago</option>
-										<option v-for="pt in paymentTypes" :value="pt.code">{{pt.code}} - {{pt.name}}</option>
-									</Field>
-								</div>
-
-								<div class="form__container form__container--half">
-									<label class="form__label form__label--required" for="cfdi_usage">Uso del CFDI</label>
-									<Field class="form__select" as="select" id="cfdi_usage" name="cfdi_usage" v-model="cfdi.cfdi_usage">
-										<option hidden value="">Selecciona el uso del CFDI</option>
-										<option v-for="cu in cfdiUsage" :value="cu.code">{{cu.code}} - {{cu.name}}</option>
-									</Field>
-								</div>
-
-								<div class="form__container form__container--half">
-									<label class="form__label form__label--required" for="TipoRelacion">Tipo de relación del CFDI</label>
-									<Field class="form__select" as="select" id="TipoRelacion" name="TipoRelacion" v-model="cfdi.TipoRelacion">
-										<option hidden value="">Selecciona la relación del CFDI</option>
-										<option v-for="rt in relationTypes" :value="rt.code">{{rt.code}} - {{rt.name}}</option>
-									</Field>
-								</div>
-
-								<div class="form__container form__container--half" v-if="cfdi.TipoRelacion">
-									<label class="form__label form__label--required" for="UUID">UUID del comprobante relacionado</label>
-									<Field class="form__input" name="UUID" id="UUID" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
-								</div>
-							</div>
-							<h2 class="form__section-title">Datos del pago</h2>
-							<div class="form__container-group" v-if="customerData.id"></div>
-
-						</fieldset>
-					</Form>
+							</fieldset>
+						</Form>
+					</div>
 				</section>
 			</main>
 		</div>
