@@ -3,6 +3,9 @@
 		<div class="search__container">
 			<div class="section">
 				<div class="section__top">
+					<button class="btn btn__icon" @click="$emit('close')">
+						<icon-set icon="close"/>
+					</button>
 
 					<form class="form">
 						<div class="form__container form__container--wide">
@@ -13,10 +16,15 @@
 
 				<div class="section__content">	
 
-					<div class="s-results">	
-						<div class="s-results__result" v-for="result in results">
-							<div class="s-results__column">
-								<span class="s-results__data s-results__data--main">{{result.code}}</span>
+					<div class="s-results" v-if="results">	
+						<div class="result" v-for="result in results" @click="$emit('searchResults', result)">
+							<div class="result__data">
+								<span v-for="(field, index) in fields" :class="{'result__title': index == 0, 'result__description': index > 0}"><strong class="result__text--strong">{{field.name}}:</strong> {{result[field.id]}}</span>
+							</div>
+							<div class="result__actions">
+								<button class="btn btn__icon">
+									<icon-set icon="add"/>
+								</button>
 							</div>
 						</div>
 					</div>
@@ -31,22 +39,29 @@ import { onMounted, ref, watch, computed } from 'vue'
 import { apiRequest } from '../../api/requests.js'
 import { useAppStore } from '../../store/index.js'
 
-const emits = defineEmits(['searchResults'])
+const emits = defineEmits(['searchResults', 'close'])
 const searchString = ref('')
-const props = defineProps(['requestParams'])
+const props = defineProps(['requestParams', 'fields'])
 const store = useAppStore()
 const results = ref(null)
 
 function setSearchText(e) {
-	results.value = null
-	getRequest(e.target.value)
+	results.value = {}
+	let searchString = e.target.value
+	if(searchString.length > 2) {
+		getRequest(searchString)
+	} else {
+		results.value = {}
+	}
 }
 
-function getRequest() {
-	new apiRequest().Get(props.requestParams).then(r => {
+function getRequest(searchString) {
+	new apiRequest().Get({
+		module: props.requestParams.module,
+		params: `${props.requestParams.params}&search=${searchString}`
+	}).then(r => {
 		results.value = r.data.data
 	}).catch(e => {
-		console.log(e)
 		results.value = null
 		store.push_alert(e.data)
 	})
