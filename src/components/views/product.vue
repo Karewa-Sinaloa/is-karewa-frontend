@@ -49,9 +49,9 @@
 								<div class="form__container form__container--small">
 									<label class="form__label form__label--required" for="code">Código SAT</label>
 									<div class="form__search">
-										<input class="form__input" type="text" id="code" placeholder="Código SAT" name="code">
-										<button class="form__search-button">
-											<span class="material-symbols-outlined">search</span>
+										<input class="form__input" type="text" id="code" placeholder="Código SAT" name="code" v-model="satCode">
+										<button class="form__search-button" @click.prevent="toggleSearchSatCode = !toggleSearchSatCode">
+											<icon-set icon="lens"/>
 										</button>
 									</div>
 									<ErrorMessage name="code" class="form__alert" data-field="code"/>
@@ -59,7 +59,7 @@
 
 							</div>
 
-							<input v-if="enableEdit" class="btn btn__default btn--regular btn__default--primary" type="submit" value="Agregar producto / servicio">
+							<input v-if="enableEdit" class="btn btn__default btn--small btn__default--primary" type="submit" value="Agregar producto / servicio">
 							<button v-if="enableEdit" class="btn btn__outlined btn--small btn__outlined--primary">
 								<span class="material-symbols-outlined">cancel</span>
 								Cancelar
@@ -69,7 +69,7 @@
 				</section>
 			</main>
 		</div>
-		<search-component :requestParams="satCodesRequestParams"></search-component>
+		<search-component v-if="toggleSearchSatCode" :requestParams="satCodesRequestParams" :fields="searchFields" @close="toggleSearchSatCode = false" @searchResults="r => satCode = r.code"></search-component>
 	</div>
 </template>
 
@@ -90,6 +90,20 @@ import searchComponent from '../partials/search.vue'
 const store = useAppStore()
 const router = useRouter()
 const route = useRoute()
+const searchFields = ref([
+	{
+		id: 'code',
+		name: 'Código'
+	},
+	{
+		id: 'description',
+		name: 'Descripción'
+	}
+])
+
+const satCode = ref(null)
+
+const toggleSearchSatCode = ref(false)
 
 const productData = function() {
 	return {	
@@ -128,7 +142,6 @@ const productDeleteConfirmationData = {
 	icon: "attention.png"
 }
 const confirmDelete = ref(false)
-const satCode = ref(null)
 const productValidateSchema = yup.object().shape({
 	rfc: yup.string().required().label('RFC').min(12).max(13).matches(/^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$/i),
 	razon_social: yup.string().required().label('razón social'),

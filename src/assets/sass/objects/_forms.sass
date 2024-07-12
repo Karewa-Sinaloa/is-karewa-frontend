@@ -111,15 +111,21 @@
 				bottom-right-radius: 0
 				right: none
 		&-button
-			padding: 0.2rem 0.5rem
+			padding: 0 0.5rem
 			border: 1px solid var(--color-grayscale-200)
 			background-color: var(--color-grayscale-50)
+			box-sizing: border-box
+			width: max-content
+			height: auto
+			aspect-ratio: 1 / 1
 			cursor: pointer
 			border:
 				top-right-radius: 0.2rem
 				bottom-right-radius: 0.2rem
-			.material-symbols-outlined
-				font-size: 20px
+			svg
+				width: 0.85rem
+				height: 0.85rem
+				object-fit: contain
 	&__select
 		color: var(--text-color-primary-dark)
 		cursor: pointer

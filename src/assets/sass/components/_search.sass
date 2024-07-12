@@ -19,3 +19,24 @@
 			weight: 700
 			size: var(--fs-large)
 			family: var(--ff1)
+.section
+	position: relative
+	overflow: hidden
+	&__top
+		.btn__icon
+			position: absolute
+			top: 0.5rem
+			right: 2rem
+			color: var(--color-primary)
+	&__content
+		max-height: 32rem
+		overflow-Y: scroll
+.result
+	cursor: pointer
+	&__actions
+		display: none
+		.btn__icon
+			color: var(--color-primary)
+	&:hover
+		.result__actions
+			display: block	
