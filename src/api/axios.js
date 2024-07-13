@@ -10,8 +10,8 @@ export class apiInstance {
 			headers: {
 				'Content-Type': cType,
 				Accept: 'application/json',
-				Authorization: bearer,
-				Connection: 'close'
+				Authorization: bearer
+				//Connection: 'close'
 			}
 		}
 		return axios.create(axiosSettings)

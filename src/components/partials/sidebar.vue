@@ -6,7 +6,7 @@
 		</div>
 		<div class="nav">
 			<router-link class="nav__element" :to="{name: 'homeView'}">
-				<span class="material-symbols-outlined nav__element-icon">dashboard</span>
+				<icon-set icon="dashboard" />
 				<span class="nav__element-text">Dashboard</span>
 			</router-link>
 

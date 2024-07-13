@@ -9,7 +9,7 @@
 
 					<form class="form">
 						<div class="form__container form__container--wide">
-							<input class="form__input form__input--big" type="search" placeholder="Buscar ..." @keyup="setSearchText" v-model="searchString">
+							<input class="form__input form__input--big" type="input" placeholder="Buscar ..." @keyup="setSearchText" v-model="searchString">
 						</div>
 					</form>
 				</div>
@@ -27,6 +27,7 @@
 								</button>
 							</div>
 						</div>
+						<pagination-container v-if="pagination" :data="pagination" @navigate="navigateTo"></pagination-container>
 					</div>
 				</div>
 			</div>		
@@ -38,34 +39,52 @@
 import { onMounted, ref, watch, computed } from 'vue'
 import { apiRequest } from '../../api/requests.js'
 import { useAppStore } from '../../store/index.js'
+import paginationContainer from '../partials/single_pagination.vue'
 
 const emits = defineEmits(['searchResults', 'close'])
 const searchString = ref('')
 const props = defineProps(['requestParams', 'fields'])
 const store = useAppStore()
 const results = ref(null)
+const pagination = ref(null)
+
+document.addEventListener('keyup', e => {
+	if(e.keyCode == 27) {
+		emits('close')
+	}
+})
 
 function setSearchText(e) {
-	results.value = {}
-	let searchString = e.target.value
-	if(searchString.length > 2) {
-		getRequest(searchString)
+	results.value = null
+	let str = e.target.value
+	let sString = str.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]|\s{2,}/g, '')
+	searchString.value = sString
+	if(sString.length > 2) {
+		getRequest()
 	} else {
-		results.value = {}
+		results.value = null
 	}
 }
 
-function getRequest(searchString) {
+function getRequest(page = 1, limit = 20) {
 	new apiRequest().Get({
 		module: props.requestParams.module,
-		params: `${props.requestParams.params}&search=${searchString}`
+		params: `${props.requestParams.params}&search=${searchString.value}&page=${page}&limit=${limit}`
 	}).then(r => {
 		results.value = r.data.data
+		pagination.value = r.data.pagination ? r.data.pagination : null
 	}).catch(e => {
 		results.value = null
+		pagination.value = null
 		store.push_alert(e.data)
 	})
 }
+
+function navigateTo(r) {
+	results.value = null
+	getRequest(r)
+}
+
 </script>
 
 <style lang="sass">
