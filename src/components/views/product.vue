@@ -51,7 +51,7 @@
 									<div class="form__search">
 										<input class="form__input" type="text" id="code" placeholder="Código SAT" name="code" v-model="satCode">
 										<button class="form__search-button" @click.prevent="toggleSearchSatCode = !toggleSearchSatCode">
-											<icon-set icon="lens"/>
+											<icon-set icon="lens-add"/>
 										</button>
 									</div>
 									<ErrorMessage name="code" class="form__alert" data-field="code"/>
@@ -69,7 +69,7 @@
 				</section>
 			</main>
 		</div>
-		<search-component v-if="toggleSearchSatCode" :requestParams="satCodesRequestParams" :fields="searchFields" @close="toggleSearchSatCode = false" @searchResults="r => satCode = r.code"></search-component>
+		<search-component v-if="toggleSearchSatCode" :requestParams="satCodesRequestParams" :fields="searchFields" @close="toggleSearchSatCode = false" @searchResults="setSatCode"></search-component>
 	</div>
 </template>
 
@@ -201,6 +201,12 @@ function onSubmit(values, action) {
 	}).catch(error => {
 		store.push_alert(error.data)
 	})
+}
+
+function setSatCode(response) {
+	console.log(response)
+	satCode.value = response.code
+	toggleSearchSatCode.value = false
 }
 </script>
 
