@@ -61,7 +61,7 @@
 
 							<input v-if="enableEdit" class="btn btn__default btn--small btn__default--primary" type="submit" value="Agregar producto / servicio">
 							<button v-if="enableEdit" class="btn btn__outlined btn--small btn__outlined--primary">
-								<span class="material-symbols-outlined">cancel</span>
+								<icon-set icon="close"/>
 								Cancelar
 							</button>
 						</Form>

@@ -11,24 +11,32 @@
 			</router-link>
 
 			<router-link class="nav__element" :to="{name: 'cfdiView'}">
-				<span class="material-symbols-outlined nav__element-icon">request_quote</span>
+				<icon-set icon="invoice" />
 				<span class="nav__element-text">Factura</span>
 			</router-link>
 
 			<router-link class="nav__element" :to="{name: 'companyView'}">
-				<span class="material-symbols-outlined nav__element-icon">store</span>
+				<icon-set icon="company" />
 				<span class="nav__element-text">Empresa</span>
 			</router-link>
 			
 			<router-link class="nav__element" :to="{name: 'customerListView'}">
-				<span class="material-symbols-outlined nav__element-icon">group</span>
+				<icon-set icon="customers" />
 				<span class="nav__element-text">Clientes</span>
 			</router-link>
 
-			<router-link class="nav__element" :to="{name: 'newProductView'}">
-				<span class="material-symbols-outlined nav__element-icon">storefront</span>
-				<span class="nav__element-text">Productos</span>
-			</router-link>
+			<span class="nav__element-container">
+				<router-link class="nav__element" :to="{name: 'newProductView'}">
+					<icon-set icon="products" />
+					<span class="nav__element-text">Productos</span>
+				</router-link>
+				<div class="nav__sub-container">
+					<router-link class="nav__element" :to="{name: 'homeView'}">
+						<icon-set icon="categories" />
+						<span class="nav__element-text">Categorías</span>
+					</router-link>
+				</div>
+			</span>
 		</div>
 	</div>
 </template>

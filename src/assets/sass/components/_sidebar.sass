@@ -36,11 +36,16 @@
 		border-radius: 0.3rem
 		text-decoration: none
 		margin: 0.2rem 0
-		&:hover
-			background-color: var(--color-primary-100)
-			.nav__element
-				&-text,
-				&-icon
+		&.router-link-active
+			background-color: var(--color-primary-500)
+			.nav__element-text,
+			svg
+				color: var(--text-color-primary-light)
+		&:not(.router-link-active)
+			&:hover
+				background-color: var(--color-primary-100)
+				.nav__element-text,
+				svg
 					color: var(--text-color-secondary-dark)
 		&-text
 			display: block
@@ -56,3 +61,8 @@
 			width: 1.2rem
 			height: 1.2rem
 			object-fit: contain
+	&__sub-container
+		.nav__element
+			margin-left: 1rem
+			&-text
+				font-weight: 300

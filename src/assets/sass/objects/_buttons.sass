@@ -23,8 +23,10 @@
 	@each $name, $fs in $fs-map
 		&--#{$name}
 			@include set-button(--fs-#{$name})
-			.material-symbols-outlined
-				font-size: calc(var(--fs-#{$name}) * 1.27)
+			svg
+				width: calc(var(--fs-#{$name}) * 1.27)
+				height: calc(var(--fs-#{$name}) * 1.27)
+				object-fit: contain
 				margin-right: calc($fs * 0.2)
 	&__outlined
 		border: 1px solid transparent
