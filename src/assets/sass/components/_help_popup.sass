@@ -1,51 +1,53 @@
 .help-popup
-  position: fixed
-  top: 0
-  left: 0
-  width: 100vw
-  height: 100vh
-  z-index: 800
-  background-color: var(--c-opaque-light-background)
-  display: flex
-  align-items: center
-  justify-content: center
-  &__container
-    padding: 2rem
-    box-sizing: border-box
-    border-radius: 0.5rem
-    background-color: var(--color2)
-    width: 95%
-    max-width: var(--bp8)
-    position: relative
-    box-shadow: 0 0.5rem 0.7rem var(--c-opaque-light-background)
-  &__close
-    position: absolute
-    top: 0.5rem
-    right: 0.5rem
-    padding: 0
-    background-color: transparent
-    border: none
-    cursor: pointer
-  &__text
-    margin: auto
-    color: var(--color3)
-    font:
-      weight: 400
-      size: var(--fs-small)
-      family: var(--ff2)
-  &__icon
-    display: block
-    width: 4rem
-    height: 4rem
-    object-fit: contain
-    margin: auto auto 0.5rem auto
-  &__title
-    text-align: center
-    margin: 0 auto 0.5rem auto
-    padding-bottom: 0.2rem
-    color: var(--color6)
-    border-bottom: 1px solid var(--color12)
-    font:
-      size: var(--fs-regular)
-      weight: 500
-      family: var(--ff1)
+	position: fixed
+	top: 0
+	left: 0
+	width: 100vw
+	height: 100vh
+	z-index: 800
+	background-color: var(--c-opaque-light-background)
+	display: flex
+	align-items: center
+	justify-content: center
+	&__container
+		padding: 2rem
+		box-sizing: border-box
+		border-radius: 0.5rem
+		background-color: var(--color-light)
+		width: 95%
+		max-width: var(--bp8)
+		position: relative
+		box-shadow: 0 0.5rem 0.7rem var(--light-box-shadows)
+		border: 1px solid var(--light-border-color)
+	&__close
+		position: absolute
+		top: 0.5rem
+		right: 0.5rem
+		padding: 0
+		background-color: transparent
+		border: none
+		cursor: pointer
+	&__text
+		margin: auto
+		color: var(--color-dark)
+		text-align: center
+		font:
+			weight: 400
+			size: var(--fs-small)
+			family: var(--ff2)
+	&__icon
+		display: block
+		width: 4rem
+		height: 4rem
+		object-fit: contain
+		margin: auto auto 0.5rem auto
+	&__title
+		text-align: center
+		margin: 0 auto 0.5rem auto
+		padding-bottom: 0.2rem
+		color: var(--color-info)
+		border-bottom: 1px solid var(--color-grayscale-100)
+		font:
+			size: var(--fs-mid)
+			weight: 700
+			family: var(--ff3)

@@ -8,7 +8,7 @@ export const useAppStore = defineStore('cfdiAppStore', {
 			userData: null,
 			alerts: [],
 			processing: false,
-			newElements: null,
+			newElements: [],
 			popup: null,
 			company: null,
 			help: null
@@ -32,7 +32,7 @@ export const useAppStore = defineStore('cfdiAppStore', {
 				text: null,
 				help: null
 			}
-			if (notification.code !== undefined && notification.code) {
+			if (notification !== undefined && notification.code !== undefined && notification.code) {
 				message = serverMessages(notification.code)
 				message.help = notification.help
 				this.alerts.push(message)
@@ -44,8 +44,8 @@ export const useAppStore = defineStore('cfdiAppStore', {
 		loading(loading) {
 			this.processing = loading
 		},
-		newElements(state, data) {
-			state.newElements = data
+		new_elements(data) {
+			this.newElements = data
 		},
 		showPopup(data) {
 			this.popup = data

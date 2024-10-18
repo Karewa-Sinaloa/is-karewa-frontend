@@ -6,6 +6,7 @@ import popupComponent from './components/partials/popups.vue'
 import { getCompany } from './mixins/company.js'
 import { useRoute } from 'vue-router'
 import helpPopup from './components/partials/help.popup.vue'
+import newElements from './components/partials/add_new_element.vue'
 
 const route = useRoute()
 /*--
@@ -53,6 +54,7 @@ watch(isLoggedIn, () => {
 	<loading-component />
 	<popup-component />
 	<help-popup></help-popup>
+	<new-elements />
 </template>
 
 <style lang="sass">

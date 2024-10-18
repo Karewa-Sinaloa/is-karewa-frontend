@@ -31,7 +31,7 @@
 					<span class="nav__element-text">Productos</span>
 				</router-link>
 				<div class="nav__sub-container">
-					<router-link class="nav__element" :to="{name: 'homeView'}">
+					<router-link class="nav__element" :to="{name: 'categoryView'}">
 						<icon-set icon="categories" />
 						<span class="nav__element-text">Categorías</span>
 					</router-link>
@@ -43,6 +43,6 @@
 
 <script setup></script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 	@import "../../assets/sass/components/_sidebar.sass"
 </style>

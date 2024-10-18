@@ -15,6 +15,8 @@ import CustomerView from '../components/views/customer.vue'
 import CustomerListView from '../components/views/customer_list.vue'
 import CFDIView from '../components/views/cfdi.vue'
 import ProductView from '../components/views/product.vue'
+import CategoryView from '../components/views/product_categories_list.vue'
+import CategoryEdit from '../components/views/product_category_edit.vue'
 
 const routes = [
 	{
@@ -69,6 +71,30 @@ const routes = [
 		path: '/clientes',
 		component: CustomerListView,
 		name: 'customerListView',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/categorias/nueva-categoria',
+		component: CategoryEdit,
+		name: 'categoryAdd',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/categorias/:id(\\d+)',
+		component: CategoryEdit,
+		name: 'categoryEdit',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/categorias',
+		component: CategoryView,
+		name: 'categoryView',
 		meta: {
 			login: true
 		}

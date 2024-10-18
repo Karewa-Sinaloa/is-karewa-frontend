@@ -3,7 +3,7 @@
 		<div class="content-top__element">
 			<button class="user-actions" @click.prevet="logOut">
 				<span class="user-actions__text">Cerrar sesión</span>
-				<span class="material-symbols-outlined user-actions__icon">logout</span>
+				<icon-set icon="logout" eclass="user-actions__icon" />
 			</button>
 		</div>
 	</div>
@@ -24,6 +24,6 @@ function logOut() {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 	@import  "../../assets/sass/components/_content_header.sass"
 </style>

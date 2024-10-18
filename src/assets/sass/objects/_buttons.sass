@@ -53,7 +53,7 @@
 		@each $name, $color in $main-color-list
 			&--#{$name}
 				background-color: #{$color}
-				@if color.lightness($color) < 65
+				@if color.channel($color, "lightness", $space: hsl) < 65
 					color: var(--color-light)
 				@else
 					color: var(--color-dark)

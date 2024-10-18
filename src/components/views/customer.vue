@@ -10,11 +10,11 @@
 						<span class="section__help-text">Solicita a tu cliente la constancia de situación fiscal para agregar de forma correcrta su información. Selecciona si es una persona física o una persona moral para iniciar el registro.</span>
 						<div class="section__options btn__grouped">
 							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="enableEdit = true">
-								<span class="material-symbols-outlined">edit_square</span>
+								<icon-set icon="edit"/>
 								Editar cliente
 							</button>
 							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
-								<span class="material-symbols-outlined">delete</span>
+								<icon-set icon="delete"/>
 								Eliminar cliente
 							</button>
 						</div>
@@ -153,7 +153,7 @@
 
 								<div class="form__container form__container--half">
 									<label class="form__label" for="alias">Alias
-										<span v-if="enableEdit" class="form__help-icon material-symbols-outlined" @click.prevent="store.push_help('Agrega un alias para identificar rapidamente a tu cliente, esto lo puedes utilizar en las búsquedas que realices donde requieras encontrarlo')">info</span>
+										<help-icon v-if="enableEdit" help_text="Agrega un alias para identificar rapidamente a tu cliente, esto lo puedes utilizar en las búsquedas que realices donde requieras encontrarlo"/>
 									</label>
 									<Field class="form__input" id="alias" name="alias" placeholder="Alias del receptor" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
 									<ErrorMessage id="alias"></ErrorMessage>
@@ -161,7 +161,7 @@
 
 								<div class="form__container form__container--half">
 									<label class="form__label" for="reference">Referencia
-										<span v-if="enableEdit" class="form__help-icon material-symbols-outlined" @click.prevent="store.push_help('Agrega el nombre de la persona encargada de facturación o bien el contacto responsable de la empresa')">info</span>
+										<help-icon v-if="enableEdit" help_text="Agrega el nombre de la persona encargada de facturación o bien el contacto responsable de la empresa"/>
 									</label>
 									<Field class="form__input" id="reference" name="reference" placeholder="Nombre de la persona de referencia" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
 									<ErrorMessage id="reference"></ErrorMessage>
@@ -169,7 +169,7 @@
 
 								<div class="form__container form__container--half">
 									<label class="form__label" for="email">Dirección de email
-										<span v-if="enableEdit" class="form__help-icon material-symbols-outlined" @click.prevent="store.push_help('Agrega una dirección de correo electrónico donde puedas enviar los comprobantes fiscales o bien te sirva de contacto con tu cliente')">info</span>
+										<help-icon v-if="enableEdit" help_text="Agrega una dirección de correo electrónico donde puedas enviar los comprobantes fiscales o bien te sirva de contacto con tu cliente"/>
 									</label>
 									<Field class="form__input" id="email" name="email" type="email" placeholder="usuario@dominio.tld" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
 									<ErrorMessage id="email"></ErrorMessage>
@@ -199,9 +199,12 @@
 								</div>
 							</div>
 
-							<input v-if="tpt && enableEdit" class="btn btn__default btn--regular btn__default--primary" type="submit" value="Agregar cliente">
+							<button type="submit "v-if="tpt && enableEdit" class="btn btn__default btn--regular btn__default--primary">
+								<icon-set icon="upload"/>
+								Agregar cliente
+							</button>
 							<button v-if="tpt && enableEdit" class="btn btn__outlined btn--small btn__outlined--primary" @click="enableEdit = false">
-								<span class="material-symbols-outlined">cancel</span>
+								<icon-set icon="close"/>
 								Cancelar
 							</button>
 						</Form>
@@ -225,6 +228,7 @@ import { apiRequest } from '../../api/requests.js'
 import { getCompany } from '../../mixins/company.js'
 import inputAutocomplete from '../partials/address-input-autocomplete.vue'
 import confirmationPopup from '../partials/confirmation_popup.vue'
+import helpIcon from '../partials/help_icon.vue'
 
 const store = useAppStore()
 const router = useRouter()
