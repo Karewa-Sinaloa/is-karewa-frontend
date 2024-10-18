@@ -31,25 +31,30 @@
 		@each $name, $color in $main-color-list
 			&--#{$name}
 				background-color: var(--color-#{$name})
-				@if color.lightness($color) < 40
+				//@if color.lightness($color) < 40
+				@if color.channel($color, "lightness", $space: hsl) < 40
 					color: var(--color-light)
 				@else
 					color: var(--color-dark)
-		> .material-symbols-outlined
-			display: block
-			width: max-content
-			color: inherit
-			margin: auto 0.4rem auto auto
-			@include font-size(--fs-xxxl)
-			margin-left: 0.4rem
+	&__icon
+		display: block
+		width: 2.5rem
+		height: 2.5rem
+		object-fit: contain
+		display: block
+		color: inherit
+		margin: auto 0.4rem auto auto
+		margin-left: 0.4rem
 	&__description
 		color: inherit
 		margin: auto
 		line-height: 1rem
+		width: calc(100% - 2.5rem - 2rem)
 		@include font-size(--fs-small)
 	&__close
 		color: inherit
-		.material-symbols-outlined
+		&-icon
 			color: inherit
-			margin: 0	
-			@include font-size(--fs-large)
+			margin: 0
+			width: 2rem
+			height: 2rem

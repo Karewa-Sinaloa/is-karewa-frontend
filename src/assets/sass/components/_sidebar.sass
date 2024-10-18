@@ -7,6 +7,7 @@
 	box-sizing: border-box
 	min-height: 100vh
 	background-color: var(--sidebar-bg)
+	display: block
 	&__logo
 		padding: 0.2rem
 		box-sizing: border-box
@@ -23,7 +24,6 @@
 		margin: 0
 		color: var(--text-color-secondary-dark)
 		@include font-size(--fs-regular)
-	display: block
 .nav
 	padding: 1rem 0
 	&__element
@@ -35,6 +35,7 @@
 		background-color: transparent
 		border-radius: 0.3rem
 		text-decoration: none
+		color: var(--color-dark)
 		margin: 0.2rem 0
 		&.router-link-active
 			background-color: var(--color-primary-500)
@@ -53,11 +54,10 @@
 			padding: 0 0 0 0.5rem
 			@include font-size(--fs-regular)
 			font:
-				family: inherit
+				family: var(--ff1)
 				weight: 400
 		svg
 			display: block
-			color: var(--color-dark)
 			width: 1.2rem
 			height: 1.2rem
 			object-fit: contain

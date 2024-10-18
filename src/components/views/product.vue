@@ -11,12 +11,12 @@
 
 						<div class="section__options btn__grouped" v-if="!enableEdit">
 							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="enableEdit = true">
-								<span class="material-symbols-outlined">edit_square</span>
+								<icon-set icon="edit" />
 								Editar producto/servicio
 							</button>
 
 							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="confirmDelete = true">
-								<span class="material-symbols-outlined">delete</span>
+								<icon-set icon="delete" />
 								Eliminar producto/servicio
 							</button>
 						</div>
@@ -49,12 +49,47 @@
 								<div class="form__container form__container--small">
 									<label class="form__label form__label--required" for="code">Código SAT</label>
 									<div class="form__search">
-										<input class="form__input" type="text" id="code" placeholder="Código SAT" name="code" v-model="satCode">
+										<Field class="form__input" id="code" placeholder="Código SAT" name="code" v-model="satCode" />
 										<button class="form__search-button" @click.prevent="toggleSearchSatCode = !toggleSearchSatCode">
 											<icon-set icon="lens-add"/>
 										</button>
 									</div>
 									<ErrorMessage name="code" class="form__alert" data-field="code"/>
+								</div>
+
+								<div class="form__container form__container--half">
+									<label class="form__label form__label--required" for="category_id">Categoría del producto</label>
+									<Field as="select" class="form__select" id="category_id" name="category_id" v-model="category_id">
+										<option disabled value="">Selecciona la categoría del producto</option>
+										<option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+									</Field>
+									<ErrorMessage name="category_id" class="form__alert" data-field="category_id"/>
+								</div>
+
+								<div class="form__container form__container--small">
+									<label class="form__label form__label--required" for="unit_id">Unidad de medida</label>
+									<div class="form__search">
+										<Field class="form__input" id="unit" placeholder="Unidad de medida" name="unit_id" v-model="unitCode" />
+										<button class="form__search-button" @click.prevent="toggleSearchUnit = !toggleSearchUnit">
+											<icon-set icon="lens-add"/>
+										</button>
+									</div>
+									<ErrorMessage name="unit_id" class="form__alert" data-field="unit_id"/>
+								</div>
+
+								<div class="form__container form__container--half">
+									<label class="form__label form__label--required" for="type_id">Tipo de producto</label>
+									<Field as="select" class="form__select" id="type_id" name="type_id" v-model="type_id">
+										<option disabled value="">Selecciona el tipo de producto</option>
+										<option v-for="type in product_types" :value="type.id">{{ type.name }}</option>
+									</Field>
+									<ErrorMessage name="type_id" class="form__alert" data-field="type_id"/>
+								</div>
+
+								<div class="form__container form__container--small">
+									<label class="form__label" for="price">Precio</label>
+									<Field class="form__input" id="price" name="precio" placeholder="Precio del producto o servicio"/>
+									<ErrorMessage name="precio" class="form__alert" data-field="precio"/>
 								</div>
 
 							</div>
@@ -70,6 +105,7 @@
 			</main>
 		</div>
 		<search-component v-if="toggleSearchSatCode" :requestParams="satCodesRequestParams" :fields="searchFields" @close="toggleSearchSatCode = false" @searchResults="setSatCode"></search-component>
+		<search-component v-if="toggleSearchUnit" :requestParams="unitRequestParams" :fields="unitSearchFields" @close="toggleSearchUnit = false" @searchResults="setUnit"></search-component>
 	</div>
 </template>
 
@@ -100,38 +136,41 @@ const searchFields = ref([
 		name: 'Descripción'
 	}
 ])
-
+const unitSearchFields = ref([
+	{
+		id: 'code',
+		name: 'Código'
+	},
+	{
+		id: 'name',
+		name: 'Nombre'
+	}
+])
 const satCode = ref(null)
-
+const unitCode = ref(null)
 const toggleSearchSatCode = ref(false)
-
+const toggleSearchUnit = ref(false)
 const productData = function() {
 	return {	
-		tax_payer_type: null,
-		razon_social: null,
-		rfc: null,
-		regimen_fiscal: null,
-		postal_code: null,
-		state_code: null,
-		localidad: null,
-		municipio: null,
-		colonia: null,
-		street: null,
-		external_number: null,
-		internal_number: null,
-		cfdi_usage_id: null,
-		alias: null,
-		reference: null,
-		email: null,
-		phone: null,
-		comments: null,
-		tax_payer_ids: []
+		category_id: null,
+		name: null,
+		sku: null,
+		code: null,
+		description: null,
+		unit_id: null,
+		price: null,
+		type_id: null	
 	}
 }
-
+const categories = ref([])
+const product_types = ref([])
 const satCodesRequestParams = ref({
 	module: 'products/sat-codes',
 	params: `?fields=code,description` 
+})
+const unitRequestParams = ref({
+	module: 'products/units',
+	params: `?fields=code,name` 
 })
 
 const productDeleteConfirmationData = {
@@ -143,34 +182,21 @@ const productDeleteConfirmationData = {
 }
 const confirmDelete = ref(false)
 const productValidateSchema = yup.object().shape({
-	rfc: yup.string().required().label('RFC').min(12).max(13).matches(/^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$/i),
-	razon_social: yup.string().required().label('razón social'),
-	tax_payer_type: yup.number().required().label('Tipo de contribuyente').integer(),
-	regimen_fiscal: yup.string().required().label('régimen fiscal').min(3).max(3),
-	postal_code: yup.number().required().label('código postal').min(1000).max(99999).integer().positive(),
-	state_code: yup.string().required().label('Código del país').min(3).max(3),
-	localidad: yup.string().label('localidad').max(100).nullable(),
-	municipio: yup.string().label('municipio').max(100).nullable(),
-	colonia: yup.string().label('colonia').max(100).nullable(),
-	street: yup.string().label('calle').max(150).nullable(),
-	external_number: yup.string().label('número exterior').max(50).nullable(),
-	internal_number: yup.string().label('número interior').max(50).nullable(),
-	payment_method_id: yup.number().label('método de pago').nullable().integer().positive(),
-	payment_type_id: yup.number().label('forma de pago').nullable().integer().positive(),
-	cfdi_usage_id: yup.number().label('uso del CFDI').nullable().integer().positive(),
-	alias: yup.string().label('alias').max(50),
-	reference: yup.string().label('contacto de referencia').max(150).nullable(),
-	phone: yup.string().label('número telefónico').max(20).nullable(),
-	email: yup.string().email().label('correo electrónico').nullable().max(100),
-	comments: yup.string().label('comentarios').nullable(),
-	tax_payer_ids: yup.array().ensure()
+	name: yup.string().required().label('Nombre del producto').max(100),
+	code: yup.string().required().label('Código SAT'),
+	description: yup.string().label('Descripción del producto').nullable(),
+	unit_id: yup.string().required().label('Unidad de medida'),
+	category_id: yup.string().required().label('Categoría del producto'),
+	price: yup.string().required().label('Precio del producto'),
+	sku: yup.string().label('SKU').max(25).nullable(),
+	type_id: yup.string().label('Tipo de producto').required()
 })
 
 const productForm = ref(null)
-const submitButtonText = ref('Registrar dirección')
 const displaySATCodeOptions = ref(false)
+const displayUnitOptions = ref(false)
 const enableEdit = ref(false)
-const sectionTitle = ref('Agregar nuevo producto o servici o servicio')
+const sectionTitle = ref('Agregar nuevo producto o servicio')
 
 onMounted(() => {
 	if(route.name == 'customerView' && route.params.id > 0) {
@@ -188,6 +214,28 @@ function productDelete() {
 
 }
 
+function getCategories() {
+	new apiRequest().Get({
+		module: 'products/categories'
+	}).then(response => {
+		categories.value = response.data.data
+	}).catch(error => {
+		store.push_alert(response.data)
+	})
+}
+getCategories()
+
+function getProductTypes() {
+	new apiRequest().Get({
+		module: 'products/types'
+	}).then(response => {
+		product_types.value = response.data.data
+	}).catch(error => {
+		store.push_alert(response.data)
+	})
+}
+getProductTypes()
+
 function onSubmit(values, action) {
 	new apiRequest().Post({
 		module: 'customers',
@@ -196,7 +244,7 @@ function onSubmit(values, action) {
 		store.push_alert(response.data)
 		router.push({
 			name: 'customerView',
-			params: {id: respose.data.data.customer_id}
+			params: {id: response.data.data.id}
 		})
 	}).catch(error => {
 		store.push_alert(error.data)
@@ -204,9 +252,13 @@ function onSubmit(values, action) {
 }
 
 function setSatCode(response) {
-	console.log(response)
 	satCode.value = response.code
 	toggleSearchSatCode.value = false
+}
+
+function setUnit(response) {
+	unitCode.value = response.code
+	toggleSearchUnit.value = false
 }
 </script>
 

@@ -1,0 +1,3 @@
+url: http://localhost:5174
+tunnel: be410a3f-5a88-4931-bc22-92ac50c5f73f
+credentials-file: /home/criselgeek/.cloudflared/be410a3f-5a88-4931-bc22-92ac50c5f73f.json

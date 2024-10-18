@@ -1,0 +1,45 @@
+@import '../mixins/_mixins.sass'
+.new-element
+	position: fixed
+	bottom: 1rem
+	right: 1rem
+	width: max-content
+	z-index: 100
+	&__button
+		border: none
+		padding: 0
+		background-color: transparent
+		padding: 0
+		transition: all 300ms ease-in-out
+		&--rotate
+			transform: rotate(45deg)
+	&__icon
+		width: 3rem
+		height: 3rem
+		color: var(--color-primary)
+		cursor: pointer
+	&__list
+		position: absolute
+		box-shadow: 0.5rem 0.5rem 0.5rem var(--light-box-shadows)
+		bottom: 3.7rem
+		right: 0
+		width: max-content
+		background-color: var(--color-light)
+		padding: 0
+		box-sizing: border-box
+		border-radius: 0.3rem
+		overflow: hidden
+	&__element
+		display: block
+		padding: 0.5rem 2rem
+		color: var(--color1)
+		text-decoration: none
+		@include font-size(--fs-regular)	
+		&:not(:last-child)
+			border-bottom: 1px solid var(--color-grayscale-100)
+		&:hover
+			background-color: var(--color-primary)
+			color: var(--color-light)
+		font:
+			weight: 400
+			family: var(--ff1)
