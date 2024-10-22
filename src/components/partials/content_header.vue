@@ -25,5 +25,5 @@ function logOut() {
 </script>
 
 <style lang="sass">
-	@import  "../../assets/sass/components/_content_header.sass"
+	@use  "../../assets/sass/components/_content_header.sass"
 </style>

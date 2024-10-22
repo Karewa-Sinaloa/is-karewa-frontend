@@ -6,8 +6,8 @@
 			<main class="main">
 				<section class="section section--wide section--no-border">
 					<div class="section__top">
-						<h1 class="section__title">Lista de categorias</h1>
-						<span class="section__help-text">Listado de las categoría disponibles para relacionar tu producto.</span>
+						<h1 class="section__title">Lista de productos</h1>
+						<span class="section__help-text">Visualiza el listado de tus productos disponibles.</span>
 					</div>
 					<div class="section__content">
 						<div class="results">
@@ -18,7 +18,7 @@
 								<result-options :optionList="{go: {name: 'categoryEdit', params: {id: category.id}}, delete: true}"></result-options>
 							</div>
 						</div>
-						<pagination-container v-if="pagination" :data="pagination"></pagination-container>
+						<pagination-container v-if="pagination" :data="pagination" module="productList"></pagination-container>
 					</div>	
 				</section>
 			</main>
@@ -28,14 +28,14 @@
 
 <script setup>
 import { onMounted, ref, watch, computed } from 'vue'
-import { useAppStore } from '../../store/index.js'
-import sidebarComponent from '../partials/sidebar.vue'
-import contentHeader from '../partials/content_header.vue'
+import { useAppStore } from '../../../store/index.js'
+import sidebarComponent from '../../partials/sidebar.vue'
+import contentHeader from '../../partials/content_header.vue'
 import { useRouter, useRoute } from 'vue-router'
-import { apiRequest } from '../../api/requests.js'
-import confirmationPopup from '../partials/confirmation_popup.vue'
-import resultOptions from '../partials/result_options.vue'
-import paginationContainer from '../partials/pagination.vue'
+import { apiRequest } from '../../../api/requests.js'
+import confirmationPopup from '../../partials/confirmation_popup.vue'
+import resultOptions from '../../partials/result_options.vue'
+import paginationContainer from '../../partials/pagination.vue'
 
 const store = useAppStore()
 const router = useRouter()
@@ -77,5 +77,5 @@ function getCategories() {
 </script>
 
 <style lang="sass" scoped>
-@use "../../assets/sass/components/_results.sass"
+@use "../../../assets/sass/components/_results.sass"
 </style>

@@ -31,5 +31,5 @@ onMounted(() => {
 </script>
 
 <style lang="sass" scoped>
-	@import "../../assets/sass/components/_help_popup.sass"
+	@use "../../assets/sass/components/_help_popup.sass"
 </style>

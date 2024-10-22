@@ -1,22 +1,23 @@
+@use "../settings/_variables" as vars
+@use "../mixins/_mixins" as mix
 @use "sass:map"
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&Arimo:ital,wght@0,400..700;1,400..700&display=swap')
-@import "../settings/_variables.sass"
 \:root
 	font-size: 16px
-	--ff1: #{$ff1}
-	--ff2: #{$ff2}
-	--ff3: #{$ff3}
-	@each $name, $size in $fs-map
+	--ff1: #{vars.$ff1}
+	--ff2: #{vars.$ff2}
+	--ff3: #{vars.$ff3}
+	@each $name, $size in vars.$fs-map
 		--fs-#{$name}: #{$size}
-	@each $name, $color in $main-color-list
+	@each $name, $color in vars.$main-color-list
 		--color-#{$name}: #{$color}
-	--color-dark: #{$color-dark}
-	--color-light: #{$color-light}
-	@include grayscale-pallete()
-	@include pallete-creator($main-colors-hue, primary, 100%)
-	@each $name, $bp in $breakpoints
+	--color-dark: #{vars.$color-dark}
+	--color-light: #{vars.$color-light}
+	@include mix.grayscale-pallete()
+	@include mix.pallete-creator(vars.$main-colors-hue, primary, 100%)
+	@each $name, $bp in vars.$breakpoints
 		--#{$name}: #{$bp}
-	--overall-opaque-bg: #{$overall-opaque-bg}
+	--overall-opaque-bg: #{vars.$overall-opaque-bg}
 	--inset-light-box-shadows: inset 0 0 1rem var(--color-grayscale-100)
 	--light-box-shadows: var(--color-grayscale-100)
 	--sidebar-bg: var(--color-light)
@@ -94,9 +95,9 @@ p,li,span,code
 	align-items: flex-start
 	height: auto
 	min-height: calc(100vh - 46px)
-@media all and (min-width: map-get($breakpoints, bp5))
+@media all and (min-width: map.get(vars.$breakpoints, bp5))
 	.desktop-view
 		display: block
-@media all and (max-width: map-get($breakpoints, bp5))
+@media all and (max-width: map.get(vars.$breakpoints, bp5))
 	.desktop-view
 		display: none

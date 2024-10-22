@@ -1,4 +1,4 @@
-@import '../mixins/_mixins.sass'
+@use '../mixins/_mixins' as mix
 .new-element
 	position: fixed
 	bottom: 1rem
@@ -34,7 +34,7 @@
 		padding: 0.5rem 2rem
 		color: var(--color1)
 		text-decoration: none
-		@include font-size(--fs-regular)	
+		@include mix.font-size(--fs-regular)	
 		&:not(:last-child)
 			border-bottom: 1px solid var(--color-grayscale-100)
 		&:hover

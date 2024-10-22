@@ -20,7 +20,7 @@
 								<result-options :optionList="{go: {name: 'customerView', params: {id: customer.id}}, delete: true}"></result-options>
 							</div>
 						</div>
-						<pagination-container v-if="pagination" :data="pagination"></pagination-container>
+						<pagination-container v-if="pagination" :data="pagination" module="customerList"></pagination-container>
 					</div>	
 				</section>
 			</main>
@@ -68,5 +68,5 @@ function getCustomers() {
 </script>
 
 <style lang="sass" scoped>
-@import "../../assets/sass/components/_results.sass"
+@use "../../assets/sass/components/_results.sass"
 </style>

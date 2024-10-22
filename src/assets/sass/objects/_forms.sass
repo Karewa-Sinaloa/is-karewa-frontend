@@ -1,5 +1,5 @@
-@import "../settings/_variables.sass"
-@import "../mixins/_mixins.sass"
+@use "../settings/_variables"
+@use "../mixins/_mixins"
 
 .form
 	&__input,
@@ -8,11 +8,11 @@
 	&__section-title
 		padding: 0.2rem 0
 		color: var(--text-color-primary-dark)
-		@include font-size(--fs-mid)
+		@include mixins.font-size(--fs-mid)
 		border-bottom: 1px dashed var(--color-primary)
 	&__help-text
 		color: var(--text-color-primary-dark)
-		@include font-size(--fs-small)
+		@include mixins.font-size(--fs-small)
 		display: block
 	&__fieldset
 		border: none
@@ -28,9 +28,9 @@
 		color: var(--text-color-primary-dark)
 		outline: none
 		padding: 0.3rem 0.8rem
-		@include font-size(--fs-regular)
+		@include mixins.font-size(--fs-regular)
 		&--big
-			@include font-size(--fs-large)
+			@include mixins.font-size(--fs-large)
 		&--disabled
 			border-color: var(--color-grayscale-50)
 			background-color: var(--color-grayscale-50)
@@ -41,9 +41,9 @@
 			background-color: var(--color-light)
 			border-bottom-color: var(--color-success)
 		&--email
-			@include input-icon('/src/assets/icons/email.png')
+			@include mixins.input-icon('/src/assets/icons/email.png')
 		&--password
-			@include input-icon('/src/assets/icons/padlock.png')
+			@include mixins.input-icon('/src/assets/icons/padlock.png')
 	&__help-icon
 		color: var(--color-secondary)
 		border: none
@@ -59,7 +59,7 @@
 	&__label
 		position: relative
 		padding: 0 0 0.4rem 0
-		@include font-size(--fs-small)
+		@include mixins.font-size(--fs-small)
 		display: flex
 		align-items: center
 		color: var(--text-color-primary-dark)
@@ -96,7 +96,7 @@
 		display: block
 		margin-top: 1rem
 	&__alert
-		@include font-size(--fs-small)
+		@include mixins.font-size(--fs-small)
 		color: var(--color-warning)
 		display: block
 		padding: 0.4rem 0 0 0
@@ -142,7 +142,7 @@
 		width: 100%
 		padding: 0.47rem 0.8rem
 		position: relative
-		@include font-size(--fs-regular)
+		@include mixins.font-size(--fs-regular)
 		background:
 			image: url(/src/assets/icons/select_triangle.png)
 			repeat: no-repeat
@@ -168,7 +168,7 @@
 		margin: auto
 		width: 100%
 		color: var(--color-secondary)
-		@include font-size(--fs-regular)
+		@include mixins.font-size(--fs-regular)
 	&__checkbox
 		display: block
 		border: 1px solid var(--color-grayscale-100)
@@ -182,7 +182,7 @@
 			color: var(--color-dark)
 			margin: 0
 			padding: 0.2rem 0
-			@include font-size(--fs-small)
+			@include mixins.font-size(--fs-small)
 	&__drag-drop
 		width: 15rem
 		margin: 1rem 0
@@ -203,7 +203,7 @@
 		color: var(--coloe-dark)
 		text-align: center
 		margin: auto
-		@include font-size(--fs-regular)
+		@include mixins.font-size(--fs-regular)
 		font:
 			weight: 500
 			family: var(--ff1)
@@ -212,7 +212,7 @@
 		text-align: center
 		display: block
 		margin: auto
-		@include font-size(--fs-small)
+		@include mixins.font-size(--fs-small)
 	.btn
 		display: block
 		margin: 1rem auto 0 auto
@@ -234,13 +234,13 @@
 		z-index: 0
 		background-color: transparent	
 	&__success
-		@include font-size(--fs-xxxl)
+		@include mixins.font-size(--fs-xxxl)
 		display: block
 		color: var(--color-success)
 		margin: 0.5rem auto auto
 		text-align: center
 	&__remove
-		@include font-size(--fs-mid)
+		@include mixins.font-size(--fs-mid)
 		display: block
 		color: var(--color-dark)
 		margin: 0.5rem auto auto
@@ -261,7 +261,7 @@
 		color: var(--color-dark)
 		margin: 0
 		padding: 0.1rem 0
-		@include font-size(--fs-small)
+		@include mixins.font-size(--fs-small)
 .autocomplete
 	&__options
 		display: block

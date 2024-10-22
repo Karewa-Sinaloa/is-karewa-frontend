@@ -34,5 +34,5 @@ function closePopup() {
 </script>
 
 <style lang="sass" scoped>
-@import "../../assets/sass/components/_popups.sass"
+@use "../../assets/sass/components/_popups.sass"
 </style>

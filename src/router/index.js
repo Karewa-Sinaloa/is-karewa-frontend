@@ -12,9 +12,10 @@ import accessViewValidation from '../components/partials/verification.vue'
 import NewCompanyView from '../components/views/new_company.vue'
 import CompanyView from '../components/views/company.vue'
 import CustomerView from '../components/views/customer.vue'
-import CustomerListView from '../components/views/customer_list.vue'
+import CustomerList from '../components/views/customer_list.vue'
 import CFDIView from '../components/views/cfdi.vue'
-import ProductView from '../components/views/product.vue'
+import ProductView from '../components/views/product/edit.vue'
+import ProductList from '../components/views/product/list.vue'
 import CategoryView from '../components/views/product_categories_list.vue'
 import CategoryEdit from '../components/views/product_category_edit.vue'
 
@@ -61,19 +62,15 @@ const routes = [
 	},
 	{
 		path: '/clientes/p/:page(\\d+)?',
-		component: CustomerListView,
-		name: 'customerListPaginateView',
+		component: CustomerList,
+		name: 'customerList',
 		meta: {
 			login: true
 		}
 	},
 	{
 		path: '/clientes',
-		component: CustomerListView,
-		name: 'customerListView',
-		meta: {
-			login: true
-		}
+		redirect: '/clientes/p/1'
 	},
 	{
 		path: '/categorias/nueva-categoria',
@@ -114,6 +111,18 @@ const routes = [
 		meta: {
 			login: true
 		}
+	},
+	{
+		path: '/productos/p/:page(\\d+)?',
+		component: ProductList,
+		name: 'productList',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/productos',
+		redirect: '/productos/p/1'
 	},
 	{
 		path: '/acceso/',

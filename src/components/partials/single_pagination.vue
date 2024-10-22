@@ -43,5 +43,5 @@ function navigateTo(page) {
 </script>
 
 <style lang="sass" scoped>
-@import "../../assets/sass/components/_pagination.sass"
+@use "../../assets/sass/components/_pagination.sass"
 </style>

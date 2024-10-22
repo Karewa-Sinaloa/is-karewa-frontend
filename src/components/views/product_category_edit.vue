@@ -179,5 +179,5 @@ function editCategory(values) {
 </script>
 
 <style lang="sass" scoped>
-	@import "../../assets/sass/components/_section.sass"
+	@use "../../assets/sass/components/_section.sass"
 </style>

@@ -28,5 +28,5 @@ watch(() => route.path, () => {
 </script>
 
 <style scope>
-@import '../../assets/sass/components/_new_elements.sass'
+@use '../../assets/sass/components/_new_elements.sass'
 </style>

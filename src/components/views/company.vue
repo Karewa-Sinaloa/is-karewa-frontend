@@ -249,5 +249,5 @@ function humanReadDate(dateString) {
 </script>
 
 <style lang="sass">
-	@import "../../assets/sass/components/_section.sass"
+	@use "../../assets/sass/components/_section.sass"
 </style>

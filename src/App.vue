@@ -58,5 +58,5 @@ watch(isLoggedIn, () => {
 </template>
 
 <style lang="sass">
-	@import "./assets/sass/base/_base.sass"
+	@use "./assets/sass/base/_base.sass"
 </style>

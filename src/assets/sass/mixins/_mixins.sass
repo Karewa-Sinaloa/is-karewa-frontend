@@ -1,3 +1,4 @@
+@use "sass:map"
 @use "sass:color"
 @mixin input-icon($icon)
 	background:
@@ -19,7 +20,7 @@
 	border-radius: calc(var(#{$fs}) * 0.2)
 
 @mixin pallete-creator($hue, $name, $saturation)
-	$x: map-get($hue, $name)
+	$x: map.get($hue, $name)
 	$color-pallete-list: ("50": 95% ,"100": 90%, "200": 80%, "300": 70%, "400": 60%, "500": 50%, "600": 40%, "700": 30%, "800": 20%, "900": 10%, "950": 5%)
 	@each $key, $value in $color-pallete-list
 		--color-#{$name}-#{$key}: hsl(#{$x} #{$saturation} #{$value})

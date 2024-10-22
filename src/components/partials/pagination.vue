@@ -1,8 +1,8 @@
 <template>
 	<div class="pagination">
-		<router-link :to="{name: 'customerListPaginateView', params: {page: 1}}" class="pagination__element pagination__element--prev">&#10094;</router-link>
-		<router-link v-for="btn in btns" :to="{name: 'customerListPaginateView', params: {page: btn}}" class="pagination__element pagination__element--page" :class="{'pagination__element--active': page == btn}">{{ btn }}</router-link>
-		<router-link :to="{name: 'customerListPaginateView', params: {page: props.data.pages}}" class="pagination__element pagination__element--next">&#10095;</router-link>
+		<router-link :to="{name: props.module, params: {page: 1}}" class="pagination__element pagination__element--prev">&#10094;</router-link>
+		<router-link v-for="btn in btns" :to="{name: props.module, params: {page: btn}}" class="pagination__element pagination__element--page" :class="{'pagination__element--active': page == btn}">{{ btn }}</router-link>
+		<router-link :to="{name: props.module, params: {page: props.data.pages}}" class="pagination__element pagination__element--next">&#10095;</router-link>
 	</div>
 </template>
 
@@ -12,7 +12,7 @@ import { watch, ref, onMounted } from 'vue'
 
 const route = useRoute()
 const router = useRouter()
-const props = defineProps(['data'])
+const props = defineProps(['data', 'module'])
 const btns = ref([])
 const page = ref(1)
 const maxBtns = ref(6)
@@ -32,7 +32,7 @@ function showButtons() {
 	}
 	if(page.value > maxBtns.value) {
 		router.push({
-			name: 'customerListPaginateView',
+			name: props.module,
 			params: {
 				page: 1
 			}
@@ -50,5 +50,5 @@ function showButtons() {
 </script>
 
 <style lang="sass" scoped>
-@import "../../assets/sass/components/_pagination.sass"
+@use "../../assets/sass/components/_pagination.sass"
 </style>

@@ -20,13 +20,13 @@
 				<span class="nav__element-text">Empresa</span>
 			</router-link>
 			
-			<router-link class="nav__element" :to="{name: 'customerListView'}">
+			<router-link class="nav__element" :to="{name: 'customerList', params: {page: 1}}">
 				<icon-set icon="customers" />
 				<span class="nav__element-text">Clientes</span>
 			</router-link>
 
 			<span class="nav__element-container">
-				<router-link class="nav__element" :to="{name: 'newProductView'}">
+				<router-link class="nav__element" :to="{name: 'productList', params: {page: 1}}">
 					<icon-set icon="products" />
 					<span class="nav__element-text">Productos</span>
 				</router-link>
@@ -44,5 +44,5 @@
 <script setup></script>
 
 <style lang="sass">
-	@import "../../assets/sass/components/_sidebar.sass"
+	@use "../../assets/sass/components/_sidebar.sass"
 </style>

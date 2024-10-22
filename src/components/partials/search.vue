@@ -88,6 +88,6 @@ function navigateTo(r) {
 </script>
 
 <style lang="sass">
-	@import "../../assets/sass/components/_search.sass"
-	@import "../../assets/sass/components/_results.sass"
+	@use "../../assets/sass/components/_search.sass"
+	@use "../../assets/sass/components/_results.sass"
 </style>

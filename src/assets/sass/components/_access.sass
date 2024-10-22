@@ -1,15 +1,15 @@
 @use "sass:map"
 
-@import "../settings/_variables.sass"
-@import "../mixins/_mixins.sass"
-@import "../objects/_forms.sass"
-@import "../objects/_buttons.sass"
+@use "../settings/_variables"
+@use "../mixins/_mixins"
+@use "../objects/_forms"
+@use "../objects/_buttons"
 
 .access
 	&__welcome
 		display: block
 		color: var(--color-light)
-		@include font-size(--fs-small)
+		@include mixins.font-size(--fs-small)
 	&__column	
 		height: 100vh
 		&--left
@@ -32,18 +32,18 @@
 		color: var(--color2)
 		display: block
 		text-decoration: none
-		@include font-size(--fs-small)
+		@include mixins.font-size(--fs-small)
 		font-family: var(--ff1)
 		width: max-content
 		margin: auto 0 auto auto
 	.form
 		margin-top: 1rem
-@media all and (min-width: map-get($breakpoints, bp5))
+@media all and (min-width: map.get(variables.$breakpoints, bp5))
 	.access
 		display: flex
 		align-items: stretch
 		&__subtitle
-			@include font-size(--fs-mid)
+			@include mixins.font-size(--fs-mid)
 			margin: auto auto 1rem auto
 		&__column
 			&--left
@@ -57,12 +57,12 @@
 			width: 100%
 			height: 100vh
 			object-fit: cover
-@media all and (max-width: map-get($breakpoints, bp5))
+@media all and (max-width: map.get(variables.$breakpoints, bp5))
 	.access
 		&__hub
 			max-width: var(--bp8)
 		&__subtitle
 			margin: auto auto 1rem auto
-			@include font-size(--fs-mid)	
+			@include mixins.font-size(--fs-mid)	
 		&__column--right
 			display: none

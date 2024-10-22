@@ -1,5 +1,7 @@
 @use "sass:color"
-@import "../settings/_variables.sass"
+@use "../settings/_variables" as vars
+@use "../mixins/mixins" as mix
+
 .btn
 	font:
 		family: var(--ff1)
@@ -20,9 +22,9 @@
 			decoration: none
 			transform: uppercase
 		box-sizing: border-box
-	@each $name, $fs in $fs-map
+	@each $name, $fs in vars.$fs-map
 		&--#{$name}
-			@include set-button(--fs-#{$name})
+			@include mix.set-button(--fs-#{$name})
 			svg
 				width: calc(var(--fs-#{$name}) * 1.27)
 				height: calc(var(--fs-#{$name}) * 1.27)
@@ -31,7 +33,7 @@
 	&__outlined
 		border: 1px solid transparent
 		background-color: transparent
-		@each $name, $color in $main-color-list
+		@each $name, $color in vars.$main-color-list
 			&--#{$name}
 				border-color: #{$color}
 				color: #{$color}
@@ -50,7 +52,7 @@
 			color: var(--color-dark)
 			&:hover
 				background-color: var(--color-grayscale-100)
-		@each $name, $color in $main-color-list
+		@each $name, $color in vars.$main-color-list
 			&--#{$name}
 				background-color: #{$color}
 				@if color.channel($color, "lightness", $space: hsl) < 65
@@ -70,7 +72,7 @@
 			color: var(--color-light)
 			&:hover
 				color: var(--color-grayscale-100)
-		@each $name, $color in $main-color-list
+		@each $name, $color in vars.$main-color-list
 			&--#{$name}
 				color: var(--color-#{$name})
 				&:hover

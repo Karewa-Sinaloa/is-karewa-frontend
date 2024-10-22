@@ -19,5 +19,5 @@
 </template>
 
 <style lang="sass">
-	@import "../../assets/sass/components/_access.sass"
+	@use "../../assets/sass/components/_access.sass"
 </style>

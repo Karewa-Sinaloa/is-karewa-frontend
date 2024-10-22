@@ -1,4 +1,4 @@
-@import "../mixins/_mixins.sass"
+@use "../mixins/_mixins" as mix
 .widget
 	background-color: var(--color-light)
 	padding: 2rem
@@ -16,12 +16,12 @@
 	&__heading2
 		margin: 0 0 0.5rem 0
 		color: var(--color-dark)
-		@include font-size(--fs-mid)
+		@include mix.font-size(--fs-mid)
 	&__help
 		color: var(--color-dark)
 		margin: auto
 		display: block
-		@include font-size(--fs-small)
+		@include mix.font-size(--fs-small)
 .progress-list
 	padding: 1rem 0
 	&__element
@@ -38,9 +38,9 @@
 	&__title
 		margin: auto auto 0.3rem auto
 		color: var(--color-dark)
-		@include font-size(--fs-regular)
+		@include mix.font-size(--fs-regular)
 	&__text
-		@include font-size(--fs-small)
+		@include mix.font-size(--fs-small)
 		color: var(--color-dark)
 		margin: auto
 	&__icon

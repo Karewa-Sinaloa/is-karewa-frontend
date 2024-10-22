@@ -1,5 +1,7 @@
+@use "../settings/_variables" as vars
+@use "../mixins/_mixins" as mix
 @use "sass:color"
-@import "../settings/_variables.sass"
+
 @keyframes show-notification
 	0%
 		right: -100%!important
@@ -28,7 +30,7 @@
 		margin: 0.2rem 0 0.2rem auto
 		padding: 0.7rem 0.5rem
 		animation: show-notification 2s infinite
-		@each $name, $color in $main-color-list
+		@each $name, $color in vars.$main-color-list
 			&--#{$name}
 				background-color: var(--color-#{$name})
 				//@if color.lightness($color) < 40
@@ -50,7 +52,7 @@
 		margin: auto
 		line-height: 1rem
 		width: calc(100% - 2.5rem - 2rem)
-		@include font-size(--fs-small)
+		@include mix.font-size(--fs-small)
 	&__close
 		color: inherit
 		&-icon

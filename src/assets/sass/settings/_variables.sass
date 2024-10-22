@@ -1,7 +1,7 @@
 @use "sass:map"
 @use "sass:color"
 @use "sass:math"
-@import "../mixins/_mixins.sass"
+@use "../mixins/_mixins"
 
 $fs-default: 16px
 $ff1: 'Oswald', sans-serif
@@ -17,13 +17,13 @@ $primary-colors: ()
 @each $key, $color in $main-color-list
 	//$co: color.hue($color)
 	$co: color.channel($color, "hue", $space: hsl)
-	$main-colors-hue: map-merge($main-colors-hue, (#{$key}: round($co)))
-	$primary-colors: map-merge($primary-colors, ($key: #{$color}))
+	$main-colors-hue: map.merge($main-colors-hue, (#{$key}: math.round($co)))
+	$primary-colors: map.merge($primary-colors, ($key: #{$color}))
 
-$grey-hue: map-get($main-colors-hue, primary)
+$grey-hue: map.get($main-colors-hue, primary)
 $color-dark: hsl($grey-hue 0% 0%)
 $color-light: hsl($grey-hue 0% 100%)
 
-$color-primary: map-get($main-color-list, primary)
-$color-info: map-get($main-color-list, info)
+$color-primary: map.get($main-color-list, primary)
+$color-info: map.get($main-color-list, info)
 $overall-opaque-bg: color.adjust($color-info, $alpha: -0.9)

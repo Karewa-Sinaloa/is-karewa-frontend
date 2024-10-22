@@ -111,17 +111,17 @@
 
 <script setup>
 import { onMounted, ref, watch, computed } from 'vue'
-import { useAppStore } from '../../store/index.js'
-import sidebarComponent from '../partials/sidebar.vue'
-import contentHeader from '../partials/content_header.vue'
+import { useAppStore } from '../../../store/index.js'
+import sidebarComponent from '../../partials/sidebar.vue'
+import contentHeader from '../../partials/content_header.vue'
 import { useRouter, useRoute } from 'vue-router'
 import * as yup from 'yup'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import { setFieldMessages }  from '../../helpers/yup.locale.js'
-import { apiRequest } from '../../api/requests.js'
-import inputAutocomplete from '../partials/input-autocomplete.vue'
-import confirmationPopup from '../partials/confirmation_popup.vue'
-import searchComponent from '../partials/search.vue'
+import { setFieldMessages }  from '../../../helpers/yup.locale.js'
+import { apiRequest } from '../../../api/requests.js'
+import inputAutocomplete from '../../partials/input-autocomplete.vue'
+import confirmationPopup from '../../partials/confirmation_popup.vue'
+import searchComponent from '../../partials/search.vue'
 
 const store = useAppStore()
 const router = useRouter()
@@ -263,5 +263,5 @@ function setUnit(response) {
 </script>
 
 <style lang="sass" scoped>
-	@import "../../assets/sass/components/_section.sass"
+	@use "../../../assets/sass/components/_section.sass"
 </style>
