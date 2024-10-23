@@ -6,7 +6,7 @@
 			</button>
 			<img class="help-popup__icon" src="../../assets/icons/information.png" alt="Icono de ayuda">
 			<h5 class="help-popup__title">Información de apoyo</h5>
-			<p class="help-popup__text" v-text="helpText"></p>
+			<p class="help-popup__text" v-html="helpText"></p>
 		</div>
 	</div>
 </template>

@@ -17,7 +17,7 @@
 									<span class="result__description" v-text="customer.rfc"></span>
 									<span class="result__info" v-text="customer.alias"></span>
 								</div>
-								<result-options :optionList="{go: {name: 'customerView', params: {id: customer.id}}, delete: true}"></result-options>
+								<result-options :optionList="{go: {name: 'customerEdit', params: {id: customer.id}}, delete: true}"></result-options>
 							</div>
 						</div>
 						<pagination-container v-if="pagination" :data="pagination" module="customerList"></pagination-container>

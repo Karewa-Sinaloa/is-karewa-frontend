@@ -27,6 +27,6 @@ watch(() => route.path, () => {
 
 </script>
 
-<style scope>
-@use '../../assets/sass/components/_new_elements.sass'
+<style lang="sass" scope>
+@use '../../assets/sass/components/_new_elements'
 </style>

@@ -323,7 +323,7 @@ const contribuyentes = computed(() => {
 })
 
 onMounted(() => {
-	if(route.name == 'customerView' && route.params.id > 0) {
+	if(route.name == 'customerEdit' && route.params.id > 0) {
 		customerId.value = route.params.id
 		sectionTitle.value = 'Editar información del cliente'
 		getCustomer()
@@ -454,7 +454,7 @@ function getCustomer() {
 		}).catch(e => {
 			store.push_alert(e.data)
 			router.push({
-				name: 'newCustomerView'
+				name: 'customerAdd'
 			})
 		})
 }
@@ -470,7 +470,7 @@ function onSubmit(values, action) {
 	}).then(response => {
 		store.push_alert(response.data)
 		router.push({
-			name: 'customerView',
+			name: 'customerList',
 			params: {id: respose.data.data.customer_id}
 		})
 	}).catch(error => {

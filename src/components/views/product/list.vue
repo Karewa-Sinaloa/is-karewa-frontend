@@ -11,11 +11,13 @@
 					</div>
 					<div class="section__content">
 						<div class="results">
-							<div class="results__result result" v-for="category in categories">
+							<div class="results__result result" v-for="product in products">
 								<div class="result__data">
-									<h3 class="result__title" v-text="category.name"></h3>
+									<h3 class="result__title" v-text="product.name"></h3>
+									<span class="result__description" v-text="product.description"></span>
+									<span class="result__info" v-text="product.product_category"></span>
 								</div>
-								<result-options :optionList="{go: {name: 'categoryEdit', params: {id: category.id}}, delete: true}"></result-options>
+								<result-options :optionList="{go: {name: 'productEdit', params: {id: product.id}}, delete: true}"></result-options>
 							</div>
 						</div>
 						<pagination-container v-if="pagination" :data="pagination" module="productList"></pagination-container>
@@ -41,7 +43,7 @@ const store = useAppStore()
 const router = useRouter()
 const route = useRoute()
 
-const categories = ref([])
+const products = ref([])
 const pagination = ref(null)
 const maxResults = ref(12)
 const currentPage = ref(1)
@@ -49,26 +51,26 @@ const currentPage = ref(1)
 onMounted(() => {
 	store.new_elements([
 		{
-			name: 'categoryAdd',
-			text: 'Agregar categoría'	
+			name: 'productAdd',
+			text: 'Agregar Producto'	
 		}
 	])
 })
 
-getCategories()
+getProducts()
 
 watch(() => route.path, () => {
 	currentPage.value = route.params.page ? route.params.page : 1
-	categories.value = []
-	getCategories()
+	products.value = []
+	getProducts()
 })
 
-function getCategories() {
+function getProducts() {
 	new apiRequest().Get({
-		module: 'products/categories',
+		module: 'products/products',
 		params: `?page=${currentPage.value}&limit=${maxResults.value}`
 	}).then(r => {
-		categories.value = r.data.data
+		products.value = r.data.data
 		pagination.value = r.data.pagination ? r.data.pagination : null
 	}).catch(e => {
 		store.push_alert(e.data)

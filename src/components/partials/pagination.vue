@@ -1,5 +1,5 @@
 <template>
-	<div class="pagination">
+	<div class="pagination" v-if="props.data.pages > 1">
 		<router-link :to="{name: props.module, params: {page: 1}}" class="pagination__element pagination__element--prev">&#10094;</router-link>
 		<router-link v-for="btn in btns" :to="{name: props.module, params: {page: btn}}" class="pagination__element pagination__element--page" :class="{'pagination__element--active': page == btn}">{{ btn }}</router-link>
 		<router-link :to="{name: props.module, params: {page: props.data.pages}}" class="pagination__element pagination__element--next">&#10095;</router-link>
@@ -19,6 +19,8 @@ const maxBtns = ref(6)
 
 page.value = route.params.page && route.params.page > 0 ? route.params.page : 1
 showButtons()
+
+console.log(props.data)
 
 watch(() => route.path, () => {
 	page.value = route.params.page && route.params.page > 0 ? route.params.page : 1

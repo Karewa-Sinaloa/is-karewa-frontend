@@ -4,6 +4,10 @@
 		<div class="result-actions" :class="{'result-actions--active': showOptions}" @click.stop>
 			<span class="result-actions__triangle"></span>
 			<router-link :to="optionList.go" class="result-actions__option">
+				<icon-set icon="view"/>
+				<span>Ver</span>
+			</router-link>
+			<router-link :to="{name: optionList.go.name, params: optionList.go.params, query: {edit: true}}" class="result-actions__option">
 				<icon-set icon="edit"/>
 				<span>Editar</span>
 			</router-link>

@@ -30,72 +30,90 @@
 
 								<div class="form__container form__container--half">
 									<label class="form__label form__label--required" for="name">Nombre del producto o servicio</label>
-									<Field class="form__input" id="name" name="name" placeholder="Nombre del producto / servicio"/>
+									<Field class="form__input" id="name" name="name" placeholder="Nombre del producto / servicio" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
 									<ErrorMessage name="name" class="form__alert" data-field="name"/>
 								</div>
 
 								<div class="form__container form__container--small">
 									<label class="form__label" for="sku">SKU</label>
-									<Field class="form__input" id="sku" name="sku" placeholder="SKU del producto / servicio"/>
+									<Field class="form__input" id="sku" name="sku" placeholder="SKU del producto / servicio" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
 									<ErrorMessage name="sku" class="form__alert" data-field="sku"/>
 								</div>
 
-								<div class="form__container form__container--half">
+								<div class="form__container form__container--full">
 									<label class="form__label form__label--required" for="description">Descripción del producto / servicio</label>
-									<Field class="form__input" id="description" name="description" placeholder="Descripción del producto / servicio"/>
+									<Field class="form__input" id="description" name="description" placeholder="Descripción del producto / servicio" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
 									<ErrorMessage name="description" class="form__alert" data-field="description"/>
-								</div>
-
-								<div class="form__container form__container--small">
-									<label class="form__label form__label--required" for="code">Código SAT</label>
-									<div class="form__search">
-										<Field class="form__input" id="code" placeholder="Código SAT" name="code" v-model="satCode" />
-										<button class="form__search-button" @click.prevent="toggleSearchSatCode = !toggleSearchSatCode">
-											<icon-set icon="lens-add"/>
-										</button>
-									</div>
-									<ErrorMessage name="code" class="form__alert" data-field="code"/>
-								</div>
+								</div>	
 
 								<div class="form__container form__container--half">
 									<label class="form__label form__label--required" for="category_id">Categoría del producto</label>
-									<Field as="select" class="form__select" id="category_id" name="category_id" v-model="category_id">
+									<Field as="select" class="form__select" id="category_id" name="category_id" v-model="category_id" :disabled="!enableEdit" :class="{'form__select--disabled': !enableEdit}">
 										<option disabled value="">Selecciona la categoría del producto</option>
 										<option v-for="category in categories" :value="category.id">{{ category.name }}</option>
 									</Field>
 									<ErrorMessage name="category_id" class="form__alert" data-field="category_id"/>
-								</div>
+								</div>	
 
 								<div class="form__container form__container--small">
-									<label class="form__label form__label--required" for="unit_id">Unidad de medida</label>
-									<div class="form__search">
-										<Field class="form__input" id="unit" placeholder="Unidad de medida" name="unit_id" v-model="unitCode" />
-										<button class="form__search-button" @click.prevent="toggleSearchUnit = !toggleSearchUnit">
-											<icon-set icon="lens-add"/>
-										</button>
-									</div>
-									<ErrorMessage name="unit_id" class="form__alert" data-field="unit_id"/>
-								</div>
-
-								<div class="form__container form__container--half">
 									<label class="form__label form__label--required" for="type_id">Tipo de producto</label>
-									<Field as="select" class="form__select" id="type_id" name="type_id" v-model="type_id">
+									<Field as="select" class="form__select" id="type_id" name="type_id" v-model="type_id" :disabled="!enableEdit" :class="{'form__select--disabled': !enableEdit}">
 										<option disabled value="">Selecciona el tipo de producto</option>
 										<option v-for="type in product_types" :value="type.id">{{ type.name }}</option>
 									</Field>
 									<ErrorMessage name="type_id" class="form__alert" data-field="type_id"/>
 								</div>
 
-								<div class="form__container form__container--small">
+								<div class="form__container form__container--half">
 									<label class="form__label" for="price">Precio</label>
-									<Field class="form__input" id="price" name="precio" placeholder="Precio del producto o servicio"/>
-									<ErrorMessage name="precio" class="form__alert" data-field="precio"/>
+									<Field class="form__input" id="price" name="price" placeholder="Precio del producto o servicio" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" @keyup="price = onlyNumbers(price)" v-model="price"/>
+									<ErrorMessage name="price" class="form__alert" data-field="price"/>
+								</div>
+
+								<div class="form__container form__container--small">
+									<label class="form__label" for="discount_price">Precio de descuento</label>
+									<Field class="form__input" id="discount_price" name="discount_price" placeholder="Precio de descuento del producto o servicio" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" @keyup="discountPrice = onlyNumbers(discountPrice)" v-model="discountPrice"/>
+									<ErrorMessage name="discount_price" class="form__alert" data-field="discount_price"/>
+								</div>
+
+							</div>
+							
+							<h2 class="form__section-title">Información fiscal</h2>
+
+							<div class="form__container-group">
+								
+								<div class="form__container form__container--half">
+									<label class="form__label form__label--required" for="unit_code">
+										Unidad de medida
+										<help-icon :help_text="`Nombre de la unidad: <strong>${productForm.product_unit}.</strong><br><i>Es la unidad de medida que corresponde al producto, se utliza como referencia para el SAT</i>`"/>
+									</label>
+									<div class="form__search">
+										<Field class="form__input" id="unit_code" placeholder="Unidad de medida" name="unit_code" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" v-model="unitCode"/>
+										<button class="form__search-button" @click.prevent="toggleSearchUnit = !toggleSearchUnit" v-if="enableEdit">
+											<icon-set icon="lens-add"/>
+										</button>
+									</div>
+									<ErrorMessage name="unit_code" class="form__alert" data-field="unit_code"/>
+								</div>
+
+								<div class="form__container form__container--small">
+									<label class="form__label form__label--required" for="code">Código SAT</label>
+									<div class="form__search">
+										<Field class="form__input" id="code" placeholder="Código SAT" name="code" v-model="satCode" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
+										<button class="form__search-button" @click.prevent="toggleSearchSatCode = !toggleSearchSatCode" v-if="enableEdit">
+											<icon-set icon="lens-add"/>
+										</button>
+									</div>
+									<ErrorMessage name="code" class="form__alert" data-field="code"/>
 								</div>
 
 							</div>
 
-							<input v-if="enableEdit" class="btn btn__default btn--small btn__default--primary" type="submit" value="Agregar producto / servicio">
-							<button v-if="enableEdit" class="btn btn__outlined btn--small btn__outlined--primary">
+							<button v-if="enableEdit" class="btn btn__default btn--small btn__default--primary" type="submit">
+								<icon-set icon="upload" />
+								<span>{{formSubmitText}}</span>
+							</button>
+							<button v-if="enableEdit" class="btn btn__outlined btn--small btn__outlined--primary" @click.prevent="enableEdit = false">
 								<icon-set icon="close"/>
 								Cancelar
 							</button>
@@ -110,7 +128,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from 'vue'
+import { onMounted, ref, watch, computed, reactive } from 'vue'
 import { useAppStore } from '../../../store/index.js'
 import sidebarComponent from '../../partials/sidebar.vue'
 import contentHeader from '../../partials/content_header.vue'
@@ -122,6 +140,7 @@ import { apiRequest } from '../../../api/requests.js'
 import inputAutocomplete from '../../partials/input-autocomplete.vue'
 import confirmationPopup from '../../partials/confirmation_popup.vue'
 import searchComponent from '../../partials/search.vue'
+import helpIcon from '../../partials/help_icon.vue'
 
 const store = useAppStore()
 const router = useRouter()
@@ -146,10 +165,14 @@ const unitSearchFields = ref([
 		name: 'Nombre'
 	}
 ])
-const satCode = ref(null)
+const productId = ref(null)
 const unitCode = ref(null)
+const satCode = ref(null)
+const price = ref(0)
+const discountPrice = ref(0)
 const toggleSearchSatCode = ref(false)
 const toggleSearchUnit = ref(false)
+const formSubmitText = ref('Añadir')
 const productData = function() {
 	return {	
 		category_id: null,
@@ -157,9 +180,10 @@ const productData = function() {
 		sku: null,
 		code: null,
 		description: null,
-		unit_id: null,
+		unit_code: null,
 		price: null,
-		type_id: null	
+		type_id: null,
+		discount_price: null
 	}
 }
 const categories = ref([])
@@ -185,9 +209,10 @@ const productValidateSchema = yup.object().shape({
 	name: yup.string().required().label('Nombre del producto').max(100),
 	code: yup.string().required().label('Código SAT'),
 	description: yup.string().label('Descripción del producto').nullable(),
-	unit_id: yup.string().required().label('Unidad de medida'),
+	unit_code: yup.string().required().label('Unidad de medida'),
 	category_id: yup.string().required().label('Categoría del producto'),
 	price: yup.string().required().label('Precio del producto'),
+	discount_price: yup.string().required().label('Descuento de precio del producto'),
 	sku: yup.string().label('SKU').max(25).nullable(),
 	type_id: yup.string().label('Tipo de producto').required()
 })
@@ -199,19 +224,49 @@ const enableEdit = ref(false)
 const sectionTitle = ref('Agregar nuevo producto o servicio')
 
 onMounted(() => {
-	if(route.name == 'customerView' && route.params.id > 0) {
-		productId.value = route.params.id
-		sectionTitle.value = 'Editar información del producto o servicio'
-		//getProduct()
-	} else {
-		sectionTitle.value = 'Agregar nuevo producto o servicio'
-		enableEdit.value = true
-		productForm.value = productData()
-	}
+	initModule()
+})
+
+watch(() => route.path, () => {
+	initModule()
 })
 
 function productDelete() {
 
+}
+
+function initModule() {
+	if(route.name == 'productEdit' && route.params.id > 0) {
+		productId.value = route.params.id
+		formSubmitText.value = 'Actualizar'
+		sectionTitle.value = 'Editar información del producto o servicio'
+		console.log(route.query)
+		if(route.query.edit == "true") {
+			enableEdit.value = true
+		} else {
+			enableEdit.value = false
+		}
+		getProduct()
+	} else {
+		formSubmitText.value = 'Añadir'
+		sectionTitle.value = 'Agregar nuevo producto o servicio'
+		enableEdit.value = true
+		productForm.value = productData()
+	}
+}
+
+function getProduct() {
+	new apiRequest().Get({
+		module: 'products/products'
+	}, productId.value).then(response => {
+		productForm.value = response.data.data
+		unitCode.value = response.data.data.unit_code
+		satCode.value = response.data.data.code
+		price.value = response.data.data.price
+		discountPrice.value = response.data.data.discount_price
+	}).catch(error => {
+		store.push_alert(response.data)
+	})
 }
 
 function getCategories() {
@@ -237,15 +292,39 @@ function getProductTypes() {
 getProductTypes()
 
 function onSubmit(values, action) {
+	if(route.name == 'productEdit') {
+		putProduct(values)
+	} else{
+		postProduct(values)
+	}
+}
+
+function postProduct(values) {
 	new apiRequest().Post({
-		module: 'customers',
+		module: 'products/products',
 		data: values
 	}).then(response => {
 		store.push_alert(response.data)
 		router.push({
-			name: 'customerView',
+			name: 'productEdit',
 			params: {id: response.data.data.id}
 		})
+	}).catch(error => {
+		store.push_alert(error.data)
+	})
+}
+
+function onlyNumbers(price) {
+	return price.replace(/[^0-9\.]/g, '')
+}
+
+function putProduct(values) {
+	new apiRequest().Put({
+		module: 'products/products',
+		data: values
+	}, productId.value).then(response => {
+		store.push_alert(response.data)
+		enableEdit.value  = false
 	}).catch(error => {
 		store.push_alert(error.data)
 	})

@@ -11,10 +11,10 @@ import accessViewRegistration from '../components/partials/registration.vue'
 import accessViewValidation from '../components/partials/verification.vue'
 import NewCompanyView from '../components/views/new_company.vue'
 import CompanyView from '../components/views/company.vue'
-import CustomerView from '../components/views/customer.vue'
+import CustomerEdit from '../components/views/customer.vue'
 import CustomerList from '../components/views/customer_list.vue'
 import CFDIView from '../components/views/cfdi.vue'
-import ProductView from '../components/views/product/edit.vue'
+import ProductEdit from '../components/views/product/edit.vue'
 import ProductList from '../components/views/product/list.vue'
 import CategoryView from '../components/views/product_categories_list.vue'
 import CategoryEdit from '../components/views/product_category_edit.vue'
@@ -46,16 +46,16 @@ const routes = [
 	},
 	{
 		path: '/clientes/nuevo-cliente',
-		component: CustomerView,
-		name: 'newCustomerView',
+		component: CustomerEdit,
+		name: 'customerAdd',
 		meta: {
 			login: true
 		}
 	},
 	{
 		path: '/clientes/:id(\\d+)',
-		component: CustomerView,
-		name: 'customerView',
+		component: CustomerEdit,
+		name: 'customerEdit',
 		meta: {
 			login: true
 		}
@@ -106,8 +106,16 @@ const routes = [
 	},
 	{
 		path: '/productos/nuevo',
-		component: ProductView,
-		name: 'newProductView',
+		component: ProductEdit,
+		name: 'productAdd',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/productos/:id(\\d+)',
+		component: ProductEdit,
+		name: 'productEdit',
 		meta: {
 			login: true
 		}
