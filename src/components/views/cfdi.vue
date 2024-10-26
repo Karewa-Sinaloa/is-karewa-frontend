@@ -4,7 +4,7 @@
 		<div class="content">
 			<content-header />
 			<main class="main">
-				<section class="section section--verywide">
+				<section class="section section--full-wide">
 					<div class="section__top">
 						<h1 class="section__title">Crear nuevo comprobante</h1>
 						<span class="section__help-text">Quam. Fusce feugiat pede vel quam. In et augue. Lorem ipsum dolor sit amet, consectetuer adipiscing.</span>
@@ -25,7 +25,7 @@
 									<div v-if="taxPayerId">
 										<div class="form__container form__container--half" @focusout="displayCustomerOptions = false" @focusin="displayCustomerOptions = true">
 											<label class="form__label form__label--required" for="razon_social">Cliente</label>
-											<input-autocomplete :requestParams="customerRequestParams" :textField="'razon_social'" placeholderText="Buscar cliente" @option="v => (customerData = v)"></input-autocomplete>
+											<input-autocomplete :requestParams="customerRequestParams" :textField="'razon_social'" placeholderText="Buscar cliente" @option="v => (customerData = v)" :optionText="['rfc', 'razon_social']" />
 											<Field id="customer_id" name="customer_id" type="hidden" v-model="customerData.id"/>
 										</div>
 									</div>
@@ -70,8 +70,8 @@
 										<Field class="form__input" name="UUID" id="UUID" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
 									</div>
 								</div>
-								<h2 class="form__section-title">Datos del pago</h2>
-								<div class="form__container-group" v-if="customerData.id"></div>
+								<h2 class="form__section-title">Productos y/o servicios</h2>
+								<cfdi-product></cfdi-product>
 
 							</fieldset>
 						</Form>
@@ -92,6 +92,7 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import inputAutocomplete from '../partials/input-autocomplete.vue'
+import cfdiProduct from '../partials/cfdi_product_element.vue'
 
 const store = useAppStore()
 
@@ -102,7 +103,7 @@ const cfdiUsage = ref([])
 const relationTypes = ref([])
 const customerRequestParams = ref({
 	module: 'customers',
-	params: `?fields=id,razon_social,tax_payer_type,regimen_fiscal,payment_type_id,payment_method_id,cfdi_usage_id` 
+	params: `?fields=id,razon_social,tax_payer_type,regimen_fiscal,payment_type_id,payment_method_id,cfdi_usage_id,rfc` 
 })
 const displayCustomerOptions = ref(false)
 const cfdi = ref({
