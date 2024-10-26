@@ -10,9 +10,9 @@
 		</div>
 		<div class="access__column access__column--right desktop-view">
 			<picture>
-				<source media="(min-width:1024px)" srcset="../../assets/images/calc_1024.jpg" />
-				<source media="(min-width:640px)" srcset="../../assets/images/calc_640.jpg" />
-				<img class="access__banner" src="../../assets/images/calc_350.jpg" alt="Welcome banner">
+				<source media="(min-width:1024px)" srcset="../../assets/images/calc_1024.webp" />
+				<source media="(min-width:640px)" srcset="../../assets/images/calc_640.webp" />
+				<img class="access__banner" src="../../assets/images/calc_350.webp" alt="Welcome banner">
 			</picture>
 		</div>
 	</div>

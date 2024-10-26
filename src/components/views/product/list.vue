@@ -17,7 +17,7 @@
 									<span class="result__description" v-text="product.description"></span>
 									<span class="result__info" v-text="product.product_category"></span>
 								</div>
-								<result-options :optionList="{go: {name: 'productEdit', params: {id: product.id}}, delete: true}"></result-options>
+								<result-options :optionList="{go: {name: 'productEdit', params: {id: product.id}}, delete: true}" @deleteItem="confirmDelete = true, productId = product.id"></result-options>
 							</div>
 						</div>
 						<pagination-container v-if="pagination" :data="pagination" module="productList"></pagination-container>
@@ -25,6 +25,7 @@
 				</section>
 			</main>
 		</div>
+		<confirmation-popup :data="categoryDeleteConfirmationData" @confirmed="productDelete" @declined="confirmDelete = false" v-if="confirmDelete"></confirmation-popup>
 	</div>
 </template>
 
@@ -39,14 +40,24 @@ import confirmationPopup from '../../partials/confirmation_popup.vue'
 import resultOptions from '../../partials/result_options.vue'
 import paginationContainer from '../../partials/pagination.vue'
 
+const categoryDeleteConfirmationData = {
+	title: "Confirma tu solicitud",
+	text: "¿Realmente desea borrar esta categoría? Esta acción es definitiva y no se puede deshacer",
+	btn_confirmation_text: "Si, borrar ahora",
+	btn_declination_text: "Cancelar",
+	icon: "attention.png"
+}
+
 const store = useAppStore()
 const router = useRouter()
 const route = useRoute()
 
+const productId = ref(null)
 const products = ref([])
 const pagination = ref(null)
 const maxResults = ref(12)
 const currentPage = ref(1)
+const confirmDelete = ref(false)
 
 onMounted(() => {
 	store.new_elements([
@@ -74,6 +85,23 @@ function getProducts() {
 		pagination.value = r.data.pagination ? r.data.pagination : null
 	}).catch(e => {
 		store.push_alert(e.data)
+	})
+}
+
+function productDelete() {
+	new apiRequest().Delete({
+		module: 'products/products'
+	}, productId.value).then(
+		response => {
+			productId.value = null
+			store.push_alert(response.data)
+			router.push({
+				name: 'productList'
+			})
+		}
+	).catch(error => {
+		productId.value = null
+		store.push_alert(error.data)
 	})
 }
 </script>

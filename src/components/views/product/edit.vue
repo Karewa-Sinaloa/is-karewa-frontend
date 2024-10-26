@@ -10,7 +10,7 @@
 						<span class="section__help-text">Agrega los productos y servicios para tus comprobantes fiscales de ingresos en esta seccion, ya los tendrás listos al momento de generar tu comprobante fiscal</span>
 
 						<div class="section__options btn__grouped" v-if="!enableEdit">
-							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="enableEdit = true">
+							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="router.push({name: 'productEdit', params: {id: productId}, query: {edit: true}})">
 								<icon-set icon="edit" />
 								Editar producto/servicio
 							</button>
@@ -34,7 +34,7 @@
 									<ErrorMessage name="name" class="form__alert" data-field="name"/>
 								</div>
 
-								<div class="form__container form__container--small">
+								<div class="form__container form__container--half">
 									<label class="form__label" for="sku">SKU</label>
 									<Field class="form__input" id="sku" name="sku" placeholder="SKU del producto / servicio" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
 									<ErrorMessage name="sku" class="form__alert" data-field="sku"/>
@@ -48,16 +48,16 @@
 
 								<div class="form__container form__container--half">
 									<label class="form__label form__label--required" for="category_id">Categoría del producto</label>
-									<Field as="select" class="form__select" id="category_id" name="category_id" v-model="category_id" :disabled="!enableEdit" :class="{'form__select--disabled': !enableEdit}">
+									<Field as="select" class="form__select" id="category_id" name="category_id" :disabled="!enableEdit" :class="{'form__select--disabled': !enableEdit}">
 										<option disabled value="">Selecciona la categoría del producto</option>
 										<option v-for="category in categories" :value="category.id">{{ category.name }}</option>
 									</Field>
 									<ErrorMessage name="category_id" class="form__alert" data-field="category_id"/>
 								</div>	
 
-								<div class="form__container form__container--small">
+								<div class="form__container form__container--half">
 									<label class="form__label form__label--required" for="type_id">Tipo de producto</label>
-									<Field as="select" class="form__select" id="type_id" name="type_id" v-model="type_id" :disabled="!enableEdit" :class="{'form__select--disabled': !enableEdit}">
+									<Field as="select" class="form__select" id="type_id" name="type_id" :disabled="!enableEdit" :class="{'form__select--disabled': !enableEdit}">
 										<option disabled value="">Selecciona el tipo de producto</option>
 										<option v-for="type in product_types" :value="type.id">{{ type.name }}</option>
 									</Field>
@@ -70,7 +70,7 @@
 									<ErrorMessage name="price" class="form__alert" data-field="price"/>
 								</div>
 
-								<div class="form__container form__container--small">
+								<div class="form__container form__container--half">
 									<label class="form__label" for="discount_price">Precio de descuento</label>
 									<Field class="form__input" id="discount_price" name="discount_price" placeholder="Precio de descuento del producto o servicio" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" @keyup="discountPrice = onlyNumbers(discountPrice)" v-model="discountPrice"/>
 									<ErrorMessage name="discount_price" class="form__alert" data-field="discount_price"/>
@@ -88,7 +88,7 @@
 										<help-icon :help_text="`Nombre de la unidad: <strong>${productForm.product_unit}.</strong><br><i>Es la unidad de medida que corresponde al producto, se utliza como referencia para el SAT</i>`"/>
 									</label>
 									<div class="form__search">
-										<Field class="form__input" id="unit_code" placeholder="Unidad de medida" name="unit_code" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" v-model="unitCode"/>
+										<Field class="form__input" id="unit_code" placeholder="Unidad de medida" name="unit_code" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" v-model="unitCode" readonly />
 										<button class="form__search-button" @click.prevent="toggleSearchUnit = !toggleSearchUnit" v-if="enableEdit">
 											<icon-set icon="lens-add"/>
 										</button>
@@ -96,10 +96,13 @@
 									<ErrorMessage name="unit_code" class="form__alert" data-field="unit_code"/>
 								</div>
 
-								<div class="form__container form__container--small">
-									<label class="form__label form__label--required" for="code">Código SAT</label>
+								<div class="form__container form__container--half">
+									<label class="form__label form__label--required" for="code">
+										<help-icon :help_text="`Descripción: <strong>${productForm.sat_code_description}.</strong><br><i>Descripción del código del tipo de producto según el listado emitido por el SAT'</i>`"/>
+										Código SAT
+									</label>
 									<div class="form__search">
-										<Field class="form__input" id="code" placeholder="Código SAT" name="code" v-model="satCode" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
+										<Field class="form__input" id="code" placeholder="Código SAT" name="code" v-model="satCode" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" readonly />
 										<button class="form__search-button" @click.prevent="toggleSearchSatCode = !toggleSearchSatCode" v-if="enableEdit">
 											<icon-set icon="lens-add"/>
 										</button>
@@ -107,13 +110,65 @@
 									<ErrorMessage name="code" class="form__alert" data-field="code"/>
 								</div>
 
+								<div class="form__container form__container--half">
+									<label class="form__label form__label--required" for="currency_id">Moneda</label>
+									<Field as="select" class="form__select" id="currency_id" name="currency_id" :disabled="!enableEdit" :class="{'form__select--disabled': !enableEdit}">
+									<option selected value="102">MXN - Peso mexicano</option>
+									</Field>
+									<ErrorMessage name="currency_id" class="form__alert" data-field="currency_id"/>
+								</div>
+								<h3 class="form__head2">IVA trasladado</h3>
+								<span class="form__help-text">Selecciona el IVA trasladado que se aplicará a tu producto o servicio</span>
+
+								<div class="form__container form__container--full form__container--checkbox">
+									<label v-for="tax,key in ivaTrasladado" class="form__label form__label--checkbox" :for="`iva_trasladado_${key}`">
+										<Field type="radio" :id="`iva_trasladado_${key}`" name="iva_trasladado" class="form__checkbox" :value="tax.id" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<span class="form__label-checkbox">{{tax.tax}} - {{changeToPercentaje(tax.max_value)}}</span>
+									</label>
+
+									<label class="form__label form__label--checkbox" for="iva_trasladado_none">
+										<Field type="radio" id="iva_trasladado_none" name="iva_trasladado" class="form__checkbox" :value="null" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<span class="form__label-checkbox">No aplica</span>
+									</label>
+								</div>
+
+								<h3 class="form__head2">IEPS trasladado</h3>
+								<span class="form__help-text">Selecciona el IEPS trasladado que se aplicará a tu producto o servicio</span>
+
+								<div class="form__container form__container--full form__container--checkbox">
+									<label v-for="tax, key in iepsTrasladado" class="form__label form__label--checkbox" :for="`ieps_trasladado_${key}`">
+										<Field type="radio" :id="`ieps_trasladado_${key}`" name="ieps_trasladado" class="form__checkbox" :value="tax.id" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<span class="form__label-checkbox">{{tax.tax}} - {{changeToPercentaje(tax.max_value)}}</span>
+									</label>
+
+									<label class="form__label form__label--checkbox" for="ieps_trasladado_none">
+										<Field type="radio" id="ieps_trasladado_none" name="ieps_trasladado" class="form__checkbox" :value="null" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<span class="form__label-checkbox">No aplica</span>
+									</label>
+								</div>
+
+								<h3 class="form__head2">IVA retenido</h3>
+								<span class="form__help-text">Selecciona el IVA retenido que se aplicará a tu producto o servicio</span>
+
+								<div class="form__container form__container--full form__container--checkbox">
+									<label v-for="tax,key in ivaRetenido" class="form__label form__label--checkbox" :for="`iva_retenido_${key}`">
+										<Field type="radio" :id="`iva_retenido_${key}`" name="iva_retenido" class="form__checkbox" :value="tax.id" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<span class="form__label-checkbox">{{tax.tax}} - {{changeToPercentaje(tax.max_value)}}</span>
+									</label>
+
+									<label class="form__label form__label--checkbox" for="iva_retenido_none">
+										<Field type="radio" id="iva_retenido_none" name="iva_retenido" class="form__checkbox" :value="null" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<span class="form__label-checkbox">No aplica</span>
+									</label>
+								</div>	
+
 							</div>
 
 							<button v-if="enableEdit" class="btn btn__default btn--small btn__default--primary" type="submit">
 								<icon-set icon="upload" />
 								<span>{{formSubmitText}}</span>
 							</button>
-							<button v-if="enableEdit" class="btn btn__outlined btn--small btn__outlined--primary" @click.prevent="enableEdit = false">
+							<button v-if="enableEdit" class="btn btn__outlined btn--small btn__outlined--primary" @click.prevent="router.push({name: 'productEdit', params: {id: productId}})">
 								<icon-set icon="close"/>
 								Cancelar
 							</button>
@@ -132,7 +187,7 @@ import { onMounted, ref, watch, computed, reactive } from 'vue'
 import { useAppStore } from '../../../store/index.js'
 import sidebarComponent from '../../partials/sidebar.vue'
 import contentHeader from '../../partials/content_header.vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute, onBeforeRouteLeave } from 'vue-router'
 import * as yup from 'yup'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { setFieldMessages }  from '../../../helpers/yup.locale.js'
@@ -165,11 +220,12 @@ const unitSearchFields = ref([
 		name: 'Nombre'
 	}
 ])
+const currencyDecimals = ref(2)
 const productId = ref(null)
 const unitCode = ref(null)
 const satCode = ref(null)
-const price = ref(0)
-const discountPrice = ref(0)
+const price = ref((0).toFixed(currencyDecimals.value))
+const discountPrice = ref((0).toFixed(currencyDecimals.value))
 const toggleSearchSatCode = ref(false)
 const toggleSearchUnit = ref(false)
 const formSubmitText = ref('Añadir')
@@ -181,9 +237,13 @@ const productData = function() {
 		code: null,
 		description: null,
 		unit_code: null,
-		price: null,
+		price: (0).toFixed(currencyDecimals.value),
 		type_id: null,
-		discount_price: null
+		discount_price: (0).toFixed(currencyDecimals.value),
+		iva_trasladado: null,
+		ieps_trasladado: null,
+		iva_retenido: null,
+		currency_id: 102
 	}
 }
 const categories = ref([])
@@ -222,32 +282,64 @@ const displaySATCodeOptions = ref(false)
 const displayUnitOptions = ref(false)
 const enableEdit = ref(false)
 const sectionTitle = ref('Agregar nuevo producto o servicio')
+const ivaTrasladado = ref([])
+const iepsTrasladado = ref([])
+const ivaRetenido = ref([])
 
-onMounted(() => {
+function changeToPercentaje(data) {
+	return `${parseFloat(data * 100).toFixed(2)}%`
+}
+
+onMounted(() => {	
 	initModule()
 })
 
-watch(() => route.path, () => {
+watch(() => route.fullPath, () => {
 	initModule()
 })
 
 function productDelete() {
-
+	new apiRequest().Delete({
+		module: 'products/products'
+	}, productId.value).then(
+		response => {
+			store.push_alert(response.data)
+			router.push({
+				name: 'productList'
+			})
+		}
+	).catch(error => {
+		store.push_alert(error.data)
+	})
 }
+
+onBeforeRouteLeave (() => {
+	productForm.value = null
+	price.value = (0).toFixed(currencyDecimals.value)
+	discountPrice.value = (0).toFixed(currencyDecimals.value)
+	unitCode.value = null
+	satCode.value = null
+})
 
 function initModule() {
 	if(route.name == 'productEdit' && route.params.id > 0) {
 		productId.value = route.params.id
 		formSubmitText.value = 'Actualizar'
 		sectionTitle.value = 'Editar información del producto o servicio'
-		console.log(route.query)
 		if(route.query.edit == "true") {
 			enableEdit.value = true
 		} else {
 			enableEdit.value = false
 		}
+		store.new_elements([
+			{
+				name: 'productAdd',
+				text: 'Agregar Producto'	
+			}
+		])
 		getProduct()
 	} else {
+		store.new_elements([])
 		formSubmitText.value = 'Añadir'
 		sectionTitle.value = 'Agregar nuevo producto o servicio'
 		enableEdit.value = true
@@ -262,10 +354,10 @@ function getProduct() {
 		productForm.value = response.data.data
 		unitCode.value = response.data.data.unit_code
 		satCode.value = response.data.data.code
-		price.value = response.data.data.price
-		discountPrice.value = response.data.data.discount_price
+		price.value = parseFloat(response.data.data.price).toFixed(currencyDecimals.value)
+		discountPrice.value = parseFloat(response.data.data.discount_price).toFixed(currencyDecimals.value)
 	}).catch(error => {
-		store.push_alert(response.data)
+		store.push_alert(error.data)
 	})
 }
 
@@ -278,7 +370,6 @@ function getCategories() {
 		store.push_alert(response.data)
 	})
 }
-getCategories()
 
 function getProductTypes() {
 	new apiRequest().Get({
@@ -289,9 +380,10 @@ function getProductTypes() {
 		store.push_alert(response.data)
 	})
 }
-getProductTypes()
 
 function onSubmit(values, action) {
+	values.price = parseFloat(values.price).toFixed(currencyDecimals.value)
+	values.discount_price = parseFloat(values.discount_price).toFixed(currencyDecimals.value)
 	if(route.name == 'productEdit') {
 		putProduct(values)
 	} else{
@@ -339,6 +431,46 @@ function setUnit(response) {
 	unitCode.value = response.code
 	toggleSearchUnit.value = false
 }
+
+function getIVATrasladado() {
+	new apiRequest().Get({
+		module: 'products/taxes',
+		params: `?fields=id,tax_id,max_value,factor,type,tax&type=eq:Fijo&tax_id=eq:2&trasladado=ist:true&factor=eq:tasa`
+	}).then(response => {
+		ivaTrasladado.value = response.data.data
+	}).catch(error => {
+		store.push_alert(error.data)
+	})
+}
+
+function getIEPSTrasladado() {
+	new apiRequest().Get({
+		module: 'products/taxes',
+		params: `?fields=id,tax_id,max_value,factor,type,tax&type=eq:Fijo&tax_id=eq:3&trasladado=ist:true&factor=eq:tasa`
+	}).then(response => {
+		iepsTrasladado.value = response.data.data
+	}).catch(error => {
+		store.push_alert(error.data)
+	})
+}
+
+function getIIVARetenido() {
+	new apiRequest().Get({
+		module: 'products/taxes',
+		params: `?fields=id,tax_id,max_value,factor,type,tax&type=eq:Fijo&tax_id=eq:2&retenido=ist:true&factor=eq:tasa`
+	}).then(response => {
+		ivaRetenido.value = response.data.data
+	}).catch(error => {
+		store.push_alert(error.data)
+	})
+}
+
+getCategories()
+getProductTypes()
+getIVATrasladado()
+getIEPSTrasladado()
+getIIVARetenido()
+
 </script>
 
 <style lang="sass" scoped>
