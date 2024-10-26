@@ -124,7 +124,7 @@
 										<label class="form__label" for="payment_method_id">Método de pago</label>
 										<Field as="select" id="payment_method_id" class="form__select" name="payment_method_id" :disabled="!enableEdit" :class="{'form__select--disabled': !enableEdit}">
 											<option disabled value="">SELECCIONE UNA OPCIÓN</option>
-											<option v-for="pm in paymentMethods" :value="pm.id">{{ pm.code }} &#183; {{ pm.description }}</option>
+											<option v-for="pm in paymentMethods" :value="pm.code">{{ pm.code }} &#183; {{ pm.description }}</option>
 										</Field>
 										<ErrorMessage id="payment_method_id"></ErrorMessage>
 									</div>
@@ -142,7 +142,7 @@
 										<label class="form__label" for="cfdi_usage_id">Uso del CFDI</label>
 										<Field as="select" id="cfdi_usage_id" class="form__select" name="cfdi_usage_id" :disabled="!enableEdit" :class="{'form__select--disabled': !enableEdit}">
 											<option disabled value="">SELECCIONE UNA OPCIÓN</option>
-											<option v-for="cu in CFDIUsage" :value="cu.id">{{ cu.code }} &#183; {{ cu.name }}</option>
+											<option v-for="cu in CFDIUsage" :value="cu.code">{{ cu.code }} &#183; {{ cu.name }}</option>
 										</Field>
 										<ErrorMessage id="cfdi_usage_id"></ErrorMessage>
 									</div>	

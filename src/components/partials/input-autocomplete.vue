@@ -87,7 +87,6 @@ function getOptions(e) {
 		module: props.requestParams.module,
 		params: `${props.requestParams.params}&search=${e.target.value}` 
 	}
-	console.log(params)
 	if(lastSearchString.value != e.target.value) {
 		new apiRequest().Get(params).then(r => {
 			options.value = r.data.data
