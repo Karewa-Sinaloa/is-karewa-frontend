@@ -1,6 +1,6 @@
 <template>
 	<div class="autocomplete">
-		<input class="form__input" type="text" id="search_string" name="search_string" :placeholder="props.placeholderText" v-model="searchString" @keyup="getOptions">
+		<input class="form__input" type="text" id="search_string" name="search_string" :placeholder="props.placeholderText" v-model="searchString" @keyup="getOptions" autocomplete="off">
 		<div class="autocomplete__options" v-if="options.length > 0 && showOptions" ref="eList">
 			<span class="autocomplete__option" v-for="opt, key in options" @click.prevent="returnOption(key)">{{getOptionTexts(opt)}}</span>
 		</div>
@@ -83,9 +83,10 @@ function returnOption(key) {
 }
 
 function getOptions(e) {
+	let str = props.requestParams.params !== undefined ? `${props.requestParams.params}&search=${e.target.value}` : `?search=${e.target.value}`
 	let params = {
 		module: props.requestParams.module,
-		params: `${props.requestParams.params}&search=${e.target.value}` 
+		params: str 
 	}
 	if(lastSearchString.value != e.target.value) {
 		new apiRequest().Get(params).then(r => {

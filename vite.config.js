@@ -10,12 +10,20 @@ export default defineConfig({
 		port: 5174,
 		watch: {
 			usePolling: true
-		}
+		},
+		allowedHosts: [
+			'cfdiapp.criselgeek.com'
+		]
 	},
 	css: {
 		preprocessorOptions: {
 			scss: {
-				api: 'modern-compiler'
+				api: 'modern-compiler',
+				quietDeps: true
+			},
+			sass: {
+				api: 'modern-compiler',
+				quietDeps: true
 			}
 		}
 	}

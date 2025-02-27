@@ -30,6 +30,8 @@
 		outline: none
 		padding: 0.3rem 0.8rem
 		@include mixins.font-size(--fs-regular)
+		&:read-only
+			background-color: var(--color-grayscale-50)
 		&--big
 			@include mixins.font-size(--fs-large)
 		&--disabled
@@ -39,8 +41,9 @@
 			padding: 0.5rem 0.8rem
 		&:active,
 		&:focus
-			background-color: var(--color-light)
-			border-bottom-color: var(--color-success)
+			&:not(:read-only)
+				background-color: var(--color-light)
+				border-bottom-color: var(--color-success)
 		&--email
 			@include mixins.input-icon('/src/assets/icons/email.png')
 		&--password
@@ -94,16 +97,19 @@
 			min-width: 250px
 		&--smaller
 			width: 25%
-			min-width: 180px
+			min-width: 200px
 		&--tiny
 			width: 20%
-			min-width: 150px
+			min-width: 175px
 		&--tinier
-			width: 15%
-			min-width: 120px
+			width: 12%
+			min-width: 125px
+		&--micro
+			width: 8%
+			min-width: 75px
 	&__container-group
 		display: flex
-		align-items: flex-start
+		align-items: stretch
 		flex-wrap: wrap
 		.form__container
 			margin-right: 2%
