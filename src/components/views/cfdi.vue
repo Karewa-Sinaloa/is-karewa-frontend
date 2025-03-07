@@ -16,17 +16,19 @@
 								<div class="form__container-group">
 									<div class="form__container form__container--half">
 										<label class="form__label form__label--required" for="tax_payer_id">Contribuyente</label>
-										<Field class="form__select" as="select" id="tax_payer_id" name="tax_payer_id" v-model="taxPayerId">
+										<Field class="form__select" as="select" id="tax_payer_id" name="tax_payer_id" v-model="cfdi.tax_payer_id">
 											<option value="" disabled>Selecciona la cuenta de facturación</option>
 											<option v-for="contribuyente in contribuyentes" :value="contribuyente.id">{{ contribuyente.rfc }} - {{ contribuyente.razon_social }}</option>
 										</Field>
+										<ErrorMessage name="tax_payer_id" class="form__alert" data-field="tax_payer_id"/>
 									</div>
 
-									<div v-if="taxPayerId">
+									<div v-if="cfdi.tax_payer_id">
 										<div class="form__container form__container--half" @focusout="displayCustomerOptions = false" @focusin="displayCustomerOptions = true">
-											<label class="form__label form__label--required" for="razon_social">Cliente</label>
+											<label class="form__label form__label--required" for="customer_id">Cliente</label>
 											<input-autocomplete :requestParams="customerRequestParams" :textField="'razon_social'" placeholderText="Buscar cliente" @option="v => (customerData = v)" :optionText="['rfc', 'razon_social']" />
-											<Field id="customer_id" name="customer_id" type="hidden" v-model="customerData.id"/>
+											<Field id="customer_id" name="customer_id" type="hidden" value="customerData.id" v-model="cfdi.customer_id"/>
+											<ErrorMessage name="customer_id" class="form__alert" data-field="customer_id"/>
 										</div>
 									</div>
 								</div>
@@ -34,19 +36,21 @@
 
 								<div class="form__container-group" v-if="customerData.id">
 									<div class="form__container form__container--half">
-										<label class="form__label form__label--required" for="MetodoPago">Método de pago</label>
-										<Field class="form__select" as="select" id="MetodoPago" name="MetodoPago" v-model="cfdi.MetodoPago">
+										<label class="form__label form__label--required" for="payment_method">Método de pago</label>
+										<Field class="form__select" as="select" id="payment_method" name="payment_method" v-model="cfdi.MetodoPago">
 											<option hidden value="">Selecciona el método de pago</option>
 											<option v-for="pm in paymentMethods" :value="pm.code">{{pm.code}} - {{pm.description}}</option>
 										</Field>
+										<ErrorMessage name="payment_method" class="form__alert" data-field="payment_method"/>
 									</div>
 
 									<div class="form__container form__container--half">
-										<label class="form__label form__label--required" for="FormaPago">Forma de pago</label>
-										<Field class="form__select" as="select" id="FormaPago" name="FormaPago" v-model="cfdi.FormaPago">
+										<label class="form__label form__label--required" for="payment_type">Forma de pago</label>
+										<Field class="form__select" as="select" id="payment_type" name="payment_type" v-model="cfdi.FormaPago">
 											<option hidden value="">Selecciona el tipo de pago</option>
 											<option v-for="pt in paymentTypes" :value="pt.code">{{pt.code}} - {{pt.name}}</option>
 										</Field>
+										<ErrorMessage name="payment_type" class="form__alert" data-field="payment_type"/>
 									</div>
 
 									<div class="form__container form__container--half">
@@ -55,10 +59,11 @@
 											<option hidden value="">Selecciona el uso del CFDI</option>
 											<option v-for="cu in cfdiUsage" :value="cu.code">{{cu.code}} - {{cu.name}}</option>
 										</Field>
+										<ErrorMessage name="cfdi_usage" class="form__alert" data-field="cfdi_usage"/>
 									</div>
 
 									<div class="form__container form__container--half">
-										<label class="form__label form__label--required" for="TipoRelacion">Tipo de relación del CFDI</label>
+										<label class="form__label" for="TipoRelacion">Tipo de relación del CFDI</label>
 										<Field class="form__select" as="select" id="TipoRelacion" name="TipoRelacion" v-model="cfdi.TipoRelacion">
 											<option hidden value="">Selecciona la relación del CFDI</option>
 											<option v-for="rt in relationTypes" :value="rt.code">{{rt.code}} - {{rt.name}}</option>
@@ -71,60 +76,39 @@
 									</div>
 								</div>
 								<h2 class="form__section-title">Productos y/o servicios</h2>
-								<div v-if="products.length > 0">
-									<button class="btn btn__default btn__default--primary btn--smaller" @click.prevent="products.push(productData())">
+								<div>
+									<button class="btn btn__default btn__default--primary btn--smaller" @click.prevent="cfdi.products.push({})">
 										<icon-set icon="add"/>
 										<span class="btn__text">Agregar producto</span>
 									</button>
-									<div class="invoice__product" v-for="(product,index) in products" :key="index">
-										<div class="form__container-group">
-											
-											<div class="form__container form__container--smaller">
-												<label class="form__label form__label--required" for="name">Producto</label>
-												<input-autocomplete :requestParams="productRequestParams" :textField="'name'" placeholderText="Producto" @option="v => setProduct(v, index)" :optionText="['code', 'name']" />
-											</div>
-
-											<div class="form__container form__container--micro">
-												<label class="form__label form__label--required" for="qty">Unidades</label>
-												<input class="form__input" type="number" name="qty" id="qty" placeholder="Cantidad" v-model="product.qty" @change="updateProduct(index)">
-											</div>
-
-											<div class="form__container form__container--tinier">
-												<label class="form__label" for="price">Valor unitario</label>
-												<input class="form__input" type="text" name="price" id="price" placeholder="Valor unitario" v-model="product.price" readonly>
-											</div>
-
-											<div class="form__container form__container--micro">
-												<label class="form__label" for="taxes">Impuestos</label>
-												<input class="form__input" type="text" name="taxes" id="taxes" placeholder="Impuestos" v-model="product.taxes" readonly>
-											</div>
-
-											<div class="form__container form__container--micro">
-												<label class="form__label" for="percentaje_discount">% descuento</label>
-												<input class="form__input" type="number" name="percentaje_discount" id="percentaje_discount" placeholder="% Descuento" v-model="product.percentaje_discount">
-											</div>
-
-											<div class="form__container form__container--micro">
-												<label class="form__label" for="total_discount">Descuentos</label>
-												<input class="form__input" type="text" name="total_discount" id="total_discount" placeholder="Descuentos" v-model="product.total_discount" readonly>
-											</div>
-
-											<div class="form__container form__container--tinier">
-												<label class="form__label" for="subtotal">Subtotal</label>
-												<input class="form__input" type="text" name="subtotal" id="subtotal" placeholder="subtotal" v-model="product.subtotal" readonly>
-											</div>
+									<item-component v-for="(product,index) in cfdi.products" :key="index" @invoiceItem="v => (cfdi.products[index] = v)" @deleteItem="deleteProduct(index)"/>
+								</div>
+								<div class="cfdi__totals">
+									<h2 class="form__section-title">Totales</h2>
+									<div class="cfdi__detail" v-if="totals.taxes">
+										<div class="cfdi__detail-row">
+											<p class="cfdi__detail-field">Subtotal:</p>
+											<p class="cfdi__detail-amount">{{setCurrencyAmounts(totals.subtotal)}}</p>
 										</div>
-										<div class="invoice__options">
-											<button class="btn btn__icon btn__icon--regular">
-												<icon-set icon="edit"/>
-											</button>
-
-											<button class="btn btn__icon btn__icon--regular" @click.prevent="deleteProduct(index)">
-												<icon-set icon="delete"/>
-											</button>
+										<div class="cfdi__detail-row">
+											<p class="cfdi__detail-field">Descuentos:</p>
+											<p class="cfdi__detail-amount">{{setCurrencyAmounts(totals.discount)}}</p>
+										</div>
+										<div class="cfdi__detail-row">
+											<p class="cfdi__detail-field">Impuestos:</p>
+											<p class="cfdi__detail-amount">{{setCurrencyAmounts(totals.taxes.total)}}</p>
+										</div>
+										<div class="cfdi__detail-row cfdi__detail-row--tax" v-if="totals.taxes.transferred.iva > 0">
+											<p class="cfdi__detail-field">IVA trasladado:</p>
+											<p class="cfdi__detail-amount">{{setCurrencyAmounts(totals.taxes.transferred.iva)}}</p>
+										</div>
+										<div class="cfdi__detail-row cfdi__detail-row--tax" v-if="totals.taxes.transferred.ieps > 0">
+											<p class="cfdi__detail-field">IEPS trasladado:</p>
+											<p class="cfdi__detail-amount">{{setCurrencyAmounts(totals.taxes.transferred.ieps)}}</p>
 										</div>
 									</div>
 								</div>
+								<button class="btn btn--regular btn__default btn__default--primary">FACTURAR AHORA</button>
 							</fieldset>
 						</Form>
 					</div>
@@ -144,10 +128,10 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import inputAutocomplete from '../partials/input-autocomplete.vue'
+import itemComponent from '../partials/cfdi_item.vue'
 
 const store = useAppStore()
 
-const taxPayerId = ref(null)
 const paymentMethods = ref([])
 const paymentTypes = ref([])
 const cfdiUsage = ref([])
@@ -155,9 +139,6 @@ const relationTypes = ref([])
 const customerRequestParams = ref({
 	module: 'customers',
 	params: `?fields=id,razon_social,tax_payer_type,regimen_fiscal,payment_type_id,payment_method_id,cfdi_usage_id,rfc` 
-})
-const productRequestParams = ref({
-	module: 'products/products'
 })
 const displayCustomerOptions = ref(false)
 const cfdi = ref({
@@ -167,39 +148,42 @@ const cfdi = ref({
 	MetodoPago: null,
 	FormaPago: null,
 	TipoRelacion: null,
-	UUID: null
+	UUID: null,
+	products: []
 })
 const customerData = ref({
 	razon_social: null,
 	id: null
 })
 
+const currencyParameters = ref({
+	code: import.meta.env.VITE_CURRENCY_CODE,
+	locale: import.meta.env.VITE_CURRENCY_LOCALE,
+	decimals:import.meta.env.VITE_CURRENCY_DECIMALS
+})
+
+const totals = ref({})
+
 const taxes = ref([])
 
-const productData = function() {
-	return {
-		name: null,
-		qty: 1,
-		description: null,
-		price: 0,
-		discount_price: 0,
-		taxes: 0,
-		percentaje_discount: 0,
-		subtotal: 0,
-		total_discount: 0
-	}
-}
-
-const products = ref([])
-
-const cfdiValidateSchema = {}
+const cfdiValidateSchema = yup.object().shape({
+	tax_payer_id: yup.number().required().positive().integer().label('Emisor'),
+	customer_id: yup.number().required().positive().integer().label('Receptor'),
+	payment_method: yup.string().required().length(3).label('Método de pago'),
+	payment_type: yup.number().required().positive().integer().label('Forma de pago'),
+	cfdi_usage: yup.string().required().min(3).max(4).label('Uso del CFDI'),
+	//taxpayer_type: yup.string().required().label('Tipo de contribuyente'),
+	//regimen_fiscal: yup.string().required().label('régimen fiscal').length(3),
+	//cer: yup.string().when(['key', 'companyValidateSchema'], {is: (value) => value != null, then: (schema) => schema.required(), otherwise: (schema) => schema.nullable()}).label('archivo de clave privada .CER'),
+	//key: yup.string().label('archivo de certificado .KEY').when(['cer', 'companyValidateSchema'], {is: (value) => value != null, then: (schema) => schema.required(), otherwise: (schema) => schema.nullable()})
+})
 
 const contribuyentes = computed(() => {
 	return store.company != null ? store.company : null
 })
 
 onMounted(() => {
-	products.value.push(productData())
+	cfdi.value.products.push({})
 })
 
 watch(customerData, () => {
@@ -213,8 +197,8 @@ watch(customerData, () => {
 	}
 })
 
-watch(products, () => {
-
+watch(cfdi.value.products, () => {
+	sumarizeTotals()
 })
 
 watch(cfdi.value, () => {
@@ -280,69 +264,58 @@ function getTipoRelacion() {
 }
 
 function deleteProduct(index) {
-	products.value.splice(index, 1)
+	cfdi.value.products.splice(index, 1)
 }
 
-function updateProduct(index) {
-	setProductTotal(products.value[index], products.value[index].Cantidad).then(response => {
-		products.value[index] = {
-			concepto: {
-				Name: p.name,
-				Cantidad: 1,
-				Descripcion: p.description,
-				Importe: response.unit_price,
-				Subtotal: response.subtotal,
-				Descuento: response.discount,
-				PorcentajeDescuento: 0
+
+function sumarizeTotals() {
+	totals.value = {
+		subtotal: 0.00,
+		discount: 0.00,
+		taxes: {
+			retentions: {
+				iva: 0.00,
+				isr: 0.00,
+				ieps: 0.00,
+				total: 0.00
 			},
-			impuestos: {
-				Total: response.taxes
+			transferred: {
+				iva: 0.00,
+				isr: 0.00,
+				ieps: 0.00,
+				total: 0.00
+			},
+			total: 0.00
+		}
+	}
+	if(cfdi.value.products) {
+		cfdi.value.products.forEach(product => {
+			if(product.value) {
+				totals.value.subtotal = totals.value.subtotal + parseFloat(product.value.concepto.ValorUnitario)
+				totals.value.discount = totals.value.discount + parseFloat(product.value.concepto.Descuento)
+				totals.value.taxes.transferred.iva = totals.value.taxes.transferred.iva + parseFloat(product.value.Impuestos.Traslados.iva.Importe)
+				totals.value.taxes.transferred.ieps = totals.value.taxes.transferred.ieps + parseFloat(product.value.Impuestos.Traslados.ieps.Importe)
+				totals.value.taxes.transferred.total = totals.value.taxes.transferred.total + (totals.value.taxes.transferred.iva + totals.value.taxes.transferred.ieps)
+				totals.value.taxes.total = totals.value.taxes.total + totals.value.taxes.transferred.total
 			}
-		}
-	})
+		})
+	}
 }
 
-function setProduct(p, index) {
-	products.value[index] = p
-	setProductTotal(p).then(response => {
-		products.value[index].qty = 1
-		products.value[index].amount = response.unit_price
-		products.value[index].subtotal = response.subtotal
-		products.value[index].total_discount = response.total_discount
-		products.value[index].percentaje_discount = response.percentaje_discount
-		products.value[index].taxes = response.taxes
-	})	
-}
-
-function setProductTotal(p, qty = 1) {
-	return new Promise((resolve, reject) => {
-		let discount = 0
-		let unit_price = p.discount_price > 0 ? p.discount_price : p.price
-		if(p.discount_price > 0) {
-			discount = (p.price - p.discount_price) * qty
-		}
-		let iva_trasladado = 0
-		let ieps_trasladado = 0
-		let iva_retenido = 0
-		let subtotal = unit_price * qty
-		if(p.iva_trasladado > 0) {
-			iva_trasladado = parseFloat(p.iva_trasladado_amount) * subtotal
-		}
-		if(p.ieps_trasladado > 0) {
-			ieps_trasladado = parseFloat(p.ieps_trasladado_amount) * subtotal
-		}
-		if(p.iva_retenido > 0 && p.iva_trasladado > 0) {
-			iva_retenido = parseFloat(p.iva_retenido_amount) * iva_trasladado
-		}
-		let taxes = (iva_trasladado - iva_retenido) + ieps_trasladado
-		let product = {
-			unit_price: parseFloat(unit_price).toFixed(p.currency_decimals),
-			discount: discount.toFixed(p.currency_decimals),
-			subtotal: subtotal.toFixed(p.currency_decimals),
-			taxes: taxes.toFixed(p.currency_decimals)
-		}
-		resolve(product)
-	})	
+function setCurrencyAmounts(amount) {
+	if(amount && amount >= 0) {
+		return amount.toLocaleString(currencyParameters.value.locale, {
+			minimumFractionDigits: currencyParameters.value.decimals,
+			style: 'currency',
+			currency: currencyParameters.value.code
+		})
+	} else {
+		return (0).toLocaleString(currencyParameters.value.locale, {
+			minimumFractionDigits: currencyParameters.value.decimals,
+			style: 'currency',
+			currency: currencyParameters.value.code
+		})
+	}
 }
 
 // TODO: HACER QUE EL ALIAS DE CLIENTE TENGA COMO MINIMO 3 CARACTERES
@@ -352,7 +325,8 @@ function onSubmit() {
 
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 	@use "../../assets/sass/components/_widgets"
 	@use '../../assets/sass/components/_invoice'
+	@use '../../assets/sass/components/_cfdi'
 </style>
