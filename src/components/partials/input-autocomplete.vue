@@ -16,7 +16,7 @@ const props = defineProps({
 	'textField': String,
 	'requestParams': Object,
 	'placeholderText': String,
-	'optionText': []
+	'optionText': Array
 })
 const store = useAppStore()
 const options = ref([])

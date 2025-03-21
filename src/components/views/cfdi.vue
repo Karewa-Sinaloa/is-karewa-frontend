@@ -10,25 +10,25 @@
 						<span class="section__help-text">Quam. Fusce feugiat pede vel quam. In et augue. Lorem ipsum dolor sit amet, consectetuer adipiscing.</span>
 					</div>
 					<div class="section__content">
-						<Form class="form" @submit="onSubmit" v-if="contribuyentes" :initial-values="cfdi" :validation-schema="cfdiValidateSchema" v-slot="{ values, setErrors }">
+						<Form class="form" @submit="onSubmit" v-if="contribuyentes">
 							<fieldset class="form__fieldset">
 
 								<div class="form__container-group">
 									<div class="form__container form__container--half">
 										<label class="form__label form__label--required" for="tax_payer_id">Contribuyente</label>
-										<Field class="form__select" as="select" id="tax_payer_id" name="tax_payer_id" v-model="cfdi.tax_payer_id">
+										<select class="form__select" id="tax_payer_id" name="tax_payer_id" v-bind="taxPayerId" v-model="tax_payer_id">
 											<option value="" disabled>Selecciona la cuenta de facturación</option>
 											<option v-for="contribuyente in contribuyentes" :value="contribuyente.id">{{ contribuyente.rfc }} - {{ contribuyente.razon_social }}</option>
-										</Field>
-										<ErrorMessage name="tax_payer_id" class="form__alert" data-field="tax_payer_id"/>
+										</select>
+										<span name="tax_payer_id" class="form__alert" data-field="tax_payer_id">{{errors.tax_payer_id}}</span>
 									</div>
 
-									<div v-if="cfdi.tax_payer_id">
+									<div v-if="tax_payer_id">
 										<div class="form__container form__container--half" @focusout="displayCustomerOptions = false" @focusin="displayCustomerOptions = true">
 											<label class="form__label form__label--required" for="customer_id">Cliente</label>
-											<input-autocomplete :requestParams="customerRequestParams" :textField="'razon_social'" placeholderText="Buscar cliente" @option="v => (customerData = v)" :optionText="['rfc', 'razon_social']" />
-											<Field id="customer_id" name="customer_id" type="hidden" value="customerData.id" v-model="cfdi.customer_id"/>
-											<ErrorMessage name="customer_id" class="form__alert" data-field="customer_id"/>
+											<input-autocomplete :requestParams="customerRequestParams" :textField="'razon_social'" placeholderText="Buscar cliente" @option="(v) => setCustomerData(v)" :optionText="['rfc', 'razon_social']" />
+											<input id="customer_id" name="customer_id" type="hidden" v-bind="customerId" v-model="customer_id">
+											<span name="customer_id" class="form__alert" data-field="customer_id">{{errors.customer_id}}</span>
 										</div>
 									</div>
 								</div>
@@ -37,29 +37,29 @@
 								<div class="form__container-group" v-if="customerData.id">
 									<div class="form__container form__container--half">
 										<label class="form__label form__label--required" for="payment_method">Método de pago</label>
-										<Field class="form__select" as="select" id="payment_method" name="payment_method" v-model="cfdi.MetodoPago">
+										<select class="form__select" id="payment_method" name="MetodoPago" v-model="MetodoPago" @change="getPaymentTypes(MetodoPago)">
 											<option hidden value="">Selecciona el método de pago</option>
 											<option v-for="pm in paymentMethods" :value="pm.code">{{pm.code}} - {{pm.description}}</option>
-										</Field>
-										<ErrorMessage name="payment_method" class="form__alert" data-field="payment_method"/>
+										</select>
+										<span name="payment_method" class="form__alert" data-field="payment_method">{{errors.MetodoPago}}</span>
 									</div>
 
 									<div class="form__container form__container--half">
 										<label class="form__label form__label--required" for="payment_type">Forma de pago</label>
-										<Field class="form__select" as="select" id="payment_type" name="payment_type" v-model="cfdi.FormaPago">
+										<select class="form__select" id="payment_type" name="FormaPago" v-model="FormaPago">
 											<option hidden value="">Selecciona el tipo de pago</option>
 											<option v-for="pt in paymentTypes" :value="pt.code">{{pt.code}} - {{pt.name}}</option>
-										</Field>
-										<ErrorMessage name="payment_type" class="form__alert" data-field="payment_type"/>
+										</select>
+										<span name="payment_type" class="form__alert" data-field="payment_type">{{errors.FormaPago}}</span>
 									</div>
 
 									<div class="form__container form__container--half">
-										<label class="form__label form__label--required" for="cfdi_usage">Uso del CFDI</label>
-										<Field class="form__select" as="select" id="cfdi_usage" name="cfdi_usage" v-model="cfdi.cfdi_usage">
+										<label class="form__label form__label--required" for="cfdi_usage_id">Uso del CFDI</label>
+										<select class="form__select" id="cfdi_usage_id" name="cfdi_usage_id" v-model="cfdi_usage_id">
 											<option hidden value="">Selecciona el uso del CFDI</option>
 											<option v-for="cu in cfdiUsage" :value="cu.code">{{cu.code}} - {{cu.name}}</option>
-										</Field>
-										<ErrorMessage name="cfdi_usage" class="form__alert" data-field="cfdi_usage"/>
+										</select>
+										<span name="cfdi_usage_id" class="form__alert" data-field="cfdi_usage_id">{{errors.cfdi_usage_id}}</span>
 									</div>
 
 									<div class="form__container form__container--half">
@@ -81,7 +81,9 @@
 										<icon-set icon="add"/>
 										<span class="btn__text">Agregar producto</span>
 									</button>
-									<item-component v-for="(product,index) in cfdi.products" :key="index" @invoiceItem="v => (cfdi.products[index] = v)" @deleteItem="deleteProduct(index)"/>
+									<template v-for="(product, index) in fields" :key="product.key">
+										<item-component @invoiceItem="(v) => setProductItem(index, v)" @deleteItem="deleteProduct(index)"/>
+									</template>
 								</div>
 								<div class="cfdi__totals">
 									<h2 class="form__section-title">Totales</h2>
@@ -124,7 +126,7 @@ import { useAppStore } from '../../store/index.js'
 import sidebarComponent from '../partials/sidebar.vue'
 import contentHeader from '../partials/content_header.vue'
 import * as yup from 'yup'
-import { Form, Field, ErrorMessage } from 'vee-validate'
+import { Form, Field, ErrorMessage, useFieldArray, useForm } from 'vee-validate'
 import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import inputAutocomplete from '../partials/input-autocomplete.vue'
@@ -141,16 +143,54 @@ const customerRequestParams = ref({
 	params: `?fields=id,razon_social,tax_payer_type,regimen_fiscal,payment_type_id,payment_method_id,cfdi_usage_id,rfc` 
 })
 const displayCustomerOptions = ref(false)
+
 const cfdi = ref({
 	customer_id: null,
 	tax_payer_id: null,
-	cfdi_usage: null,
+	cfdi_usage_id: null,
 	MetodoPago: null,
 	FormaPago: null,
 	TipoRelacion: null,
 	UUID: null,
 	products: []
 })
+
+const cfdiValidateSchema = yup.object().shape({
+	tax_payer_id: yup.number().required().positive().integer().label('Emisor'),
+	//customerId: yup.number().required().positive().integer().label('Receptor'),
+	//MetodoPago: yup.string().required().length(3).label('Método de pago'),
+	//FormaPago: yup.number().required().positive().integer().label('Forma de pago'),
+	//cfdi_usage_id: yup.string().required().min(3).max(4).label('Uso del CFDI'),
+	//taxpayer_type: yup.string().required().label('Tipo de contribuyente'),
+	//regimen_fiscal: yup.string().required().label('régimen fiscal').length(3),
+	//cer: yup.string().when(['key', 'companyValidateSchema'], {is: (value) => value != null, then: (schema) => schema.required(), otherwise: (schema) => schema.nullable()}).label('archivo de clave privada .CER'),
+	//key: yup.string().label('archivo de certificado .KEY').when(['cer', 'companyValidateSchema'], {is: (value) => value != null, then: (schema) => schema.required(), otherwise: (schema) => schema.nullable()})
+})
+
+const {handleSubmit, defineField, errors, setFieldValue} = useForm({
+	initialValues: {
+		customer_id: null,
+		tax_payer_id: null,
+		cfdi_usage_id: null,
+		MetodoPago: null,
+		FormaPago: null,
+		TipoRelacion: null,
+		UUID: null,
+		products: [{}]
+	},
+	validationSchema: cfdiValidateSchema
+})
+
+const [tax_payer_id, taxPayerId] = defineField('tax_payer_id')
+const [customer_id, customerId] = defineField('customer_id')
+const [cfdi_usage_id, cfdiUsageId] = defineField('cfdi_usage_id')
+const [MetodoPago, metodoDePago] = defineField('MetodoPago')
+const [FormaPago, formaDePago] = defineField('FormaPago')
+const [TipoRelacion, tipoDeRelacion] = defineField('TipoRelacion')
+const [UUID, uuid] = defineField('UUID')
+
+const {push, remove, fields, insert, update} = useFieldArray('products')
+
 const customerData = ref({
 	razon_social: null,
 	id: null
@@ -166,48 +206,12 @@ const totals = ref({})
 
 const taxes = ref([])
 
-const cfdiValidateSchema = yup.object().shape({
-	tax_payer_id: yup.number().required().positive().integer().label('Emisor'),
-	customer_id: yup.number().required().positive().integer().label('Receptor'),
-	payment_method: yup.string().required().length(3).label('Método de pago'),
-	payment_type: yup.number().required().positive().integer().label('Forma de pago'),
-	cfdi_usage: yup.string().required().min(3).max(4).label('Uso del CFDI'),
-	//taxpayer_type: yup.string().required().label('Tipo de contribuyente'),
-	//regimen_fiscal: yup.string().required().label('régimen fiscal').length(3),
-	//cer: yup.string().when(['key', 'companyValidateSchema'], {is: (value) => value != null, then: (schema) => schema.required(), otherwise: (schema) => schema.nullable()}).label('archivo de clave privada .CER'),
-	//key: yup.string().label('archivo de certificado .KEY').when(['cer', 'companyValidateSchema'], {is: (value) => value != null, then: (schema) => schema.required(), otherwise: (schema) => schema.nullable()})
-})
-
 const contribuyentes = computed(() => {
 	return store.company != null ? store.company : null
 })
 
-onMounted(() => {
-	cfdi.value.products.push({})
-})
-
-watch(customerData, () => {
-	if(customerData.value.id) {
-		cfdi.value.FormaPago = customerData.value.payment_type_id
-		cfdi.value.MetodoPago = customerData.value.payment_method_id
-		cfdi.value.cfdi_usage = customerData.value.cfdi_usage_id
-		getCFDIUsage()
-		getPaymentMethods()
-		getTipoRelacion()
-	}
-})
-
 watch(cfdi.value.products, () => {
 	sumarizeTotals()
-})
-
-watch(cfdi.value, () => {
-	if(cfdi.value.MetodoPago == 'PPD') {
-		cfdi.value.FormaPago = '99'
-		getPaymentTypes('PPD')
-	} else {
-		getPaymentTypes()
-	}
 })
 
 function getPaymentMethods() {
@@ -215,16 +219,21 @@ function getPaymentMethods() {
 		module: 'cfdi/payment-methods'
 	}).then(response => {
 		paymentMethods.value = response.data.data
+		getPaymentTypes()
 	}).catch(error => {
-		console.log(error)
 		paymentMethods.value = []
 	})
 }
 
 function getPaymentTypes(method = null) {
 	let params = ''
+	if(!method || method=== undefined) {
+		method = customerData.value.payment_method_id
+	}
+	console.log(method)
 	if(method == 'PPD') {
 		params = '?code=eq:99'
+		setFieldValue('FormaPago', 99)
 	}
 	new apiRequest().Get({
 		module: 'cfdi/payment-types',
@@ -232,7 +241,6 @@ function getPaymentTypes(method = null) {
 	}).then(response => {
 		paymentTypes.value = response.data.data
 	}).catch(error => {
-		console.log(error)
 		paymentTypes.value = []
 	})
 }
@@ -240,14 +248,12 @@ function getPaymentTypes(method = null) {
 function getCFDIUsage() {
 	let persona = customerData.value.tax_payer_type == 2 ? 'persona_moral' : 'persona_fisica'
 	let qryParams = `?fields=id,code,name&${persona}=ist:true&recipient_regimen_fiscal=any:${customerData.value.regimen_fiscal}`
-	console.log(qryParams)
 	new apiRequest().Get({
 		module: 'cfdi/cfdi-usage',
 		params: qryParams
 	}).then(response => {
 		cfdiUsage.value = response.data.data
 	}).catch(error => {
-		console.log(error)
 		cfdiUsage.value = []
 	})
 }
@@ -258,7 +264,6 @@ function getTipoRelacion() {
 	}).then(response => {
 		relationTypes.value = response.data.data
 	}).catch(error => {
-		console.log(error.data)
 		relationTypes.value = []
 	})
 }
@@ -318,10 +323,43 @@ function setCurrencyAmounts(amount) {
 	}
 }
 
-// TODO: HACER QUE EL ALIAS DE CLIENTE TENGA COMO MINIMO 3 CARACTERES
-function onSubmit() {
+function setCustomerData(v) {
+	customerData.value = v
+	setFieldValue('customer_id', v.id)
+	setFieldValue('MetodoPago', v.payment_method_id)
+	setFieldValue('FormaPago', v.payment_type_id)
+	setFieldValue('cfdi_usage_id', v.cfdi_usage_id)
+	getCFDIUsage()
+	getPaymentMethods()
+	getTipoRelacion()
+}
+
+function setProductItem(index, v) {
+	if(!fields.value[index]) {
+		insert(index, v.value)
+	} else {
+		update(index, v.value)
+	}
 
 }
+
+// TODO: HACER QUE EL ALIAS DE CLIENTE TENGA COMO MINIMO 3 CARACTERES
+const onSubmit = handleSubmit(values => {
+	console.log(values)
+	new apiRequest().Post({
+		module: 'cfdi/generate',
+		data: values
+	}).then(response => {
+		store.push_alert(response.data)
+		//router.push({
+		//	name: 'customerList',
+		//	params: {id: respose.data.data.customer_id}
+		//})
+	}).catch(error => {
+		console.log(error)
+		store.push_alert(error.data)
+	})
+})
 
 </script>
 
