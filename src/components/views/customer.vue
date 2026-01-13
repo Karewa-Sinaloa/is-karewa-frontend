@@ -8,7 +8,7 @@
 					<div class="section__top">
 						<h1 class="section__title" v-text="sectionTitle"></h1>
 						<span class="section__help-text">Solicita a tu cliente la constancia de situación fiscal para agregar de forma correcrta su información. Selecciona si es una persona física o una persona moral para iniciar el registro.</span>
-						<div class="section__options btn__grouped">
+						<div class="section__options btn__grouped" v-if="!enableEdit">
 							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="enableEdit = true">
 								<icon-set icon="edit"/>
 								Editar cliente
@@ -21,7 +21,7 @@
 					</div>	
 					<confirmation-popup :data="customerDeleteConfirmationData" @confirmed="customerDelete" @declined="confirmDelete = false" v-if="confirmDelete"></confirmation-popup>
 					<div class="section__content">
-						<Form @submit="onSubmit" class="form" :initial-values="customerForm" :validation-schema="companyValidateSchema" v-slot="{ values, setErrors }" v-if="customerForm">
+						<form @submit="onSubmit" class="form" v-if="customerData">
 							<h2 class="form__section-title">Datos fiscales</h2>
 
 							<div class="form__container form__container--small">
@@ -60,13 +60,14 @@
 								<div class="form__container-group">
 									<div class="form__container form__container--small">
 										<label class="form__label form__label--required" for="postal_code">Código postal</label>
-										<Field class="form__input" name="postal_code" id="postal_code" placeholder="00000" @change="getPostalCode" v-model="customerForm.postal_code" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
+										<Field class="form__input" name="postal_code" id="postal_code" placeholder="00000" @change="getPostalCode" v-model="postal_code" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
 										<ErrorMessage id="postal_code"></ErrorMessage>
+										<span name="payment_method_id" class="form__alert" data-field="payment_method_id">{{errors.postal_code}}</span>
 									</div>
 
 									<div class="form__container form__container--small" v-if="postalCodeData.postal_code">
 										<label class="form__label" for="state_code">Estado</label>
-										<Field class="form__input" name="state_code" id="state_code" placeholder="Estado" disabled v-model="customerForm.state_code" :class="{'form__input--disabled': !enableEdit}" />
+										<Field class="form__input" name="state_code" id="state_code" placeholder="Estado" disabled v-model="state_code" :class="{'form__input--disabled': !enableEdit}" />
 										<ErrorMessage id="state_code"></ErrorMessage>
 									</div>
 								</div>
@@ -74,15 +75,15 @@
 								<div class="form__container-group" v-if="postalCodeData.postal_code">
 									<div class="form__container form__container--small">
 										<label class="form__label" for="localidad">Localidad</label>
-										<Field class="form__input" name="localidad" id="localidad" placeholder="Localidad" v-model="customerForm.localidad" @focus="displayLocationOptions = true" autocomplete="off" @blur="displayLocationOptions = false" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
-										<input-autocomplete :elements="postalCodeData.localidades" :showOptions="displayLocationOptions" :stringValue="customerForm.localidad" @newStringValue="v => (customerForm.localidad = v)"></input-autocomplete>
+										<Field class="form__input" name="localidad" id="localidad" placeholder="Localidad" v-model="localidad" @focus="displayLocationOptions = true" autocomplete="off" @blur="displayLocationOptions = false" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<input-autocomplete :elements="postalCodeData.localidades" :showOptions="displayLocationOptions" :stringValue="localidad" @newStringValue="v => (localidad = v)"></input-autocomplete>
 										<ErrorMessage id="localidad"></ErrorMessage>
 									</div>
 
 									<div class="form__container form__container--small">
 										<label class="form__label" for="municipio">Municipio</label>
-										<Field class="form__input" name="municipio" id="municipio" placeholder="Municipio" v-model="customerForm.municipio" @focus="displayMunicipiosOptions = true" autocomplete="off" @blur="displayMunicipiosOptions = false" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
-										<input-autocomplete :elements="postalCodeData.municipios" :stringValue="customerForm.municipio" @newStringValue="v => (customerForm.municipio = v)" :showOptions="displayMunicipiosOptions"></input-autocomplete>
+										<Field class="form__input" name="municipio" id="municipio" placeholder="Municipio" v-model="municipio" @focus="displayMunicipiosOptions = true" autocomplete="off" @blur="displayMunicipiosOptions = false" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<input-autocomplete :elements="postalCodeData.municipios" :stringValue="municipio" @newStringValue="v => (municipio = v)" :showOptions="displayMunicipiosOptions"></input-autocomplete>
 										<ErrorMessage id="municipio"></ErrorMessage>
 									</div>
 								</div>
@@ -90,14 +91,14 @@
 								<div class="form__container-group" v-if="postalCodeData.postal_code">
 									<div class="form__container form__container--small">
 										<label class="form__label" for="Colonia">Colonia</label>
-										<Field class="form__input" name="colonia" id="colonia" placeholder="Colonia" v-model="customerForm.colonia" @focus="displayColoniasOptions = true" autocomplete="off" @blur="displayColoniasOptions = false" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
-										<input-autocomplete :elements="postalCodeData.colonias" :showOptions="displayColoniasOptions" :stringValue="customerForm.colonia" @newStringValue="v => (customerForm.colonia = v)"></input-autocomplete>
+										<Field class="form__input" name="colonia" id="colonia" placeholder="Colonia" v-model="colonia" @focus="displayColoniasOptions = true" autocomplete="off" @blur="displayColoniasOptions = false" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<input-autocomplete :elements="postalCodeData.colonias" :showOptions="displayColoniasOptions" :stringValue="colonia" @newStringValue="v => (colonia = v)"></input-autocomplete>
 										<ErrorMessage id="colonia"></ErrorMessage>
 									</div>
 
 									<div class="form__container form__container--small">
 										<label class="form__label" for="internal_number">Número interior</label>
-										<Field class="form__input" name="internal_number" id="internal_number" placeholder="Número interior" v-model="customerForm.internal_number" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
+										<Field class="form__input" name="internal_number" id="internal_number" placeholder="Número interior" v-model="internal_number" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
 										<ErrorMessage id="internal_number"></ErrorMessage>
 									</div>
 								</div>
@@ -105,13 +106,13 @@
 								<div class="form__container-group" v-if="postalCodeData.postal_code">
 									<div class="form__container form__container--small">
 										<label class="form__label" for="street">Calle</label>
-										<Field class="form__input" name="street" id="street" placeholder="Nombre de la calle" v-model="customerForm.street" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
+										<Field class="form__input" name="street" id="street" placeholder="Nombre de la calle" v-model="street" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}"/>
 										<ErrorMessage id="street"></ErrorMessage>
 									</div>
 
 									<div class="form__container form__container--small">
 										<label class="form__label" for="external_number">Número exterior</label>
-										<Field class="form__input" name="external_number" id="external_number" placeholder="Número exterior" v-model="customerForm.external_number" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
+										<Field class="form__input" name="external_number" id="external_number" placeholder="Número exterior" v-model="external_number" :disabled="!enableEdit" :class="{'form__input--disabled': !enableEdit}" />
 										<ErrorMessage id="external_number"></ErrorMessage>
 									</div>
 								</div>
@@ -126,7 +127,8 @@
 											<option disabled value="">SELECCIONE UNA OPCIÓN</option>
 											<option v-for="pm in paymentMethods" :value="pm.code">{{ pm.code }} &#183; {{ pm.description }}</option>
 										</Field>
-										<ErrorMessage id="payment_method_id"></ErrorMessage>
+										<span name="payment_method_id" class="form__alert" data-field="payment_method_id">{{setFieldMessages.payment_method_id}}</span>
+										<ErrorMessage name="payment_method_id"></ErrorMessage>
 									</div>
 
 									<div class="form__container form__container--small">
@@ -201,13 +203,13 @@
 
 							<button type="submit "v-if="tpt && enableEdit" class="btn btn__default btn--regular btn__default--primary">
 								<icon-set icon="upload"/>
-								Agregar cliente
+								{{submitCustomerButtonText}}
 							</button>
-							<button v-if="tpt && enableEdit" class="btn btn__outlined btn--small btn__outlined--primary" @click="enableEdit = false">
+							<button v-if="tpt && enableEdit" class="btn btn__outlined btn--small btn__outlined--primary btn--fixed" @click.prevent="enableEdit = false">
 								<icon-set icon="close"/>
 								Cancelar
 							</button>
-						</Form>
+						</form>
 					</div>
 				</section>
 			</main>
@@ -222,7 +224,7 @@ import sidebarComponent from '../partials/sidebar.vue'
 import contentHeader from '../partials/content_header.vue'
 import { useRouter, useRoute } from 'vue-router'
 import * as yup from 'yup'
-import { Form, Field, ErrorMessage } from 'vee-validate'
+import { Form, Field, ErrorMessage, useFieldArray, useForm } from 'vee-validate'
 import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import { getCompany } from '../../mixins/company.js'
@@ -234,48 +236,36 @@ const store = useAppStore()
 const router = useRouter()
 const route = useRoute()
 
-const customerData = function() {
-	return {	
-		tax_payer_type: null,
-		razon_social: null,
-		rfc: null,
-		regimen_fiscal: null,
-		postal_code: null,
-		state_code: null,
-		localidad: null,
-		municipio: null,
-		colonia: null,
-		street: null,
-		external_number: null,
-		internal_number: null,
-		payment_method_id: null,
-		payment_type_id: null,
-		cfdi_usage_id: null,
-		alias: null,
-		reference: null,
-		email: null,
-		phone: null,
-		comments: null,
-		tax_payer_ids: []
-	}
-}
-const customerDeleteConfirmationData = {
-	title: "Confirma tu solicitud",
-	text: "¿Realmente desea borrar este cliente? Esta acción es definitiva y no se puede deshacer",
-	btn_confirmation_text: "Si, borrar ahora",
-	btn_declination_text: "Cancelar",
-	icon: "attention.png"
-}
-const tpt = ref(null)
-const confirmDelete = ref(false)
-const taxpayerType = ref(null)
-const regimenesFiscales = ref(null)
-const companyValidateSchema = yup.object().shape({
+const customerData = ref({	
+	tax_payer_type: null,
+	razon_social: 'sdfsdfds',
+	rfc: null,
+	regimen_fiscal: null,
+	postal_code: null,
+	state_code: null,
+	localidad: null,
+	municipio: null,
+	colonia: null,
+	street: null,
+	external_number: null,
+	internal_number: null,
+	payment_method_id: null,
+	payment_type_id: null,
+	cfdi_usage_id: null,
+	alias: null,
+	reference: null,
+	email: null,
+	phone: null,
+	comments: null,
+	tax_payer_ids: []
+})
+
+const customerValidationSchema = yup.object().shape({
 	rfc: yup.string().required().label('RFC').min(12).max(13).matches(/^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$/i),
 	razon_social: yup.string().required().label('razón social'),
-	tax_payer_type: yup.number().required().label('Tipo de contribuyente').integer(),
+	tax_payer_type: yup.number().required().label('Tipo de contribuyente').integer().transform((value) => (Number.isNaN(value) ? 0 : value)),
 	regimen_fiscal: yup.string().required().label('régimen fiscal').min(3).max(3),
-	postal_code: yup.number().required().label('código postal').min(1000).max(99999).integer().positive(),
+	postal_code: yup.number().required().label('código postal').min(1000).max(99999).integer().positive().transform((value) => (Number.isNaN(value) ? 0 : value)),
 	state_code: yup.string().required().label('Código del país').min(3).max(3),
 	localidad: yup.string().label('localidad').max(100).nullable(),
 	municipio: yup.string().label('municipio').max(100).nullable(),
@@ -283,9 +273,9 @@ const companyValidateSchema = yup.object().shape({
 	street: yup.string().label('calle').max(150).nullable(),
 	external_number: yup.string().label('número exterior').max(50).nullable(),
 	internal_number: yup.string().label('número interior').max(50).nullable(),
-	payment_method_id: yup.number().label('método de pago').nullable().integer().positive(),
-	payment_type_id: yup.number().label('forma de pago').nullable().integer().positive(),
-	cfdi_usage_id: yup.number().label('uso del CFDI').nullable().integer().positive(),
+	payment_method_id: yup.number().label('método de pago').nullable().integer().positive().transform((value) => (Number.isNaN(value) ? 0 : value)),
+	payment_type_id: yup.number().label('forma de pago').nullable().integer().positive().transform((value) => (Number.isNaN(value) ? 0 : value)),
+	cfdi_usage_id: yup.string().label('uso del CFDI').max(4).nullable().min(3),
 	alias: yup.string().label('alias').max(50),
 	reference: yup.string().label('contacto de referencia').max(150).nullable(),
 	phone: yup.string().label('número telefónico').max(20).nullable(),
@@ -293,6 +283,24 @@ const companyValidateSchema = yup.object().shape({
 	comments: yup.string().label('comentarios').nullable(),
 	tax_payer_ids: yup.array().ensure()
 })
+
+const {handleSubmit, defineField, errors, useFieldModel, resetForm} = useForm({
+	initialValues: customerData.value,
+	validationSchema: customerValidationSchema
+})
+const customerDeleteConfirmationData = {
+	title: "Confirma tu solicitud",
+	text: "¿Realmente desea borrar este cliente? Esta acción es definitiva y no se puede deshacer",
+	btn_confirmation_text: "Si, borrar ahora",
+	btn_declination_text: "Cancelar",
+	icon: "attention.png"
+}
+//DEFINITION: TPT: Tax Payer Type
+const tpt = ref(null)
+const confirmDelete = ref(false)
+const taxpayerType = ref(null)
+const regimenesFiscales = ref(null)
+
 const companyCreated = computed(() => {
 	return store.company != null ? true : false
 })
@@ -305,7 +313,7 @@ const pCodeData = () => {
 		postal_code: null
 	}
 }
-const customerForm = ref(null)
+
 const postalCodeData = ref(pCodeData())
 const submitButtonText = ref('Registrar dirección')
 const displayLocationOptions = ref(false)
@@ -317,6 +325,7 @@ const CFDIUsage = ref([])
 const customerId = ref(null)
 const enableEdit = ref(false)
 const sectionTitle = ref('Agregar nuevo cliente')
+const submitCustomerButtonText = ref('AGREGAR CLIENTE')
 
 const contribuyentes = computed(() => {
 	return store.company
@@ -326,11 +335,16 @@ onMounted(() => {
 	if(route.name == 'customerEdit' && route.params.id > 0) {
 		customerId.value = route.params.id
 		sectionTitle.value = 'Editar información del cliente'
+		submitCustomerButtonText.value = 'ACTUALIZAR CLIENTE'
 		getCustomer()
+		if(route.query.edit == 'true') {
+			enableEdit.value = true
+		}
 	} else {
 		sectionTitle.value = 'Agregar nuevo cliente'
+		submitCustomerButtonText.value = 'AGREGAR CLIENTE'
 		enableEdit.value = true
-		customerForm.value = customerData()
+		resetForm({values: customerData.value})
 	}
 })
 
@@ -338,6 +352,14 @@ watch(tpt, () => {
 	if (tpt.value == 1 || tpt.value == 2) {
 		getRegimenFiscal()
 		getCFDIUsage()
+	}
+})
+
+watch(enableEdit, () => {
+	if(enableEdit.value == true) {
+		router.push({name: 'customerEdit', params:{id: customerId.value}, query: {edit: true}})
+	} else {
+		router.push({name: 'customerEdit', params:{id: customerId.value}})
 	}
 })
 
@@ -378,8 +400,8 @@ function getPostalCode(e) {
 	displayColoniasOptions.value = false
 	if (postalCode.length == 5 || postalCode.length == 4) {
 		if(!customerId.value) {
-			customerForm.value = customerData()
-			customerForm.value.postal_code = postalCode
+			resetForm({values: customerData.value})
+			useFieldModel('postal_code', postalCode)
 			postalCodeData.value = pCodeData()
 		}
 		new apiRequest()
@@ -392,7 +414,7 @@ function getPostalCode(e) {
 			)
 			.then(response => {
 				postalCodeData.value = response.data.data
-				customerForm.value.state_code = response.data.data.pc_state_code
+				useFieldModel('state_code', response.data.data.pc_state_code)
 			})
 			.catch(error => {
 				console.log(error)
@@ -443,7 +465,7 @@ function getCustomer() {
 		module: 'customers'
 	}, customerId.value)
 		.then(r => {
-			customerForm.value = r.data.data
+			resetForm({values: r.data.data})
 			tpt.value = r.data.data.tax_payer_type
 			postalCodeData.value.postal_code = r.data.data.postal_code
 			getPostalCode({
@@ -452,10 +474,11 @@ function getCustomer() {
 				}
 			})
 		}).catch(e => {
+			console.log(e)
 			store.push_alert(e.data)
-			router.push({
-				name: 'customerAdd'
-			})
+			//router.push({
+			//	name: 'customerAdd'
+			//})
 		})
 }
 
@@ -463,7 +486,7 @@ function customerDelete() {
 
 }
 
-function onSubmit(values, action) {
+const onSubmit = handleSubmit(values => {
 	new apiRequest().Post({
 		module: 'customers',
 		data: values
@@ -476,7 +499,7 @@ function onSubmit(values, action) {
 	}).catch(error => {
 		store.push_alert(error.data)
 	})
-}
+})
 </script>
 
 <style lang="sass" scoped>

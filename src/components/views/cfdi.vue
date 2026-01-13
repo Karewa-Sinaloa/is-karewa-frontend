@@ -37,7 +37,7 @@
 								<div class="form__container-group" v-if="customerData.id">
 									<div class="form__container form__container--half">
 										<label class="form__label form__label--required" for="payment_method">Método de pago</label>
-										<select class="form__select" id="payment_method" name="MetodoPago" v-model="MetodoPago" @change="getPaymentTypes(MetodoPago)">
+										<select class="form__select" id="payment_method" name="MetodoPago" v-model="MetodoPago" @change="getPaymentTypes(MetodoPago, FormaPago)" v-bind="metodoDePago">
 											<option hidden value="">Selecciona el método de pago</option>
 											<option v-for="pm in paymentMethods" :value="pm.code">{{pm.code}} - {{pm.description}}</option>
 										</select>
@@ -46,7 +46,7 @@
 
 									<div class="form__container form__container--half">
 										<label class="form__label form__label--required" for="payment_type">Forma de pago</label>
-										<select class="form__select" id="payment_type" name="FormaPago" v-model="FormaPago">
+										<select class="form__select" id="payment_type" name="FormaPago" v-model="FormaPago" v-bind="FormaPago">
 											<option hidden value="">Selecciona el tipo de pago</option>
 											<option v-for="pt in paymentTypes" :value="pt.code">{{pt.code}} - {{pt.name}}</option>
 										</select>
@@ -55,7 +55,7 @@
 
 									<div class="form__container form__container--half">
 										<label class="form__label form__label--required" for="cfdi_usage_id">Uso del CFDI</label>
-										<select class="form__select" id="cfdi_usage_id" name="cfdi_usage_id" v-model="cfdi_usage_id">
+										<select class="form__select" id="cfdi_usage_id" name="cfdi_usage_id" v-model="cfdi_usage_id" v-bind="cfdiUsageId">
 											<option hidden value="">Selecciona el uso del CFDI</option>
 											<option v-for="cu in cfdiUsage" :value="cu.code">{{cu.code}} - {{cu.name}}</option>
 										</select>
@@ -157,10 +157,10 @@ const cfdi = ref({
 
 const cfdiValidateSchema = yup.object().shape({
 	tax_payer_id: yup.number().required().positive().integer().label('Emisor'),
-	//customerId: yup.number().required().positive().integer().label('Receptor'),
-	//MetodoPago: yup.string().required().length(3).label('Método de pago'),
-	//FormaPago: yup.number().required().positive().integer().label('Forma de pago'),
-	//cfdi_usage_id: yup.string().required().min(3).max(4).label('Uso del CFDI'),
+	customer_id: yup.number().required().positive().integer().label('Receptor'),
+	MetodoPago: yup.string().required().length(3).label('Método de pago'),
+	FormaPago: yup.number().required().positive().integer().label('Forma de pago'),
+	cfdi_usage_id: yup.string().required().min(3).max(4).label('Uso del CFDI'),
 	//taxpayer_type: yup.string().required().label('Tipo de contribuyente'),
 	//regimen_fiscal: yup.string().required().label('régimen fiscal').length(3),
 	//cer: yup.string().when(['key', 'companyValidateSchema'], {is: (value) => value != null, then: (schema) => schema.required(), otherwise: (schema) => schema.nullable()}).label('archivo de clave privada .CER'),
@@ -225,15 +225,19 @@ function getPaymentMethods() {
 	})
 }
 
-function getPaymentTypes(method = null) {
+function getPaymentTypes(method = null, forma = null) {
 	let params = ''
 	if(!method || method=== undefined) {
 		method = customerData.value.payment_method_id
 	}
-	console.log(method)
 	if(method == 'PPD') {
 		params = '?code=eq:99'
 		setFieldValue('FormaPago', 99)
+	} else {
+		params = '?code=ne:99'
+		if(forma == 99) {
+			setFieldValue('FormaPago', null)
+		}
 	}
 	new apiRequest().Get({
 		module: 'cfdi/payment-types',
@@ -253,9 +257,20 @@ function getCFDIUsage() {
 		params: qryParams
 	}).then(response => {
 		cfdiUsage.value = response.data.data
+		let u = false
+		response.data.data.forEach(usage => {
+			if(Object.values(usage).indexOf(customerData.value.cfdi_usage_id) > -1) {
+				u = true
+			}
+		})
+		if(u === false) {
+			setFieldValue('cfdi_usage_id', null)
+
+		}
 	}).catch(error => {
 		cfdiUsage.value = []
-	})
+		console.log(error)
+	})	
 }
 
 function getTipoRelacion() {

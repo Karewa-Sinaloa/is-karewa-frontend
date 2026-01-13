@@ -9,15 +9,7 @@ import accessViewRecovery from '../components/partials/recovery.vue'
 import accessViewReset from '../components/partials/reset.vue'
 import accessViewRegistration from '../components/partials/registration.vue'
 import accessViewValidation from '../components/partials/verification.vue'
-import NewCompanyView from '../components/views/new_company.vue'
 import CompanyView from '../components/views/company.vue'
-import CustomerEdit from '../components/views/customer.vue'
-import CustomerList from '../components/views/customer_list.vue'
-import CFDIView from '../components/views/cfdi.vue'
-import ProductEdit from '../components/views/product/edit.vue'
-import ProductList from '../components/views/product/list.vue'
-import CategoryView from '../components/views/product_categories_list.vue'
-import CategoryEdit from '../components/views/product_category_edit.vue'
 
 const routes = [
 	{
@@ -29,108 +21,12 @@ const routes = [
 		}
 	},
 	{
-		path: '/empresas/nueva-empresa',
-		component: NewCompanyView,
-		name: 'newCompanyView',
-		meta: {
-			login: true
-		}
-	},
-	{
 		path: '/empresas/mi-empresa',
 		component: CompanyView,
 		name: 'companyView',
 		meta: {
 			login: true
 		}
-	},
-	{
-		path: '/clientes/nuevo-cliente',
-		component: CustomerEdit,
-		name: 'customerAdd',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/clientes/:id(\\d+)',
-		component: CustomerEdit,
-		name: 'customerEdit',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/clientes/p/:page(\\d+)?',
-		component: CustomerList,
-		name: 'customerList',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/clientes',
-		redirect: '/clientes/p/1'
-	},
-	{
-		path: '/categorias/nueva-categoria',
-		component: CategoryEdit,
-		name: 'categoryAdd',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/categorias/:id(\\d+)',
-		component: CategoryEdit,
-		name: 'categoryEdit',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/categorias',
-		component: CategoryView,
-		name: 'categoryView',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/nuevo-comprobante',
-		component: CFDIView,
-		name: 'cfdiView',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/productos/nuevo',
-		component: ProductEdit,
-		name: 'productAdd',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/productos/:id(\\d+)',
-		component: ProductEdit,
-		name: 'productEdit',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/productos/p/:page(\\d+)?',
-		component: ProductList,
-		name: 'productList',
-		meta: {
-			login: true
-		}
-	},
-	{
-		path: '/productos',
-		redirect: '/productos/p/1'
 	},
 	{
 		path: '/acceso/',

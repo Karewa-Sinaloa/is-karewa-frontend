@@ -11,13 +11,17 @@ const errorMessages = {
 	date: 'El campo ${label} no tiene un formato de fecha válido',
 	oneOf: 'El valor de ${label} debe coincidir en ambos campos, por favor verifica',
 	matches: 'El valor del campo ${label} no coincide con el formato requerido',
-	length: 'La longitud del campo ${label} debe ser extrictamente de ${length} caracteres'
+	length: 'La longitud del campo ${label} debe ser extrictamente de ${length} caracteres',
+	integer: '${label} debe ser un número pero se proporciono un ${cast}',
+	positive: '${label} debe ser un valor positivo mayor a cero'
 }
 
 setLocale({
 	mixed: errorMessages,
 	string: errorMessages,
-	date: errorMessages
+	date: errorMessages,
+	number: errorMessages,
+	boolean: errorMessages
 })
 
 export const setFieldMessages = function(errors) {
@@ -27,5 +31,6 @@ export const setFieldMessages = function(errors) {
 			fieldErrors[error.field] = errorMessages[error.rule]
 		}
 	})
+	console.log(fieldErrors)
 	return fieldErrors
 }
