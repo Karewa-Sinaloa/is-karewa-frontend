@@ -12,7 +12,7 @@ export default defineConfig({
 			usePolling: true
 		},
 		allowedHosts: [
-			'cfdiapp.criselgeek.com'
+			'appkarewa.criselgeek.com'
 		]
 	},
 	css: {
