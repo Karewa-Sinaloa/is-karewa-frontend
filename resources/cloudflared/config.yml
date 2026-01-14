@@ -1,0 +1,3 @@
+url: http://localhost:5174
+tunnel: 09f9684c-7fa2-4bec-a5a7-7f5f1b7c65c7
+credentials-file: /var/www/vhosts/karewa/frontend/resources/cloudflared/09f9684c-7fa2-4bec-a5a7-7f5f1b7c65c7.json

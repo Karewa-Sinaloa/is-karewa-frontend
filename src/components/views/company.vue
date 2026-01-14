@@ -102,7 +102,6 @@
 						<span class="section__help-text">Los datos de la dirección de facturación deben ser los mismo registrados en to comprobante de identificación fiscal vigente.</span>
 					</div>
 					<div class="section__content">
-						<tax-payer-address :taxpayerid="myCompany.id"></tax-payer-address>
 					</div>
 				</section>
 			</main>
@@ -121,7 +120,6 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { setFieldMessages }  from '../../helpers/yup.locale.js'
 import { apiRequest } from '../../api/requests.js'
 import dragDrop from '../../components/partials/drag_drop_file.vue'
-import taxPayerAddress from '../partials/tax_payer_address.vue'
 import confirmationPopup from '../partials/confirmation_popup.vue'
 import { getCompany } from '../../mixins/company.js'
 

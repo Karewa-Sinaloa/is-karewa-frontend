@@ -1,4 +1,4 @@
-import jwt_decode from "jwt-decode"
+import * as jwt_decode from "jwt-decode"
 import { useAppStore } from '../store/index.js'
 import { apiRequest } from '../api/requests'
 import { frontEndLogs } from '../helpers/frontend.logs.js'

@@ -1,5 +1,5 @@
 <template>
-	<h2 class="access__subtitle">Bienvenido de vuelta a CFDI APP</h2>
+	<h2 class="access__subtitle">Bienvenido a KAREWA</h2>
 	<span class="access__welcome">Accede con tu correo electrónico y contraseña, si no estas registrado obtén una prueba gratuita registrándote ahora!</span>
 	<Form class="form" @Submit="onSubmit" :validation-schema="loginValidateSchema" ref="loginForm">
 		<fieldset class="form__fieldset">
