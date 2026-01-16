@@ -1,4 +1,4 @@
-import * as jwt_decode from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
 import { useAppStore } from '../store/index.js'
 import { apiRequest } from '../api/requests'
 import { frontEndLogs } from '../helpers/frontend.logs.js'
@@ -10,15 +10,17 @@ export class userSession {
 	set(bearer) {
 		return new Promise((resolve, reject) => {
 			if(bearer) {
-				let userData = jwt_decode(bearer)
+				let userData = jwtDecode(bearer)
 				this.validateSession(userData, bearer).then(() => {
 					this.store.setUserData(userData)
 					resolve(userData)
-				}).catch(() => {
+				}).catch(error => {
+					$debug && console.error('Error validating session:', error)
 					reject(false)
 				})
 			} else {
 				reject(false)
+				$debug && console.error('No bearer token provided')
 			}
 		})
 	}
@@ -27,9 +29,9 @@ export class userSession {
 		if(bearer && this.store.userData) {
 			return this.validateSession(this.store.userData, bearer, true)
 		} else if(bearer && !this.store.userData) {
-			let result = this.validateSession(jwt_decode(bearer), bearer, true)
+			let result = this.validateSession(jwtDecode(bearer), bearer, true)
 			if(result) {
-				this.store.setUserData(jwt_decode(bearer))
+				this.store.setUserData(jwtDecode(bearer))
 			}
 			return result
 		} else {
@@ -39,7 +41,7 @@ export class userSession {
 	}
 	validateSession(userData, bearer, stored = false) {
 		return new Promise((resolve, reject) => {
-			if(!userData || this.sessionExpired(userData.exp) || userData.role > 5 || !userData.role || userData.role === undefined) {
+			if(!userData || this.sessionExpired(userData.exp) || userData.data.role_id > 5 || !userData.data.role_id || userData.data.role_id === undefined) {
 				localStorage.removeItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
 				this.store.setUserData(null)
 				frontEndLogs({

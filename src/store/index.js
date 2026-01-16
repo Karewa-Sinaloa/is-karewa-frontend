@@ -20,7 +20,7 @@ export const useAppStore = defineStore('cfdiAppStore', {
 			state.siteConfig = data
 		},
 		setUserData(data) {
-			this.userData = data
+			this.userData = data ? data.data : null
 		},
 		push_help(data) {
 			this.help = data

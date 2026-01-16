@@ -9,7 +9,7 @@ const alertData = {
 		title: 'ERROR DE SERVIDOR',
 		text: 'Ha ocurrido un error interno del servidor, por favor intente de nuevo, si el problema persiste, comunicate con el administrador'
 	},
-	ACCESS001: {
+	'APP_AUTH_FAILED': {
 		type: 'error',
 		title: 'ACCESSO NO AUTORIZADO',
 		text: 'Los datos de acceso proporcionados no son correctos, por favor, verifique la información'
