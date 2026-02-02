@@ -41,7 +41,8 @@ export class userSession {
 	}
 	validateSession(userData, bearer, stored = false) {
 		return new Promise((resolve, reject) => {
-			if(!userData || this.sessionExpired(userData.exp) || userData.data.role_id > 5 || !userData.data.role_id || userData.data.role_id === undefined) {
+			console.log('Validating session for user data:', userData)
+			if(!userData || userData.data === undefined || this.sessionExpired(userData.exp) || userData.data.role_id > 5 || !userData.data.role_id || userData.data.role_id === undefined) {
 				localStorage.removeItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
 				this.store.setUserData(null)
 				frontEndLogs({

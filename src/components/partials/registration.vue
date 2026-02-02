@@ -1,6 +1,6 @@
 <template>
 	<h2 class="access__subtitle">Crear nueva cuenta</h2>
-	<span class="access__welcome">Gracias por optar por CFDI APP. Esta cuenta será tu cuenta principal, desde la misma podrás crear una o más empresas para facturar. Una vez registrado podrás continuar con la configuración de tu empresa.</span>
+	<span class="access__welcome">Gracias por optar por Monitor Karewa. Esta cuenta será tu cuenta principal, desde la misma podrás crear una o más empresas para facturar. Una vez registrado podrás continuar con la configuración de tu empresa.</span>
 	<Form class="form" @Submit="onSubmit" :validation-schema="registrationValidateSchema" ref="registrationForm" v-slot="{setErrors, handleSubmit, values, validate}">
 		<fieldset class="form__fieldset">
 			<div class="form__container">

@@ -3,7 +3,7 @@ import { watch, computed, onMounted } from 'vue'
 import notificationComponent from './components/partials/notifications.vue'
 import loadingComponent from './components/partials/loading.vue'
 import popupComponent from './components/partials/popups.vue'
-import { getCompany } from './mixins/company.js'
+import { getOrganization } from './mixins/organization.js'
 import { useRoute } from 'vue-router'
 import helpPopup from './components/partials/help.popup.vue'
 import newElements from './components/partials/add_new_element.vue'
@@ -35,13 +35,13 @@ const isLoggedIn = computed(() => {
 
 onMounted(() => {
 	if(isLoggedIn.value) {
-		getCompany()
+		getOrganization()
 	}
 })
 
 watch(isLoggedIn, () => {
 	if(isLoggedIn.value) {
-		getCompany()
+		getOrganization()
 	}
 })
 
