@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { serverMessages } from '../resources/errors.js'
 
-export const useAppStore = defineStore('cfdiAppStore', {
+export const useAppStore = defineStore('KarewaAppStore', {
 	state: () => {
 		return {
 			siteConfig: null,
