@@ -16,7 +16,6 @@ const hCaptchaKey = import.meta.env.VITE_HCAPTCHA_KEY
 const hCaptchaEndpoint = import.meta.env.VITE_HCAPTCHA_ENDPOINT
 
 function captchaValidation(data) {
-  console.log(data)
 	emit('releaseForm', data)
 	captchaClosed()
 }

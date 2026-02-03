@@ -6,6 +6,7 @@ import { userSession } from '../helpers/set.session.js'
 export class apiRequest {
 	constructor(contentType = 'application/json') {
 		this.instance = new apiInstance().init(contentType)
+		this.$debug = import.meta.env.VITE_DEBUG
 	}
 	Get(_params, id = null) {
 		return new Promise((resolve, reject) => {
@@ -78,6 +79,7 @@ export class apiRequest {
 					resolve(response)
 				})
 				.catch(error => {
+					this.$debug && console.error('API Request Error:', error)
 					store.loading(false)
 					let closedSessionCodes = ['ACCESS003', 'ACCESS006']
 					let errorResponse = JSON.parse(error.request.response)

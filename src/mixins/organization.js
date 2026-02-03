@@ -5,7 +5,8 @@ export const getOrganization = function() {
 	return new Promise(resolve => {
 		const store = useAppStore()
 		new apiRequest().Get({
-			module: 'organization'
+			module: 'organization',
+			params: '/1'
 		}).then(response => {
 			store.setCompany(response.data.data)
 			resolve(true)
