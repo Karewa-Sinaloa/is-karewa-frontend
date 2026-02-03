@@ -1,4 +1,5 @@
 import { jwtDecode } from "jwt-decode"
+import { toRaw } from 'vue'
 import { useAppStore } from '../store/index.js'
 import { apiRequest } from '../api/requests'
 import { frontEndLogs } from '../helpers/frontend.logs.js'
@@ -25,10 +26,11 @@ export class userSession {
 		})
 	}
 	verify() {
+		let uData = toRaw(this.store.userData)
 		let bearer = localStorage.getItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
-		if(bearer && this.store.userData) {
-			return this.validateSession(this.store.userData, bearer, true)
-		} else if(bearer && !this.store.userData) {
+		if(bearer && uData) {
+			return this.validateSession(uData, bearer, true)
+		} else if(bearer && !uData) {
 			let result = this.validateSession(jwtDecode(bearer), bearer, true)
 			if(result) {
 				this.store.setUserData(jwtDecode(bearer))
@@ -41,7 +43,6 @@ export class userSession {
 	}
 	validateSession(userData, bearer, stored = false) {
 		return new Promise((resolve, reject) => {
-			console.log('Validating session for user data:', userData)
 			if(!userData || userData.data === undefined || this.sessionExpired(userData.exp) || userData.data.role_id > 5 || !userData.data.role_id || userData.data.role_id === undefined) {
 				localStorage.removeItem(`${import.meta.env.VITE_LOCALSTORAGE_SUFFIX}bearer`)
 				this.store.setUserData(null)

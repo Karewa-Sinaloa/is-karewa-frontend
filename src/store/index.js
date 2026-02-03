@@ -20,7 +20,7 @@ export const useAppStore = defineStore('KarewaAppStore', {
 			state.siteConfig = data
 		},
 		setUserData(data) {
-			this.userData = data ? data.data : null
+			this.userData = data ? data : null
 		},
 		push_help(data) {
 			this.help = data

@@ -4,8 +4,12 @@
 
 .btn
 	font:
-		family: var(--ff1)
-		weight: 600
+		family: var(--ff3)
+		weight: 500
+	&:disabled
+		filter: saturate(0.2) brightness(0.9)
+		pointer-events: none
+		opacity: 0.3
 	cursor: pointer
 	appearance: none
 	outline: none

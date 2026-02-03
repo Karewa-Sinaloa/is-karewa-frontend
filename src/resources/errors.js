@@ -49,7 +49,7 @@ const alertData = {
 		title: 'MENSAJE NO ENVIADO',
 		text: 'No hemos podido enviar por correo electrónico la información solicitada, por favor, vuelve a intentarlo'
 	},
-	VALIDATION001: {
+	'APP_PAYLOAD_VALIDATION': {
 		type: 'error',
 		title: 'ERROR DE VERIFICACIÓN',
 		text: 'Uno o varios campos del formulario podrían ser incorrecto o estar vacíos, por favor, revise la información proporcionada.'
@@ -89,40 +89,6 @@ const alertData = {
 		title: 'NO SE PUEDE BORRAR',
 		text: 'No es posible borrar el elemento solicitado ya que esta ligado uno no más elementos'
 	},
-	'TAX-PAYER-001': {
-		type: 'error',
-		title: 'RFC INCONSISTENTE',
-		text: 'El RFC proporcionado no coincide con el certificado proveido, por favor, verifica los datos y archivos enviados'
-	},
-	'TAX-PAYER-002': {
-		type: 'error',
-		title: 'CERTIFICADO EXPIRADO',
-		text: 'El archivo de certificado proporcionado ha expirado, por favor, sube un certificado vigente'
-	},
-	'TAX-PAYER-003': {
-		type: 'error',
-		title: 'LLAVE PRIVADA NO GUARDADA',
-		text: 'No se ha podido guardar el archivo de llave privada (.key) proporcionado, por favor, vuelve a intentar subirlo.'
-	},
-	'TAX-PAYER-004': {
-		type: 'error',
-		title: 'Ha ocurrido un error al leer el archivo de certificado (.cer), por favor, vuelve a intentar, si el problema persiste, comunicate con nosotros'
-	},
-	'TAX-PAYER-005': {
-		type: 'error',
-		title: 'RÉGIMEN FISCAL INCORRECTO',
-		text: 'El régimen fiscal seleccionado no es compatible con el tipo de contribuyente'
-	},
-	'TAX-PAYER-006': {
-		type: 'error',
-		title: 'ARCHIVO NO GUARDADO',
-		text: 'No hemos podido guardar el archivo de certificado (.cer) enviado, por favor, vuelve a subirlo, si el problema persiste, contáctanos'
-	},
-	'TAX-PAYER-007': {
-		type: 'error',
-		title: 'CONTRASEÑA INCORRECTA',
-		text: 'La contraseña de tu CSD no es correcta, por favor verificala.'
-	},
 	'HCAPTCHA-001': {
 		type: 'warning',
 		title: 'Error completando la captcha',
@@ -146,6 +112,9 @@ const alertData = {
 }
 
 export function serverMessages(code = 'SERVER-ERROR') {
+	if(code in alertData === false) {
+		code = 'SERVER-ERROR'
+	}
 	let error = alertData[code]
 	return {
 		type: error.type,

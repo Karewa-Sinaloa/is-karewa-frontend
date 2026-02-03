@@ -1,7 +1,7 @@
 @use "../settings/_variables" as vars
 @use "../mixins/_mixins" as mix
 @use "sass:map"
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&Arimo:ital,wght@0,400..700;1,400..700&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')
 \:root
 	font-size: 16px
 	--ff1: #{vars.$ff1}
@@ -27,6 +27,7 @@
 	--text-color-secondary-dark: var(--color-grayscale-700)
 	--text-color-primary-light: var(--color-light)
 	--text-color-secondary-light: var(--color-grayscale-200)
+	--main-section-background: #{vars.$main-section-background}
 html
 	padding: 0
 	margin: 0
@@ -87,7 +88,7 @@ p,li,span,code
 .main
 	padding: 1rem
 	box-sizing: border-box
-	background-color: var(--color-grayscale-50)
+	background-color: var(--main-section-background)
 	border-top-left-radius: 0.5rem
 	border: 1px solid var(--color-grayscale-100)
 	display: flex

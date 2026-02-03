@@ -58,11 +58,9 @@ function onSubmit(values, actions) {
       store.push_alert(response.data)
       router.push({name: 'homeView'})
     }).catch(error => {
-      console.log(error)
       store.push_alert({code: 'SERVER-ERROR'})
     })
   }).catch(error => {
-    console.log(error)
     if(error.status === 400) {
       let errors = setFieldMessages(error.data.errors)
       loginForm.value.setErrors(errors)

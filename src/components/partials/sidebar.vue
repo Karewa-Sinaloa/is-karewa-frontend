@@ -9,6 +9,10 @@
 				<icon-set icon="dashboard" />
 				<span class="nav__element-text">Panel de control</span>
 			</router-link>
+      <router-link class="nav__element" :to="{name: 'organizationView'}">
+        <icon-set icon="business" />
+        <span class="nav__element-text">Mi organización</span>
+      </router-link>
 		</div>
 	</div>
 </template>
