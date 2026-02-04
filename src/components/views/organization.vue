@@ -30,19 +30,19 @@
 								</div>
 
                 <div class="form__container form__container--half">
-								  <label class="form__label" for="shortname">Nombre corto</label>
+								  <label class="form__label form__label--required" for="shortname">Nombre corto</label>
 									<Field id="shortname" name="shortname" placeholder="Nombre corto de la organización" class="form__input" :disabled="organizationEditBlocked" :class="{'form__input--disabled': organizationEditBlocked}"/>
 								  <ErrorMessage name="shortname" class="form__alert" data-field="shortname"/>
 							  </div>
 
 								<div class="form__container form__container--half">
-									<label class="form__label" for="contact_email" id="contact_email">Correo de contacto</label>
+									<label class="form__label form__label--required" for="contact_email" id="contact_email">Correo de contacto</label>
 									<Field class="form__input" type="email" id="contact_email" name="contact_email" placeholder="user@organization.tld" :disabled="organizationEditBlocked" :class="{'form__input--disabled': organizationEditBlocked}"/>
 									<ErrorMessage name="contact_email" class="form__alert" data-field="contact_email"/>
 								</div>
 
                 <div class="form__container form__container--full">
-									<label class="form__label form__label--required" for="name" id="name">Calle y núnero</label>
+									<label class="form__label" for="name" id="name">Calle y núnero</label>
 									<Field id="street" name="street" placeholder="Nombre de la calle y número" class="form__input" :disabled="organizationEditBlocked" :class="{'form__input--disabled': organizationEditBlocked}"/>
 								  <ErrorMessage name="street" class="form__alert" data-field="street"/>
 								</div>
@@ -111,8 +111,8 @@ const organizationEditBlocked = ref(true)
 const tpt = ref(null)
 const organizationValidateSchema = yup.object().shape({
 	name: yup.string().required().label('Nombre de la organización').max(150),
-  shortname: yup.string().label('Nombre corto').max(20),
-  contact_email: yup.string().email().label('Correo de contacto').max(100),
+  shortname: yup.string().required().label('Nombre corto').max(20),
+  contact_email: yup.string().required().email().label('Correo de contacto').max(100),
   street: yup.string().required().label('Calle y número').max(150),
   colonia: yup.string().label('Colonia / Delegación').max(100),
   city: yup.string().label('Ciudad').max(100),
@@ -125,7 +125,7 @@ const myOrganization = computed(() => {
 
 onMounted(() => {
 	if(!myOrganization.value) {
-	//	router.push({name: 'homeView'})
+		router.push({name: 'homeView'})
 	}
 })
 
@@ -154,11 +154,6 @@ function organizationDelete() {
 			error.data.help = "Debe borrar primero las direcciones asociadas al organización"
 			store.push_alert(error.data)
 		})
-}
-
-function humanReadDate(dateString) {
-	let d = new Date(dateString)
-	return `${d.toLocaleString()}`
 }
 </script>
 

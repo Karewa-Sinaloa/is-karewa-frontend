@@ -9,7 +9,8 @@ import accessViewRecovery from '../components/partials/recovery.vue'
 import accessViewReset from '../components/partials/reset.vue'
 import accessViewRegistration from '../components/partials/registration.vue'
 import accessViewValidation from '../components/partials/verification.vue'
-import OrganizationView from '../components/views/company.vue'
+import OrganizationView from '../components/views/organization.vue'
+import ProveedoresView from '../components/views/proveedores/view.vue'
 
 const routes = [
 	{
@@ -24,6 +25,14 @@ const routes = [
 		path: '/organizacion/mi-organizacion',
 		component: OrganizationView,
 		name: 'organizationView',
+		meta: {
+			login: true
+		}
+	},
+	{
+		path: '/proveedores/:id',
+		component: ProveedoresView,
+		name: 'proveedoresView',
 		meta: {
 			login: true
 		}

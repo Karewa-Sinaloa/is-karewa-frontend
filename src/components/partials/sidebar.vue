@@ -13,6 +13,10 @@
         <icon-set icon="business" />
         <span class="nav__element-text">Mi organización</span>
       </router-link>
+      <router-link class="nav__element" :to="{name: 'proveedoresView', params: {id: 1}}">
+        <icon-set icon="business" />
+        <span class="nav__element-text">Proveedores</span>
+      </router-link>
 		</div>
 	</div>
 </template>
