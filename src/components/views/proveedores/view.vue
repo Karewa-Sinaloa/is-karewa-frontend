@@ -6,9 +6,9 @@
 			<main class="main">
 				<section class="section section--wide" v-if="myProvider">
 					<div class="section__top">
-						<h1 class="section__title">{{myProvider.name}}</h1>
-						<span class="section__help-text">Edita la información del proveedores de servicios</span>
-						<div class="section__options btn__grouped" v-if="providerEditBlocked" >
+						<h1 class="section__title">{{myProvider.name || 'Crear nuevo proveedor'}}</h1>
+						<span class="section__help-text">Agrega o edita la información del proveedores de servicios</span>
+						<div class="section__options btn__grouped" v-if="providerEditBlocked && myProvider.id" >
 							<button class="btn btn__default btn--smaller btn__default--primary" @click.prevent="providerEditBlocked = false">
 								<span class="material-symbols-outlined">edit_square</span>
 								Editar proveedor
@@ -25,30 +25,30 @@
 							<div>
 								<div class="form__container form__container--full">
 									<label class="form__label form__label--required" for="name" id="name">Nombre del proveedor</label>
-									<Field id="name" name="name" placeholder="Nombre de de tu proveedor" class="form__input" :disabled="providerEditBlocked" :class="{'form__input--disabled': providerEditBlocked}"/>
+									<Field id="name" name="name" placeholder="Nombre de de tu proveedor" class="form__input" :disabled="providerEditBlocked && myProvider.id" :class="{'form__input--disabled': providerEditBlocked && myProvider.id}"/>
 								  <ErrorMessage name="name" class="form__alert" data-field="name"/>
 								</div>
 
                 <div class="form__container form__container--half">
 								  <label class="form__label form__label--required" for="shortname">Nombre corto</label>
-									<Field id="shortname" name="shortname" placeholder="Nombre corto del proveedor" class="form__input" :disabled="providerEditBlocked" :class="{'form__input--disabled': providerEditBlocked}"/>
+									<Field id="shortname" name="shortname" placeholder="Nombre corto del proveedor" class="form__input" :disabled="providerEditBlocked && myProvider.id" :class="{'form__input--disabled': providerEditBlocked && myProvider.id}"/>
 								  <ErrorMessage name="shortname" class="form__alert" data-field="shortname"/>
 							  </div>
 
 								<div class="form__container form__container--half">
 									<label class="form__label form__label--required" for="rfc" id="rfc">RFC del proveedor</label>
-									<Field class="form__input" type="text" id="rfc" name="rfc" placeholder="XXX31121972XX0" :disabled="providerEditBlocked" :class="{'form__input--disabled': providerEditBlocked}"/>
+									<Field class="form__input" type="text" id="rfc" name="rfc" placeholder="XXX31121972XX0" :disabled="providerEditBlocked && myProvider.id" :class="{'form__input--disabled': providerEditBlocked && myProvider.id}"/>
 									<ErrorMessage name="rfc" class="form__alert" data-field="rfc"/>
 								</div>
 
                 <div class="form__container form__container--full">
 									<label class="form__label" for="comments" id="comments">Comentarios o notas</label>
-									<Field class="form__input form__input--textarea" rows="4" as="textarea" id="comments" name="comments" placeholder="Comentarios o notas acerca del proveedor" :disabled="providerEditBlocked" :class="{'form__input--disabled': providerEditBlocked}"/>
+									<Field class="form__input form__input--textarea" rows="4" as="textarea" id="comments" name="comments" placeholder="Comentarios o notas acerca del proveedor" :disabled="providerEditBlocked && myProvider.id" :class="{'form__input--disabled': providerEditBlocked && myProvider.id}"/>
 									<ErrorMessage name="comments" class="form__alert" data-field="comments"/>
 								</div>
 
 							</div>
-							<input v-if="!providerEditBlocked" class="btn btn__default btn--small btn__default--primary" type="submit" value="Actualizar proveedor">
+              <input v-if="!providerEditBlocked || !myProvider.id" class="btn btn__default btn--small btn__default--primary" type="submit" :value="submitButtonText"/>
 							<button v-if="!providerEditBlocked" class="btn btn__outlined btn--small btn__outlined--primary" @click="providerEditBlocked = true">
 								<span class="material-symbols-outlined">cancel</span>
 								Cancelar</button>
@@ -64,7 +64,7 @@
 import sidebarComponent from '../../partials/sidebar.vue'
 import contentHeader from '../../partials/content_header.vue'
 import { onMounted, ref, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute, onBeforeRouteLeave } from 'vue-router'
 import * as yup from 'yup'
 import { useAppStore } from '../../../store/index.js'
 import { Form, Field, ErrorMessage } from 'vee-validate'
@@ -74,7 +74,8 @@ import confirmationPopup from '../../partials/confirmation_popup.vue'
 
 const store = useAppStore()
 const router = useRouter()
-const myProvider = ref(null)
+const route = useRoute()
+const myProvider = ref()
 const providerDeleteConfirmationData = {
 	title: "Confirma tu solicitud",
 	text: "¿Realmente desea borrar este proveedor? Esta acción es definitiva y no se puede deshacer",
@@ -83,9 +84,11 @@ const providerDeleteConfirmationData = {
 	icon: "attention.png"
 }
 const confirmDelete = ref(false)
-
 const providerEditBlocked = ref(true)
-const tpt = ref(null)
+const submitButtonText = computed(() => {
+  return myProvider.value && myProvider.value.id ? 'Actualizar proveedor' : 'Crear proveedor'
+})
+
 const providerValidateSchema = yup.object().shape({
 	name: yup.string().required().label('Nombre de la proveedor').max(150),
   shortname: yup.string().required().label('Nombre corto').max(20),
@@ -93,21 +96,54 @@ const providerValidateSchema = yup.object().shape({
   comments: yup.string().label('Comentarios'),
 })
 
-onMounted(() => {
-  getProvider()
+onBeforeRouteLeave((to, from, next) => {
+  myProvider.value = null
+  next()
 })
 
+onMounted(() => {
+  manageRoute() 
+})
+
+watch(() => route.path , async () => {
+  manageRoute() 
+})
+
+function manageRoute() {
+  if(route.name === 'proveedoresView') {
+    if(!route.params.id || route.params.id === 0) {
+      router.push({name: 'proveedoresCreate'})
+    } else {
+      getProvider()
+    }
+  } else {
+    myProvider.value = {name: '', shortname: '', rfc: '', comments: '', id: null};
+  }
+}
+
 function onSubmit(values, action) {
-	new apiRequest().Put({
-		module: 'proveedores',
-		data: values
-	}, myProvider.value.id).then(response => {
-		store.push_alert(response.data)
-		providerEditBlocked.value = true
-		getOrganization()
-	}).catch(error => {
-		store.push_alert(error.data)
-	})
+  if(!myProvider.value.id) {
+    new apiRequest().Post({
+      module: 'proveedores',
+      data: values
+    }).then(response => {
+      store.push_alert(response.data)
+      router.push({name: 'proveedoresView', params: {id: response.data.data.id}})
+    }).catch(error => {
+      store.push_alert(error.data)
+    })
+  } else {
+    new apiRequest().Put({
+      module: 'proveedores',
+      data: values
+    }, myProvider.value.id).then(response => {
+      store.push_alert(response.data)
+      providerEditBlocked.value = true
+      getOrganization()
+    }).catch(error => {
+      store.push_alert(error.data)
+    })
+  }
 }
 
 function getProvider() {
@@ -124,7 +160,7 @@ function getProvider() {
 
 function providerDelete() {
 	new apiRequest().Delete({
-		module: 'organization'
+		module: 'proveedores'
 	}, myProvider.value.id)
 		.then(response => {
 			confirmDelete.value = false

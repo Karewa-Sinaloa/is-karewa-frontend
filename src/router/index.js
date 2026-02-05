@@ -11,6 +11,7 @@ import accessViewRegistration from '../components/partials/registration.vue'
 import accessViewValidation from '../components/partials/verification.vue'
 import OrganizationView from '../components/views/organization.vue'
 import ProveedoresView from '../components/views/proveedores/view.vue'
+import ProveedoresList from '../components/views/proveedores/list.vue'
 
 const routes = [
 	{
@@ -20,24 +21,35 @@ const routes = [
 		meta: {
 			login: true
 		}
-	},
-	{
+	},{
 		path: '/organizacion/mi-organizacion',
 		component: OrganizationView,
 		name: 'organizationView',
 		meta: {
 			login: true
 		}
-	},
-	{
+	},{
+		path: '/proveedores/nuevo',
+		component: ProveedoresView,
+		name: 'proveedoresCreate',
+		meta: {
+			login: true
+		}
+	},{
 		path: '/proveedores/:id',
 		component: ProveedoresView,
 		name: 'proveedoresView',
 		meta: {
 			login: true
 		}
-	},
-	{
+	},{
+		path: '/proveedores',
+		component: ProveedoresList,
+		name: 'proveedoresList',
+		meta: {
+			login: true
+		}
+	},{
 		path: '/acceso/',
 		component: AccessView,
 		meta: {
@@ -70,8 +82,7 @@ const routes = [
 				name: 'accessViewValidation'
 			}
 		]
-	},
-	{
+	},{
 		path: "/acceso/",
 		redirect: "/acceso/inicio-de-sesion"
 	}
