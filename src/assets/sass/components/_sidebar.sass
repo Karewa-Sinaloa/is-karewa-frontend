@@ -2,6 +2,8 @@
 @use "../mixins/_mixins" as mix
 .sidebar
 	width: 220px
+	position: relative
+	z-index: 10
 	height: auto
 	padding: 1rem
 	box-sizing: border-box
@@ -29,11 +31,13 @@
 	&__element
 		display: flex
 		align-items: center
+		flex-wrap: wrap
 		cursor: pointer
 		padding: 0.5rem 1rem
+		position: relative
 		box-sizing: border-box
 		background-color: transparent
-		border-radius: 0.3rem
+		border-radius: 0
 		text-decoration: none
 		color: var(--color-dark)
 		margin: 0.2rem 0
@@ -62,7 +66,22 @@
 			height: 1.2rem
 			object-fit: contain
 	&__sub-container
+		display: none
+		width: 100%
+		position: absolute
+		box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.1)
+		left: 100%
+		top: 0
+		padding: 0
+		background-color: var(--color-grayscale-25)
+		border-radius: 0 0.3rem 0.3rem 0.3rem
+		overflow: hidden
+		&--active
+			display: block
 		.nav__element
-			margin-left: 1rem
+			border-radius: 0
+			margin: 0
+			&:not(:last-child)
+				border-bottom: 1px solid var(--color-grayscale-100)
 			&-text
-				font-weight: 300
+				font-weight: 400
