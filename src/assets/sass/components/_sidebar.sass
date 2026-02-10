@@ -41,17 +41,6 @@
 		text-decoration: none
 		color: var(--color-dark)
 		margin: 0.2rem 0
-		&.router-link-active
-			background-color: var(--color-primary-500)
-			.nav__element-text,
-			svg
-				color: var(--text-color-primary-light)
-		&:not(.router-link-active)
-			&:hover
-				background-color: var(--color-primary-100)
-				.nav__element-text,
-				svg
-					color: var(--text-color-secondary-dark)
 		&-text
 			display: block
 			color: var(--text-color-primary-dark)
@@ -65,6 +54,18 @@
 			width: 1.2rem
 			height: 1.2rem
 			object-fit: contain
+		&.router-link-active
+			background-color: var(--color-primary-800)
+			.nav__element-text,
+			svg
+				color: var(--text-color-primary-light)
+		&:not(.router-link-active)
+			&:hover
+				background-color: var(--color-primary-700)
+				& > div > .nav__element-text,
+				& > .nav__element-text,
+				svg
+					color: var(--text-color-primary-light)!important	
 	&__sub-container
 		display: none
 		width: 100%

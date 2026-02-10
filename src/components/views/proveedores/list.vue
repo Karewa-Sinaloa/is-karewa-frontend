@@ -60,6 +60,9 @@ const providerDeleteConfirmationData = {
 }
 
 onMounted(() => {
+  store.new_elements([
+    {name: 'proveedoresCreate', text: 'Nuevo proveedor'}
+  ])
   getProviders()
 })
 

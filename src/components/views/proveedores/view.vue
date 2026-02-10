@@ -114,6 +114,9 @@ function manageRoute() {
     if(!route.params.id || route.params.id === 0) {
       router.push({name: 'proveedoresCreate'})
     } else {
+      store.new_elements([
+        {name: 'proveedoresCreate', text: 'Nuevo proveedor'}
+      ])
       getProvider()
     }
   } else {
@@ -165,6 +168,7 @@ function providerDelete() {
 		.then(response => {
 			confirmDelete.value = false
 			store.push_alert(response.data)
+      router.push({name: 'proveedoresList'})
 		}).catch(error => {
 			confirmDelete.value = false
 			store.push_alert(error.data)

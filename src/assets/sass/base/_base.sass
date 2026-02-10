@@ -15,6 +15,7 @@
 	--color-light: #{vars.$color-light}
 	@include mix.grayscale-pallete()
 	@include mix.pallete-creator(vars.$main-colors-hue, primary, 100%)
+	@include mix.pallete-creator(vars.$main-colors-hue, secondary, 100%)
 	@each $name, $bp in vars.$breakpoints
 		--#{$name}: #{$bp}
 	--overall-opaque-bg: #{vars.$overall-opaque-bg}
@@ -27,7 +28,6 @@
 	--text-color-secondary-dark: var(--color-grayscale-700)
 	--text-color-primary-light: var(--color-light)
 	--text-color-secondary-light: var(--color-grayscale-200)
-	--main-section-background: #{vars.$main-section-background}
 html
 	padding: 0
 	margin: 0
@@ -88,7 +88,7 @@ p,li,span,code
 .main
 	padding: 1rem
 	box-sizing: border-box
-	background-color: var(--main-section-background)
+	background-color: var(--color-grayscale-25)
 	border-top-left-radius: 0.5rem
 	border: 1px solid var(--color-grayscale-100)
 	display: flex
