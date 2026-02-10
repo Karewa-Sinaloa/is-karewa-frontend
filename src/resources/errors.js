@@ -69,7 +69,7 @@ const alertData = {
 		title: 'INFORMACIÓN ACTUALIZADA',
 		text: 'Los cambios solicitados en tu petición han sido procesados correctamente y la información fue actualizada'
 	},
-	CREATED: {
+	'APP_CREATE_SUCCESS': {
 		type: 'success',
 		title: 'NUEVO ELEMENTO CREADO',
 		text: 'Se ha agregado correctamente los datos enviados en tu petición'
