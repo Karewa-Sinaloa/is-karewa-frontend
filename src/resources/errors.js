@@ -1,5 +1,5 @@
 const alertData = {
-	NOTFOUND: {
+	'APP_RESULTS_NOT_FOUND': {
 		type: 'error',
 		title: 'SIN RESULTADOS',
 		text: 'Su consulta no ha generado resultados, puede que no exista información relacionada o los parámetros indicados son incorrectos.'
@@ -74,7 +74,12 @@ const alertData = {
 		title: 'NUEVO ELEMENTO CREADO',
 		text: 'Se ha agregado correctamente los datos enviados en tu petición'
 	},
-	DELETED: {
+	'APP_DATABASE_INTERNAL_ERROR': {
+		type: 'error',
+		title: 'ERROR DE BASE DE DATOS',
+		text: 'Ha ocurrido un error interno en la base de datos, por favor, vuelve a intentar, si el problema persiste contáctanos'
+	},
+	'DELETED': {
 		type: 'success',
 		title: 'ELEMENTO BORRADO',
 		text: 'Se ha borrado correctamente el elemento solicitado, recuerda que este cambio no se puede revertir'

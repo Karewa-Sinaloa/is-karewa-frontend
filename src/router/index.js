@@ -12,6 +12,8 @@ import accessViewValidation from '../components/partials/verification.vue'
 import OrganizationView from '../components/views/organization.vue'
 import ProveedoresView from '../components/views/proveedores/view.vue'
 import ProveedoresList from '../components/views/proveedores/list.vue'
+import UnidadesAdministrativasList from '../components/views/admin_units/list.vue'
+import UnidadesAdministrativasView from '../components/views/admin_units/view.vue'
 
 const routes = [
 	{
@@ -46,6 +48,27 @@ const routes = [
 		path: '/proveedores',
 		component: ProveedoresList,
 		name: 'proveedoresList',
+		meta: {
+			login: true
+		}
+	},{
+		path: '/unidades-administrativas/nuevo',
+		component: UnidadesAdministrativasView,
+		name: 'unidadesAdministrativasCreate',
+		meta: {
+			login: true
+		}
+	},{
+		path: '/unidades-administrativas/:id',
+		component: UnidadesAdministrativasView,
+		name: 'unidadesAdministrativasView',
+		meta: {
+			login: true
+		}
+	},{
+		path: '/unidades-administrativas',
+		component: UnidadesAdministrativasList,
+		name: 'unidadesAdministrativasList',
 		meta: {
 			login: true
 		}

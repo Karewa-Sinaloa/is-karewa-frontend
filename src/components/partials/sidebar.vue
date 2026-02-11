@@ -10,22 +10,38 @@
 				<span class="nav__element-text">Panel de control</span>
 			</router-link>
       <router-link class="nav__element" :to="{name: 'organizationView'}">
-        <icon-set icon="business" />
+        <icon-set icon="company" />
         <span class="nav__element-text">Mi organización</span>
       </router-link> 
       <span class="nav__element" @mouseover="showSubmenu($event, true)" @mouseleave="showSubmenu($event, false)">
-        <div>
-          <icon-set icon="business" />
+        <div class="nav__element-container">
+          <icon-set icon="provider" />
           <span class="nav__element-text">Proveedores</span>
         </div>
         <div class="nav__sub-container">
           <router-link class="nav__element" :to="{name: 'proveedoresList'}">
-            <icon-set icon="business" />
+            <icon-set icon="list" />
             <span class="nav__element-text">Todos</span>
           </router-link>
           <router-link class="nav__element" :to="{name: 'proveedoresCreate'}">
-            <icon-set icon="business" />
+            <icon-set icon="add" />
             <span class="nav__element-text">Crear nuevo</span>
+          </router-link>
+        </div>
+      </span>
+      <span class="nav__element" @mouseover="showSubmenu($event, true)" @mouseleave="showSubmenu($event, false)">
+        <div class="nav__element-container">
+          <icon-set icon="admin_unit" />
+          <span class="nav__element-text">U. Administrativas</span>
+        </div>
+        <div class="nav__sub-container">
+          <router-link class="nav__element" :to="{name: 'unidadesAdministrativasList'}">
+            <icon-set icon="list" />
+            <span class="nav__element-text">Todas</span>
+          </router-link>
+          <router-link class="nav__element" :to="{name: 'unidadesAdministrativasCreate'}">
+            <icon-set icon="add" />
+            <span class="nav__element-text">Crear nueva</span>
           </router-link>
         </div>
       </span>
