@@ -41,6 +41,10 @@
 		text-decoration: none
 		color: var(--color-dark)
 		margin: 0.2rem 0
+		&-container
+			display: flex
+			align-items: center
+			justify-content: flex-start
 		&-text
 			display: block
 			color: var(--text-color-primary-dark)
@@ -54,6 +58,7 @@
 			width: 1.2rem
 			height: 1.2rem
 			object-fit: contain
+			color: var(--text-color-primary-dark)
 		&.router-link-active
 			background-color: var(--color-primary-800)
 			.nav__element-text,
@@ -64,7 +69,8 @@
 				background-color: var(--color-primary-700)
 				& > div > .nav__element-text,
 				& > .nav__element-text,
-				svg
+				& > svg,
+				& > div > svg
 					color: var(--text-color-primary-light)!important	
 	&__sub-container
 		display: none
@@ -84,5 +90,6 @@
 			margin: 0
 			&:not(:last-child)
 				border-bottom: 1px solid var(--color-grayscale-100)
-			&-text
+			&-text,
+			svg
 				font-weight: 400
