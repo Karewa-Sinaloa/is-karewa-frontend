@@ -9,17 +9,29 @@
             <h1 class="section__title">Listado de Unidades Administrativas</h1>
             <span class="section__help-text">Aquí puedes ver y administrar las unidades administrativas asociadas a tu organización.</span>
           </div>
-          <div class="section__content">
+          <div class="section__content" v-if="adminUnits && adminUnits.length > 0">
               <div class="results">
                 <div class="results__result result" v-for="adminUnit in adminUnits" :key="adminUnit.id">
                   <div class="result__data">
                     <h3 class="result__title">{{adminUnit.name}}</h3>
                   </div>
-                  <result-options :optionList="{go: {name: 'unidadesAdministrativasView', params: {id: adminUnit.id}}, delete: true}" @deleteItem="confirmDelete = true"></result-options>
+                  <result-options :optionList="{go: {name: 'unidadesAdministrativasView', params: {id: adminUnit.id}}, delete: true}" @deleteItem="deleteConfirmation"></result-options>
                 </div>
               </div>
-					    <confirmation-popup :data="adminUnitDeleteConfirmationData" @confirmed="adminUnitDelete" @declined="confirmDelete = false" v-if="confirmDelete"></confirmation-popup>
+					    <confirmation-popup :data="adminUnitDeleteConfirmationData" @confirmed="adminUnitDelete" @declined="confirmDelete = false, itemToDelete = null" v-if="confirmDelete"></confirmation-popup>
               <pagination-container v-if="pagination" :data="pagination" module="unidadesAdministrativasList"></pagination-container>
+          </div>
+          <div class="section__content" v-else-if="adminUnits && adminUnits.length === 0">
+            <div class="results">
+              <p class="results__no-results">No se encontraron unidades administrativas.</p>
+              <button class="btn btn--small btn__default btn__default--primary" @click="router.push({name: 'unidadesAdministrativasCreate'})">
+                <icon-set icon="add" />
+                Crear nueva unidad administrativa
+              </button>
+            </div>
+          </div>
+          <div class="section__content" v-else>
+            <span class="results__loading">Cargando unidades administrativas...</span>
           </div>
         </section>
       </main>
@@ -45,6 +57,7 @@ const adminUnits = ref(null)
 const confirmDelete = ref(false)
 const pagination = ref(null)
 const maxResults = ref(12)
+const itemToDelete = ref(null)
 const page = ref(computed(() => {
   return route.params.page ? parseInt(route.params.page) : 1
 }))
@@ -59,7 +72,7 @@ const adminUnitDeleteConfirmationData = {
 
 onMounted(() => {
   store.new_elements([
-    {name: 'unidadAdministrativaCreate', text: 'Nueva unidad'}
+    {name: 'unidadesAdministrativasCreate', text: 'Nueva unidad'}
   ])
   getadminUnits()
 })
@@ -78,16 +91,25 @@ function getadminUnits() {
       pagination.value = response.data.pagination ? response.data.pagination : null
     }).catch(error => {
       store.push_alert(error.data)
-      router.push({name: 'homeView'})
+      if(error.data.http_code !== 404) {
+        router.push({name: 'homeView'})
+      }
+      adminUnits.value = []
     })
+}
+
+const deleteConfirmation = (id) => {
+  confirmDelete.value = true
+  itemToDelete.value = id
 }
 
 function adminUnitDelete() {
   new apiRequest().Delete({
     module: 'unidades-administrativas'
-  }, adminUnits.value.id)
+  }, itemToDelete.value)
     .then(response => {
       confirmDelete.value = false
+      adminUnits.value = adminUnits.value.filter(unit => unit.id !== itemToDelete.value)
       store.push_alert(response.data)
     }).catch(error => {
       confirmDelete.value = false

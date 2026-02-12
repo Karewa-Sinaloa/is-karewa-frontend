@@ -40,6 +40,6 @@ function setShowOptions() {
 
 function setDeleteItem() {
 	showOptions.value = false
-	emits('deleteItem')
+	emits('deleteItem', props.optionList.go.params.id)
 }
 </script>

@@ -9,7 +9,7 @@
             <h1 class="section__title">Listado de proveedores</h1>
             <span class="section__help-text">Aquí puedes ver y administrar los proveedores de servicios asociados a tu organización.</span>
           </div>
-          <div class="section__content">
+          <div class="section__content" v-if="providers && providers.length > 0">
               <div class="results">
                 <div class="results__result result" v-for="provider in providers" :key="provider.id">
                   <div class="result__data">
@@ -17,11 +17,23 @@
                     <span class="result__description">{{provider.shortname}}</span>
                     <span class="result__info">RFC: {{provider.rfc}}</span>
                   </div>
-                  <result-options :optionList="{go: {name: 'proveedoresView', params: {id: provider.id}}, delete: true}" @deleteItem="confirmDelete = true"></result-options>
+                  <result-options :optionList="{go: {name: 'proveedoresView', params: {id: provider.id}}, delete: true}" @deleteItem="deleteConfirmation"></result-options>
                 </div>
               </div>
-					    <confirmation-popup :data="providerDeleteConfirmationData" @confirmed="providerDelete" @declined="confirmDelete = false" v-if="confirmDelete"></confirmation-popup>
+					    <confirmation-popup :data="providerDeleteConfirmationData" @confirmed="providerDelete" @declined="confirmDelete = false, itemToDelete = null" v-if="confirmDelete"></confirmation-popup>
               <pagination-container v-if="pagination" :data="pagination" module="proveedoresList"></pagination-container>
+          </div>
+          <div class="section__content" v-else-if="proveedores && proveedores.length === 0">
+            <div class="results">
+              <p class="results__no-results">No se encontraron proveedores</p>
+              <button class="btn btn--small btn__default btn__default--primary" @click="router.push({name: 'proveedoresCreate'})">
+                <icon-set icon="add" />
+                Crear nuevo proveedor
+              </button>
+            </div>
+          </div>
+          <div class="section__content" v-else>
+            <span class="results__loading">Cargando lista de proveedores....</span>
           </div>
         </section>
       </main>
@@ -47,6 +59,7 @@ const providers = ref(null)
 const confirmDelete = ref(false)
 const pagination = ref(null)
 const maxResults = ref(12)
+const itemToDelete = ref(null)
 const page = ref(computed(() => {
   return route.params.page ? parseInt(route.params.page) : 1
 }))
@@ -80,8 +93,15 @@ function getProviders() {
       pagination.value = response.data.pagination ? response.data.pagination : null
     }).catch(error => {
       store.push_alert(error.data)
-      router.push({name: 'homeView'})
+      if(error.data.http_code !== 404) {
+        router.push({name: 'homeView'})
+      }
     })
+}
+
+const deleteConfirmation = (id) => {
+  confirmDelete.value = true
+  itemToDelete.value = id
 }
 
 function providerDelete() {
@@ -90,6 +110,7 @@ function providerDelete() {
   }, providers.value.id)
     .then(response => {
       confirmDelete.value = false
+      providers.value = providers.value.filter(provider => provider.id !== itemToDelete.value)
       store.push_alert(response.data)
     }).catch(error => {
       confirmDelete.value = false
