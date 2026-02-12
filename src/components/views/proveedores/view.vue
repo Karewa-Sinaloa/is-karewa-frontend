@@ -131,7 +131,7 @@ function onSubmit(values, action) {
       data: values
     }).then(response => {
       store.push_alert(response.data)
-      router.push({name: 'proveedoresView', params: {id: response.data.data.id}})
+      router.push({name: 'proveedoresView', params: {id: response.data.data.inserted_id}})
     }).catch(error => {
       store.push_alert(error.data)
     })
