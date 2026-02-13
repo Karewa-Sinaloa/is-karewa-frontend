@@ -33,6 +33,16 @@ export class apiRequest {
 	}
 	Delete(_params, id = null) {
 		return new Promise((resolve, reject) => {
+			if(id === null || isNaN(id) || id <= 0) {
+				reject({
+					status: 406,
+					data: {
+						code: 'API_NO_ENTRY_ID_PROVIDED',
+						message: 'No se ha proporcionado un ID de entrada para realizar esta acción, por favor, verifica los datos ingresados'
+					}
+				})
+				return
+			}
 			this.processResponse('delete', _params, id)
 				.then(response => resolve(response))
 				.catch(error => reject(error))

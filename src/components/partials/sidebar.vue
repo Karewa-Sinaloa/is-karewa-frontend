@@ -45,6 +45,26 @@
           </router-link>
         </div>
       </span>
+      <span class="nav__element" @mouseover="showSubmenu($event, true)" @mouseleave="showSubmenu($event, false)">
+        <div class="nav__element-container">
+          <icon-set icon="contract" />
+          <span class="nav__element-text">Contratos</span>
+        </div>
+        <div class="nav__sub-container">
+          <router-link class="nav__element" :to="{name: 'unidadesAdministrativasList'}">
+            <icon-set icon="list" />
+            <span class="nav__element-text">Todos</span>
+          </router-link>
+          <router-link class="nav__element" :to="{name: 'unidadesAdministrativasCreate'}">
+            <icon-set icon="add" />
+            <span class="nav__element-text">Crear nuevo</span>
+          </router-link>
+          <router-link class="nav__element" :to="{name: 'contractsConfigurations'}">
+            <icon-set icon="settings" />
+              <span class="nav__element-text">Configuración</span>
+          </router-link>
+        </div>
+      </span>
 		</div>
 	</div>
 </template>

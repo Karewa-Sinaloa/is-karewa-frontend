@@ -142,7 +142,7 @@ function onSubmit(values, action) {
     }, myProvider.value.id).then(response => {
       store.push_alert(response.data)
       providerEditBlocked.value = true
-      getOrganization()
+      getOprocedure()
     }).catch(error => {
       store.push_alert(error.data)
     })

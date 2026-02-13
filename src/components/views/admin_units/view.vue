@@ -103,7 +103,7 @@ function manageRoute() {
       store.new_elements([
         {name: 'unidadesAdministrativasCreate', text: 'Nuevo unidad administrativa'}
       ])
-      getAdminunit()
+      getAdminUnit()
     }
   } else {
     adminUnit.value = {name: '', notes: '', id: null};
@@ -128,14 +128,14 @@ function onSubmit(values, action) {
     }, adminUnit.value.id).then(response => {
       store.push_alert(response.data)
       adminUnitEditBlocked.value = true
-      getOrganization()
+      getAdminUnit()
     }).catch(error => {
       store.push_alert(error.data)
     })
   }
 }
 
-function getAdminunit() {
+function getAdminUnit() {
   new apiRequest().Get({
     module: 'unidades-administrativas'
   }, router.currentRoute.value.params.id)

@@ -15,7 +15,7 @@
                   <div class="result__data">
                     <h3 class="result__title">{{adminUnit.name}}</h3>
                   </div>
-                  <result-options :optionList="{go: {name: 'unidadesAdministrativasView', params: {id: adminUnit.id}}, delete: true}" @deleteItem="deleteConfirmation"></result-options>
+                  <result-options :optionList="{go: {name: 'unidadesAdministrativasView', params: {id: adminUnit.id}}, delete: true}" @deleteItem="deleteConfirmation(adminUnit.id)"></result-options>
                 </div>
               </div>
 					    <confirmation-popup :data="adminUnitDeleteConfirmationData" @confirmed="adminUnitDelete" @declined="confirmDelete = false, itemToDelete = null" v-if="confirmDelete"></confirmation-popup>

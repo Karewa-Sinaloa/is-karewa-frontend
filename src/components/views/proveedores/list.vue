@@ -17,7 +17,7 @@
                     <span class="result__description">{{provider.shortname}}</span>
                     <span class="result__info">RFC: {{provider.rfc}}</span>
                   </div>
-                  <result-options :optionList="{go: {name: 'proveedoresView', params: {id: provider.id}}, delete: true}" @deleteItem="deleteConfirmation"></result-options>
+                  <result-options :optionList="{go: {name: 'proveedoresView', params: {id: provider.id}}, delete: true}" @deleteItem="deleteConfirmation(provider.id)"></result-options>
                 </div>
               </div>
 					    <confirmation-popup :data="providerDeleteConfirmationData" @confirmed="providerDelete" @declined="confirmDelete = false, itemToDelete = null" v-if="confirmDelete"></confirmation-popup>

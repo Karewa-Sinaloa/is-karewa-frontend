@@ -113,6 +113,11 @@ const alertData = {
 		type: 'error',
 		title: 'Entrada duplicada',
 		text: 'No se puede agregar o actualizar esta entrada, ya existe una en el sistema, verifica los datos ingresados'
+	},
+	'API_NO_ENTRY_ID_PROVIDED': {
+		type: 'error',
+		title: 'ID de entrada no proporcionada',
+		text: 'No se ha proporcionado un ID de entrada para realizar esta acción, por favor, verifica los datos ingresados'
 	}
 }
 
