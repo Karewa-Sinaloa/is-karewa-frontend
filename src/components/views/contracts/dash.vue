@@ -5,6 +5,7 @@
 			<content-header />
 			<main class="main">
         <contracts-procedures/>
+        <contracts-materia/>
 			</main>
 		</div>
 	</div>
@@ -16,13 +17,7 @@ import { useAppStore } from '../../../store/index.js'
 import sidebarComponent from '../../partials/sidebar.vue'
 import contentHeader from '../../partials/content_header.vue'
 import ContractsProcedures from './procedimientos.vue'
-
-const store = useAppStore()
-
-const companyCreated = computed(() => {
-	return store.company != null ? true : false
-})
-
+import ContractsMateria from './materia.vue'
 </script>
 
 <style lang="sass" scoped>

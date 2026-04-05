@@ -62,6 +62,7 @@ function onSubmit(values, actions) {
     })
   }).catch(error => {
     if(error.status === 400) {
+      console.log(error.data.errors)
       let errors = setFieldMessages(error.data.errors)
       loginForm.value.setErrors(errors)
     } else {
