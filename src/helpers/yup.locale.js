@@ -26,11 +26,17 @@ setLocale({
 
 export const setFieldMessages = function(errors) {
 	let fieldErrors = {}
-	errors.forEach(error => {
-		if(error.rule in errorMessages) {
-			fieldErrors[error.field] = errorMessages[error.rule]
+	if(Object.keys(errors).length === 0) {
+		return fieldErrors
+	}
+	for(const [field, error] of Object.entries(errors)) {
+		if(Object.keys(error).length === 0) {
+			continue
 		}
-	})
-	console.log(fieldErrors)
+		let rule = Object.keys(error)[0]
+		if(rule in errorMessages) {
+			fieldErrors[field] = errorMessages[rule]
+		}
+	}
 	return fieldErrors
 }
