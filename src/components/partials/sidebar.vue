@@ -51,7 +51,7 @@
           <span class="nav__element-text">Contratos</span>
         </div>
         <div class="nav__sub-container">
-          <router-link class="nav__element" :to="{name: 'unidadesAdministrativasList'}">
+          <router-link class="nav__element" :to="{name: 'contractList'}">
             <icon-set icon="list" />
             <span class="nav__element-text">Todos</span>
           </router-link>

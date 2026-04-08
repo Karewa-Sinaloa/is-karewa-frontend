@@ -96,6 +96,9 @@ p,li,span,code
 	align-items: flex-start
 	height: auto
 	min-height: calc(100vh - 46px)
+	&__dash-grid
+		columns: 2
+		break-inside: avoid
 @media all and (min-width: map.get(vars.$breakpoints, bp5))
 	.desktop-view
 		display: block

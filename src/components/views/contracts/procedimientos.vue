@@ -1,8 +1,8 @@
 <template>
   <section class="section section--wide section--no-border">
       <div class="section__top">
-        <h1 class="section__title">Tipos de procedimientos</h1>
-        <span class="section__help-text">Agrega, edita o elimina tipos de procedimientos de contratos, estos aparecerán a la hora de crear nuevos contratoso editarlos.</span>
+        <h1 class="section__title">Procedimientos de contratos</h1>
+        <span class="section__help-text">Agrega, edita o elimina procedimientos de contratos, estos aparecerán a la hora de crear nuevos contratoso editarlos.</span>
         <button class="btn btn--small btn__default btn__default--primary" @click="choosenId = 'new'" v-if="procedures && procedures.length > 0">
           <icon-set icon="add" />
           Crear nuevo procedimiento
