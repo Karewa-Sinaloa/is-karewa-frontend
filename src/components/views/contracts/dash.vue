@@ -4,8 +4,13 @@
 		<div class="content">
 			<content-header />
 			<main class="main">
-        <contracts-procedures/>
-        <contracts-materia/>
+        <div class="main__dash-grid">
+          <contracts-procedures/>
+          <contracts-materia/>
+          <contracts-estatus/>
+          <contract-type/>
+          <unit-types/>
+        </div>
 			</main>
 		</div>
 	</div>
@@ -18,6 +23,9 @@ import sidebarComponent from '../../partials/sidebar.vue'
 import contentHeader from '../../partials/content_header.vue'
 import ContractsProcedures from './procedimientos.vue'
 import ContractsMateria from './materia.vue'
+import ContractsEstatus from './estatus.vue'
+import ContractType from './tipo.vue'
+import UnitTypes from './unit_types.vue'
 </script>
 
 <style lang="sass" scoped>

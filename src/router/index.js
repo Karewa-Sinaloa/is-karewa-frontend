@@ -15,6 +15,8 @@ import ProveedoresList from '../components/views/proveedores/list.vue'
 import UnidadesAdministrativasList from '../components/views/admin_units/list.vue'
 import UnidadesAdministrativasView from '../components/views/admin_units/view.vue'
 import ContractsConfigurations from '../components/views/contracts/dash.vue'
+import ContractList from '../components/views/contracts/contract_list.vue'
+import ContractView from '../components/views/contracts/contract_view.vue'
 
 const routes = [
 	{
@@ -70,6 +72,27 @@ const routes = [
 		path: '/unidades-administrativas',
 		component: UnidadesAdministrativasList,
 		name: 'unidadesAdministrativasList',
+		meta: {
+			login: true
+		}
+	},{
+		path: '/contratos/nuevo',
+		component: ContractView,
+		name: 'contractCreate',
+		meta: {
+			login: true
+		}
+	},{
+		path: '/contratos/:id',
+		component: ContractView,
+		name: 'contractView',
+		meta: {
+			login: true
+		}
+	},{
+		path: '/contratos',
+		component: ContractList,
+		name: 'contractList',
 		meta: {
 			login: true
 		}

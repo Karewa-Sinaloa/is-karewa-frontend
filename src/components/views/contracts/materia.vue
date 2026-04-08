@@ -1,8 +1,8 @@
 <template>
   <section class="section section--wide section--no-border">
       <div class="section__top">
-        <h1 class="section__title">Tipos de materias</h1>
-        <span class="section__help-text">Agrega, edita o elimina tipos de materia de contratos, estos aparecerán a la hora de crear nuevos contratoso editarlos.</span>
+        <h1 class="section__title">Materia o asunto de los contratos</h1>
+        <span class="section__help-text">Agrega, edita o eliminalas materias de contratos, estos aparecerán a la hora de crear nuevos contratoso editarlos.</span>
         <button class="btn btn--small btn__default btn__default--primary" @click="choosenId = 'new'" v-if="materias && materias.length > 0">
           <icon-set icon="add" />
           Crear nuevo materia
