@@ -8,6 +8,20 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ## [Unreleased]
 
+### Agregado
+
+- Componente `periodos.vue` — Gestión inline de periodos de contratos con listado, popup de alta/edición y eliminación.
+- Componente `periodos_view.vue` — Formulario para crear o editar periodos de contratos.
+
+### Modificado
+
+- `dash.vue` — Añadido el panel `Periodos de contratos` al dashboard de configuración de contratos.
+- `contract_list.vue` — El listado ahora consume el módulo `contracts`, muestra el identificador del contrato y enlaza a la vista `contractView`.
+
+### Corregido
+
+- `periodos.vue` — La eliminación de periodos ahora envía el `id` seleccionado correctamente al endpoint.
+
 ## [1.1.0] - 2026-04-08
 
 ### Agregado
