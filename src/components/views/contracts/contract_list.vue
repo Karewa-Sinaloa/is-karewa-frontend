@@ -4,7 +4,7 @@
 		<div class="content">
 			<content-header />
 			<main class="main">
-				<section class="section section--wide section--no-border">
+				<section class="section section--full section--no-border">
 					<div class="section__top">
 						<h1 class="section__title">Listado de contratos</h1>
 						<span class="section__help-text">Aquí podrás ver el listado de todos los contratos registrados en el sistema.</span>
@@ -13,20 +13,49 @@
 						class="section__content"
 						v-if="contracts && contracts.length > 0"
 					>
-						<div class="results">
-							<div
-								class="results__result result"
-								v-for="contract in contracts"
-								:key="contract.id"
-							>
-								<div class="result__data">
-									<h3 class="result__title">{{ contract.contract_id }}</h3>
-								</div>
-								<result-options
-									:optionList="{ go: { name: 'contractView', params: { id: contract.id } }, delete: true }"
-									@deleteItem="deleteConfirmation(contract.id)"
-								></result-options>
-							</div>
+						<div class="section__scrollable">
+							<table class="r-table">
+								<thead class="r-table__head">
+									<tr>
+										<th>ID del contrato</th>
+										<th>Nombre del proveedor</th>
+										<th>Nombre unidad convocante</th>
+										<th>Nombre unidad solicitante</th>
+										<th>Materia</th>
+										<th>Tipo de procedimiento</th>
+										<th>Administración</th>
+										<th>Estado</th>
+										<th>Descripción de la obra</th>
+										<th>Fecha</th>
+										<th>Tipo</th>
+										<th>Opciones</th>
+									</tr>
+								</thead>
+								<tbody class="r-table__body">
+									<tr
+										v-for="contract in contracts"
+										:key="contract.id"
+									>
+										<td>{{ contract.contract_id }}</td>
+										<td>{{ contract.provider_name }}</td>
+										<td>{{ contract.organizer_admin_unit_name }}</td>
+										<td>{{ contract.applicant_admin_unit_name }}</td>
+										<td class="r-table__center-align">{{ contract.subject_name }}</td>
+										<td class="r-table__center-align">{{ contract.procedure_name }}</td>
+										<td class="r-table__center-align">{{ contract.admin_period_start }}-{{ contract.admin_period_end }}</td>
+										<td class="r-table__center-align">{{ contract.status_name }}</td>
+										<td>{{ contract.work_description.substring(0, 100) }}...</td>
+										<td class="r-table__center-align">{{ dateFormat(contract.contract_date) }}</td>
+										<td class="r-table__center-align">{{ contract.contract_type_name }}</td>
+										<td>
+											<result-options
+												:optionList="{ go: { name: 'contractView', params: { id: contract.id } }, delete: true }"
+												@deleteItem="deleteConfirmation(contract.id)"
+											></result-options>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 						<confirmation-popup
 							:data="contractDeleteConfirmationData"
@@ -77,6 +106,7 @@
 	import confirmationPopup from '../../partials/confirmation_popup.vue';
 	import resultOptions from '../../partials/result_options.vue';
 	import paginationContainer from '../../partials/pagination.vue';
+	import { useDateFormat } from '@vueuse/core';
 
 	const store = useAppStore();
 	const router = useRouter();
@@ -116,7 +146,7 @@
 		new apiRequest()
 			.Get({
 				module: 'contracts',
-				params: `?page=${page.value}&limit=${maxResults.value}`,
+				params: `?page=${page.value}&limit=${maxResults.value}&embed=pagination&sort=-contract_date`,
 			})
 			.then(response => {
 				contracts.value = response.data.data;
@@ -153,6 +183,10 @@
 				confirmDelete.value = false;
 				store.push_alert(error.data);
 			});
+	}
+
+	function dateFormat(date) {
+		return useDateFormat(date, 'DD/MM/YYYY', { locale: 'es-MX' });
 	}
 </script>
 
