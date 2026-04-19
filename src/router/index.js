@@ -1,22 +1,22 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { useAppStore } from '../store/index.js'
-import { userSession } from '../helpers/set.session.js'
+import { createRouter, createWebHistory } from 'vue-router';
+import { useAppStore } from '../store/index.js';
+import { userSession } from '../helpers/set.session.js';
 
-import HomeView from '../components/views/home.vue'
-import AccessView from '../components/views/access.vue'
-import accessViewLogin from '../components/partials/login.vue'
-import accessViewRecovery from '../components/partials/recovery.vue'
-import accessViewReset from '../components/partials/reset.vue'
-import accessViewRegistration from '../components/partials/registration.vue'
-import accessViewValidation from '../components/partials/verification.vue'
-import OrganizationView from '../components/views/organization.vue'
-import ProveedoresView from '../components/views/proveedores/view.vue'
-import ProveedoresList from '../components/views/proveedores/list.vue'
-import UnidadesAdministrativasList from '../components/views/admin_units/list.vue'
-import UnidadesAdministrativasView from '../components/views/admin_units/view.vue'
-import ContractsConfigurations from '../components/views/contracts/dash.vue'
-import ContractList from '../components/views/contracts/contract_list.vue'
-import ContractView from '../components/views/contracts/contract_view.vue'
+import HomeView from '../components/views/home.vue';
+import AccessView from '../components/views/access.vue';
+import accessViewLogin from '../components/partials/login.vue';
+import accessViewRecovery from '../components/partials/recovery.vue';
+import accessViewReset from '../components/partials/reset.vue';
+import accessViewRegistration from '../components/partials/registration.vue';
+import accessViewValidation from '../components/partials/verification.vue';
+import OrganizationView from '../components/views/organization.vue';
+import ProveedoresView from '../components/views/proveedores/view.vue';
+import ProveedoresList from '../components/views/proveedores/list.vue';
+import UnidadesAdministrativasList from '../components/views/admin_units/list.vue';
+import UnidadesAdministrativasView from '../components/views/admin_units/view.vue';
+import ContractsConfigurations from '../components/views/contracts/dash.vue';
+import ContractList from '../components/views/contracts/contract_list.vue';
+import ContractView from '../components/views/contracts/contract_view.vue';
 
 const routes = [
 	{
@@ -24,86 +24,102 @@ const routes = [
 		name: 'homeView',
 		component: HomeView,
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/organizacion/mi-organizacion',
 		component: OrganizationView,
 		name: 'organizationView',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/proveedores/nuevo',
 		component: ProveedoresView,
 		name: 'proveedoresCreate',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/proveedores/:id',
 		component: ProveedoresView,
 		name: 'proveedoresView',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/proveedores',
 		component: ProveedoresList,
 		name: 'proveedoresList',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/unidades-administrativas/nuevo',
 		component: UnidadesAdministrativasView,
 		name: 'unidadesAdministrativasCreate',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/unidades-administrativas/:id',
 		component: UnidadesAdministrativasView,
 		name: 'unidadesAdministrativasView',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/unidades-administrativas',
 		component: UnidadesAdministrativasList,
 		name: 'unidadesAdministrativasList',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/contratos/nuevo',
 		component: ContractView,
 		name: 'contractCreate',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/contratos/:id',
 		component: ContractView,
 		name: 'contractView',
 		meta: {
-			login: true
-		}
-	},{
-		path: '/contratos',
+			login: true,
+		},
+	},
+	{
+		path: '/contratos/p/:page',
 		component: ContractList,
 		name: 'contractList',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
+		path: '/contratos',
+		redirect: '/contratos/p/1',
+	},
+	{
 		path: '/contratos/configuraciones',
 		component: ContractsConfigurations,
 		name: 'contractsConfigurations',
 		meta: {
-			login: true
-		}
-	},{
+			login: true,
+		},
+	},
+	{
 		path: '/acceso/',
 		component: AccessView,
 		meta: {
@@ -111,58 +127,59 @@ const routes = [
 		},
 		children: [
 			{
-				path: "inicio-de-sesion",
+				path: 'inicio-de-sesion',
 				component: accessViewLogin,
-				name: 'accessViewLogin'
+				name: 'accessViewLogin',
 			},
 			{
-				path: "olvide-mi-contrasena",
+				path: 'olvide-mi-contrasena',
 				component: accessViewRecovery,
-				name: "accessViewRecovery"
+				name: 'accessViewRecovery',
 			},
 			{
-				path: "cambiar-contrasena",
+				path: 'cambiar-contrasena',
 				component: accessViewReset,
-				name: "accessViewReset"
+				name: 'accessViewReset',
 			},
 			{
 				path: 'crear-cuenta',
 				component: accessViewRegistration,
-				name: 'accessViewRegistration'
+				name: 'accessViewRegistration',
 			},
 			{
 				path: 'verificacion-de-usuario',
 				component: accessViewValidation,
-				name: 'accessViewValidation'
-			}
-		]
-	},{
-		path: "/acceso/",
-		redirect: "/acceso/inicio-de-sesion"
-	}
-]
+				name: 'accessViewValidation',
+			},
+		],
+	},
+	{
+		path: '/acceso/',
+		redirect: '/acceso/inicio-de-sesion',
+	},
+];
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes,
-	scrollBehavior () {
-		return {x: 0, y: 0}
-	}
-})
+	scrollBehavior() {
+		return { x: 0, y: 0 };
+	},
+});
 
 router.beforeEach((to, from, next) => {
-	const store = useAppStore()
-	const session = new userSession()
-	let auth = session.verify()
-	if(to.meta.login && auth) {
-		next()
-	} else if(['accessViewLogin', 'accessViewRecovery', 'accessViewReset'].indexOf(to.name) != -1 && auth) {
-		next({name: 'homeView'})
-	} else if(!auth && to.meta.login) {
-		next({name: 'accessViewLogin'})
+	const store = useAppStore();
+	const session = new userSession();
+	let auth = session.verify();
+	if (to.meta.login && auth) {
+		next();
+	} else if (['accessViewLogin', 'accessViewRecovery', 'accessViewReset'].indexOf(to.name) != -1 && auth) {
+		next({ name: 'homeView' });
+	} else if (!auth && to.meta.login) {
+		next({ name: 'accessViewLogin' });
 	} else {
-		next()
+		next();
 	}
-})
+});
 
-export default router
+export default router;

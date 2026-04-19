@@ -94,3 +94,39 @@
 			height: 1rem
 			margin-right: 0.5rem
 			object-fit: contain
+.r-table
+	width: auto
+	border-collapse: collapse
+	border: 1px dotted var(--color-grayscale-100)
+	&__head
+		background-color: var(--color-primary)
+		color: var(--color-light)
+		th
+			text-align: center
+			text-transform: uppercase
+			white-space: nowrap
+			width: auto
+			padding: 1rem 1rem
+			box-sizing: border-box
+			border:
+				right: 1px dotted var(--color-grayscale-100)
+			font:
+				size: var(--fs-smaller)
+				weight: 700
+				family: var(--ff2)
+	&__body
+		tr
+			border-bottom: 1px dotted var(--color-grayscale-100)
+			&:nth-child(even)
+				background-color: var(--color-grayscale-15)
+			&:hover
+				background-color: var(--color-grayscale-50)
+		td
+			font:
+				size: var(--fs-smaller)
+				weight: 400
+				family: var(--ff2)
+			padding: 0.5rem 1rem
+			box-sizing: border-box
+	&__center-align
+		text-align: center

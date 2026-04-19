@@ -1,85 +1,126 @@
 <template>
 	<div class="sidebar">
 		<div class="sidebar__logo">
-			<img class="sidebar__logo-image" src="../../assets/images/logo.png" alt="My company logo">
+			<img
+				class="sidebar__logo-image"
+				src="../../assets/images/logo.png"
+				alt="My company logo"
+			/>
 			<span class="sidebar__company-name">Monitor Karewa</span>
 		</div>
 		<div class="nav">
-			<router-link class="nav__element" :to="{name: 'homeView'}">
+			<router-link
+				class="nav__element"
+				:to="{ name: 'homeView' }"
+			>
 				<icon-set icon="dashboard" />
 				<span class="nav__element-text">Panel de control</span>
 			</router-link>
-      <router-link class="nav__element" :to="{name: 'organizationView'}">
-        <icon-set icon="company" />
-        <span class="nav__element-text">Mi organización</span>
-      </router-link> 
-      <span class="nav__element" @mouseover="showSubmenu($event, true)" @mouseleave="showSubmenu($event, false)">
-        <div class="nav__element-container">
-          <icon-set icon="provider" />
-          <span class="nav__element-text">Proveedores</span>
-        </div>
-        <div class="nav__sub-container">
-          <router-link class="nav__element" :to="{name: 'proveedoresList'}">
-            <icon-set icon="list" />
-            <span class="nav__element-text">Todos</span>
-          </router-link>
-          <router-link class="nav__element" :to="{name: 'proveedoresCreate'}">
-            <icon-set icon="add" />
-            <span class="nav__element-text">Crear nuevo</span>
-          </router-link>
-        </div>
-      </span>
-      <span class="nav__element" @mouseover="showSubmenu($event, true)" @mouseleave="showSubmenu($event, false)">
-        <div class="nav__element-container">
-          <icon-set icon="admin_unit" />
-          <span class="nav__element-text">U. Administrativas</span>
-        </div>
-        <div class="nav__sub-container">
-          <router-link class="nav__element" :to="{name: 'unidadesAdministrativasList'}">
-            <icon-set icon="list" />
-            <span class="nav__element-text">Todas</span>
-          </router-link>
-          <router-link class="nav__element" :to="{name: 'unidadesAdministrativasCreate'}">
-            <icon-set icon="add" />
-            <span class="nav__element-text">Crear nueva</span>
-          </router-link>
-        </div>
-      </span>
-      <span class="nav__element" @mouseover="showSubmenu($event, true)" @mouseleave="showSubmenu($event, false)">
-        <div class="nav__element-container">
-          <icon-set icon="contract" />
-          <span class="nav__element-text">Contratos</span>
-        </div>
-        <div class="nav__sub-container">
-          <router-link class="nav__element" :to="{name: 'contractList'}">
-            <icon-set icon="list" />
-            <span class="nav__element-text">Todos</span>
-          </router-link>
-          <router-link class="nav__element" :to="{name: 'unidadesAdministrativasCreate'}">
-            <icon-set icon="add" />
-            <span class="nav__element-text">Crear nuevo</span>
-          </router-link>
-          <router-link class="nav__element" :to="{name: 'contractsConfigurations'}">
-            <icon-set icon="settings" />
-              <span class="nav__element-text">Configuración</span>
-          </router-link>
-        </div>
-      </span>
+			<router-link
+				class="nav__element"
+				:to="{ name: 'organizationView' }"
+			>
+				<icon-set icon="company" />
+				<span class="nav__element-text">Mi organización</span>
+			</router-link>
+			<span
+				class="nav__element"
+				@mouseover="showSubmenu($event, true)"
+				@mouseleave="showSubmenu($event, false)"
+			>
+				<div class="nav__element-container">
+					<icon-set icon="provider" />
+					<span class="nav__element-text">Proveedores</span>
+				</div>
+				<div class="nav__sub-container">
+					<router-link
+						class="nav__element"
+						:to="{ name: 'proveedoresList' }"
+					>
+						<icon-set icon="list" />
+						<span class="nav__element-text">Todos</span>
+					</router-link>
+					<router-link
+						class="nav__element"
+						:to="{ name: 'proveedoresCreate' }"
+					>
+						<icon-set icon="add" />
+						<span class="nav__element-text">Crear nuevo</span>
+					</router-link>
+				</div>
+			</span>
+			<span
+				class="nav__element"
+				@mouseover="showSubmenu($event, true)"
+				@mouseleave="showSubmenu($event, false)"
+			>
+				<div class="nav__element-container">
+					<icon-set icon="admin_unit" />
+					<span class="nav__element-text">U. Administrativas</span>
+				</div>
+				<div class="nav__sub-container">
+					<router-link
+						class="nav__element"
+						:to="{ name: 'unidadesAdministrativasList' }"
+					>
+						<icon-set icon="list" />
+						<span class="nav__element-text">Todas</span>
+					</router-link>
+					<router-link
+						class="nav__element"
+						:to="{ name: 'unidadesAdministrativasCreate' }"
+					>
+						<icon-set icon="add" />
+						<span class="nav__element-text">Crear nueva</span>
+					</router-link>
+				</div>
+			</span>
+			<span
+				class="nav__element"
+				@mouseover="showSubmenu($event, true)"
+				@mouseleave="showSubmenu($event, false)"
+			>
+				<div class="nav__element-container">
+					<icon-set icon="contract" />
+					<span class="nav__element-text">Contratos</span>
+				</div>
+				<div class="nav__sub-container">
+					<router-link
+						class="nav__element"
+						:to="{ name: 'contractList', params: { page: 1 } }"
+					>
+						<icon-set icon="list" />
+						<span class="nav__element-text">Todos</span>
+					</router-link>
+					<router-link
+						class="nav__element"
+						:to="{ name: 'contractCreate' }"
+					>
+						<icon-set icon="add" />
+						<span class="nav__element-text">Crear nuevo</span>
+					</router-link>
+					<router-link
+						class="nav__element"
+						:to="{ name: 'contractsConfigurations' }"
+					>
+						<icon-set icon="settings" />
+						<span class="nav__element-text">Configuración</span>
+					</router-link>
+				</div>
+			</span>
 		</div>
 	</div>
 </template>
 
 <script setup>
-  
-function showSubmenu(e, show) {
-  const submenu = e.currentTarget.querySelector('.nav__sub-container')
-  if(show) {
-    submenu.style.display = 'block'
-  } else {
-    submenu.style.display = 'none'
-  }
-}
-
+	function showSubmenu(e, show) {
+		const submenu = e.currentTarget.querySelector('.nav__sub-container');
+		if (show) {
+			submenu.style.display = 'block';
+		} else {
+			submenu.style.display = 'none';
+		}
+	}
 </script>
 
 <style lang="sass">
