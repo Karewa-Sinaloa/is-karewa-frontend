@@ -430,23 +430,17 @@
                       for="contract_date"
                       id="contract_date"
                     >Fecha de el contrato</label>
-                    <Field
-                      id="contract_date"
-                      name="contract_date"
-                      class="form__input"
+                    <VueDatePicker
+                      v-model="values.contract_date"
                       :disabled="contractEditBlocked && contract.id"
                       :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
-                      v-slot="{ field }"
-                    >
-                      <VueDatePicker
-                        v-bind="field"
-                        :disabled="contractEditBlocked && contract.id"
-                        :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
-                        input-class="form__input"
-                        wrapper-class="date-picker-wrapper"
-                        format="YYYY-MM-DD"
-                        />
-                    </Field>
+                      input-class="form__input"
+                      id="contract_date"
+                      name="contract_date"
+                      :format="MM/dd/yyyy"
+                      :locale="esMx"
+                      :timezone="mst"
+                      />
                     <ErrorMessage
                       name="contract_date"
                       class="form__alert"
@@ -1179,6 +1173,13 @@
       .catch(error => {
         store.push_alert(error.data);
       });
+  }
+
+  // FUNCION PARA CONVERTIR UN STRING DE FECHA TIPO "YYYY-MM-DD" A UN OBJETO DE FECHA DE JAVASCRIPT
+  function parseDateString(dateString) {
+    const [year, month, day] = dateString.split('-').map(Number)
+    console.log(year, month, day);
+    return new Date(year, month - 1, day)
   }
 </script>
 
