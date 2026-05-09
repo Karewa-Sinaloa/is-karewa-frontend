@@ -13,7 +13,7 @@
 						<span class="section__help-text">Agrega o edita la información de el contrato</span>
 						<div
 							class="section__options btn__grouped"
-							v-if="contractEditBlocked && contract.id"
+							v-if="fieldDisabled"
 						>
 							<button
 								class="btn btn__default btn--smaller btn__default--primary"
@@ -60,8 +60,8 @@
 											name="contract_number"
 											placeholder="Número de contrato"
 											class="form__input"
-											:disabled="contractEditBlocked && contract.id"
-											:class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+											:disabled="fieldDisabled"
+											:class="{ 'form__input--disabled': fieldDisabled }"
 										/>
 										<ErrorMessage
 											name="contract_number"
@@ -82,8 +82,8 @@
 											name="contract_id"
 											placeholder="Identificador de contrato"
 											class="form__input"
-											:disabled="contractEditBlocked && contract.id"
-											:class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+											:disabled="fieldDisabled"
+											:class="{ 'form__input--disabled': fieldDisabled }"
 										/>
 										<ErrorMessage
 											name="contract_id"
@@ -107,8 +107,8 @@
 											id="procedure_id"
 											name="procedure_id"
 											class="form__select"
-											:disabled="contractEditBlocked && contract.id"
-											:class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+											:disabled="fieldDisabled"
+											:class="{ 'form__select--disabled': fieldDisabled }"
 										>
 											<option
 												value=""
@@ -144,8 +144,8 @@
                       as="select"
 											placeholder="Materia de el contrato"
 											class="form__select"
-											:disabled="contractEditBlocked && contract.id"
-											:class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+											:disabled="fieldDisabled"
+											:class="{ 'form__select--disabled': fieldDisabled }"
 										>
                       <option value="" disabled>Selecciona la materia de el contrato</option>
                       <option
@@ -176,8 +176,8 @@
                       name="admin_period_start"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona el año</option>
                       <option
@@ -206,8 +206,8 @@
                       name="admin_period_end"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona el año de fin</option>
                       <option
@@ -237,8 +237,8 @@
                       name="fiscal_year"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona el año</option>
                       <template v-for="year in Array.from({ length: 15 }, (_, i) => new Date().getFullYear() - i)">
@@ -268,8 +268,8 @@
                       name="period_id"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona el periodo</option>
                       <option
@@ -301,8 +301,8 @@
                       name="partida_type"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona el tipo de partida</option>
                       <option
@@ -331,8 +331,8 @@
                       name="partida_id"
                       placeholder="ID de partida"
                       class="form__input"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__input--disabled': fieldDisabled }"
                     />
                     <ErrorMessage
                       name="partida_id"
@@ -352,8 +352,8 @@
                       name="status_id"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona el estatus de contrato</option>
                       <option
@@ -382,8 +382,8 @@
                       name="contract_type_id"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona el tipo de contrato</option>
                       <option
@@ -413,8 +413,8 @@
                     name="contract_link"
                     placeholder="URL de el contrato"
                     class="form__input"
-                    :disabled="contractEditBlocked && contract.id"
-                    :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                    :disabled="fieldDisabled"
+                    :class="{ 'form__input--disabled': fieldDisabled }"
                   />
                   <ErrorMessage
                     name="contract_link"
@@ -430,17 +430,18 @@
                       for="contract_date"
                       id="contract_date"
                     >Fecha de el contrato</label>
+                    <Field name="contract_date" id="contract_date" v-slot="{field, errors}" >
                     <VueDatePicker
                       v-model="values.contract_date"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :input-class="{'form__input--disabled': fieldDisabled }"
                       input-class="form__input"
-                      id="contract_date"
-                      name="contract_date"
-                      :format="MM/dd/yyyy"
-                      :locale="esMx"
-                      :timezone="mst"
+                      @update:modelValue="field.onChange"
+                      :formats="{input: 'MM/dd/yyyy'}"
+                      timezone="utc"
+                      model-type="yyyy-MM-dd"
                       />
+                    </Field>
                     <ErrorMessage
                       name="contract_date"
                       class="form__alert"
@@ -463,8 +464,8 @@
                       name="subtotal"
                       placeholder="Monto total sin impuestos"
                       class="form__input"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__input--disabled': fieldDisabled }"
                     />
                     <ErrorMessage
                       name="subtotal"
@@ -484,8 +485,8 @@
                       name="total_amount"
                       placeholder="Monto total con impuestos"
                       class="form__input"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__input--disabled': fieldDisabled }"
                     />
                     <ErrorMessage
                       name="total_amount"
@@ -510,8 +511,8 @@
                     id="work_description"
                     name="work_description"
                     placeholder="Descripción de la obra"
-                    :disabled="contractEditBlocked && contract.id"
-                    :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                    :disabled="fieldDisabled"
+                    :class="{ 'form__input--disabled': fieldDisabled }"
                   />
                   <ErrorMessage
                     name="work_description"
@@ -531,8 +532,8 @@
                     name="call_link"
                     placeholder="URL de la convocatoria"
                     class="form__input"
-                    :disabled="contractEditBlocked && contract.id"
-                    :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                    :disabled="fieldDisabled"
+                    :class="{ 'form__input--disabled': fieldDisabled }"
                   />
                   <ErrorMessage
                     name="call_link"
@@ -552,8 +553,8 @@
                     name="proposals_url"
                     placeholder="URL de presentación de propuestas"
                     class="form__input"
-                    :disabled="contractEditBlocked && contract.id"
-                    :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                    :disabled="fieldDisabled"
+                    :class="{ 'form__input--disabled': fieldDisabled }"
                   />
                   <ErrorMessage
                     name="proposals_url"
@@ -573,8 +574,8 @@
                     name="proposal_url"
                     placeholder="URL de presentación de la propuesta"
                     class="form__input"
-                    :disabled="contractEditBlocked && contract.id"
-                    :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                    :disabled="fieldDisabled"
+                    :class="{ 'form__input--disabled': fieldDisabled }"
                   />
                   <ErrorMessage
                     name="proposal_url"
@@ -590,22 +591,17 @@
                       for="call_date"
                       id="call_date"
                     >Fecha de la convocatoria</label>
-                    <Field
-                      id="call_date"
-                      name="call_date"
-                      class="form__input"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
-                      v-slot="{ field }"
-                    >
-                      <VueDatePicker
-                        v-bind="field"
-                        :disabled="contractEditBlocked && contract.id"
-                        :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
-                        input-class="form__input"
-                        wrapper-class="date-picker-wrapper"
-                        format="YYYY-MM-DD"
-                      />
+                    <Field name="call_date" id="call_date" v-slot="{field, errors}" >
+                    <VueDatePicker
+                      v-model="values.call_date"
+                      :disabled="fieldDisabled"
+                      @update:modelValue="field.onChange"
+                      :class="{ 'form__input--disabled': fieldDisabled }"
+                      input-class="form__input"
+                      :formats="{input: 'MM/dd/yyyy'}"
+                      timezone="utc"
+                      model-type="yyyy-MM-dd"
+                    />
                     </Field>
                     <ErrorMessage
                       name="call_date"
@@ -620,22 +616,17 @@
                       for="clarification_meeting_date"
                       id="clarification_meeting_date"
                     >Fecha de junta de aclaraciones</label>
-                    <Field
-                      id="clarification_meeting_date"
-                      name="clarification_meeting_date"
-                      class="form__input"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
-                      v-slot="{ field }"
-                    >
-                      <VueDatePicker
-                        v-bind="field"
-                        :disabled="contractEditBlocked && contract.id"
-                        :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
-                        input-class="form__input"
-                        wrapper-class="date-picker-wrapper"
-                        format="YYYY-MM-DD"
-                      />
+                    <Field name="clarification_date" id="clarification_date" v-slot="{field, errors}" >
+                    <VueDatePicker
+                      v-model="values.clarification_meeting_date"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__input--disabled': fieldDisabled }"
+                      input-class="form__input"
+                      :formats="{input: 'MM/dd/yyyy'}"
+                      timezone="utc"
+                      @update:modelValue="field.onChange"
+                      model-type="yyyy-MM-dd"
+                    />
                     </Field>
                     <ErrorMessage
                       name="clarification_meeting_date"
@@ -658,8 +649,8 @@
                       name="provider_id"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona el proveedor de la obra</option>
                       <option
@@ -688,8 +679,8 @@
                       name="organizer_admin_unit_id"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona la unidad convocante</option>
                       <option
@@ -718,8 +709,8 @@
                       name="applicant_admin_unit_id"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona la unidad solicitante</option>
                       <option
@@ -748,8 +739,8 @@
                       name="admin_unit_type_id"
                       as="select"
                       class="form__select"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__select--disabled': fieldDisabled }"
                     >
                       <option value="" disabled>Selecciona el tipo de unidad administrativa</option>
                       <option
@@ -781,8 +772,8 @@
                     name="area_in_charge"
                     placeholder="Área responsable de la información del contrato"
                     class="form__input"
-                    :disabled="contractEditBlocked && contract.id"
-                    :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                    :disabled="fieldDisabled"
+                    :class="{ 'form__input--disabled': fieldDisabled }"
                   />
                   <ErrorMessage
                     name="area_in_charge"
@@ -806,8 +797,8 @@
 										id="notes"
 										name="notes"
 										placeholder="Comentarios o notas acerca de el contrato"
-										:disabled="contractEditBlocked && contract.id"
-										:class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+										:disabled="fieldDisabled"
+										:class="{ 'form__input--disabled': fieldDisabled }"
 									/>
 									<ErrorMessage
 										name="notes"
@@ -829,8 +820,8 @@
                     id="organization_notes"
                     name="organization_notes"
                     placeholder="Notas internas de Karewa acerca de el contrato"
-                    :disabled="contractEditBlocked && contract.id"
-                    :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                    :disabled="fieldDisabled"
+                    :class="{ 'form__input--disabled': fieldDisabled }"
                   />
                   <ErrorMessage
                     name="organization_notes"
@@ -839,49 +830,70 @@
                   />
                 </div>
                 <!-- Campo de seleccion de fecha de actualización de la información del contrato con id contract_updated_at utilizando VueDatePicker -->
-                <div class="form__container form__container--small">
-                  <label
-                    class="form__label"
-                    for="contract_updated_at"
-                    id="contract_updated_at"
-                  >Fecha de actualización de la información</label>
-                  <Field
-                    id="contract_updated_at"
-                    name="contract_updated_at"
-                    class="form__input"
-                    :disabled="contractEditBlocked && contract.id"
-                    :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
-                    v-slot="{ field }"
-                  >
+                <div class="form__container-group">
+                  <div class="form__container form__container--small">
+                    <label
+                      class="form__label"
+                      for="contract_updated_at"
+                      id="contract_updated_at"
+                    >Fecha de actualización de la información</label>
+                    <Field name="contract_updated_at" id="contract_updated_at" v-slot="{field, errors}">
                     <VueDatePicker
-                      v-bind="field"
-                      :disabled="contractEditBlocked && contract.id"
-                      :class="{ 'form__input--disabled': contractEditBlocked && contract.id }"
+                      v-model="values.contract_updated_at"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__input--disabled': fieldDisabled }"
+                      @update:modelValue="field.onChange"
                       input-class="form__input"
-                      wrapper-class="date-picker-wrapper"
-                      format="YYYY-MM-DD"
+                      :formats="{input: 'MM/dd/yyyy'}"
+                      timezone="utc"
+                      model-type="yyyy-MM-dd"
                     />
-                  </Field>
-                  <ErrorMessage
-                    name="contract_updated_at"
-                    class="form__alert"
-                    data-field="contract_updated_at"
-                  />
+                    </Field>
+                    <ErrorMessage
+                      name="contract_updated_at"
+                      class="form__alert"
+                      data-field="contract_updated_at"
+                    />
+                  </div>
+                  <div class="form__container form__container--small">
+                    <label
+                      class="form__label"
+                      for="information_date"
+                      id="information_date"
+                    >Fecha de obtención de datos</label>
+                    <Field name="information_date" id="information_date" v-slot="{field, errors}" >
+                    <VueDatePicker
+                      v-model="values.information_date"
+                      :disabled="fieldDisabled"
+                      :class="{ 'form__input--disabled': fieldDisabled }"
+                      input-class="form__input"
+                      @update:modelValue="field.onChange"
+                      :formats="{input: 'MM/dd/yyyy'}"
+                      timezone="utc"
+                      model-type="yyyy-MM-dd"
+                    />
+                    </Field>
+                    <ErrorMessage
+                      name="information_date"
+                      class="form__alert"
+                      data-field="information_date"
+                    />
+                  </div>
                 </div>
 							</div>
 							<input
 								v-if="!contractEditBlocked || !contract.id"
 								class="btn btn__default btn--small btn__default--primary"
-								type="submit"
-								:value="submitButtonText"
-							/>
-							<button
-								v-if="!contractEditBlocked"
-								class="btn btn__outlined btn--small btn__outlined--primary"
-								@click="contractEditBlocked = true"
-							>
-								<span class="material-symbols-outlined">cancel</span>
-								Cancelar
+              type="submit"
+              :value="submitButtonText"
+            />
+            <button
+              v-if="!contractEditBlocked"
+              class="btn btn__outlined btn--small btn__outlined--primary"
+              @click="contractEditBlocked = true"
+            >
+              <span class="material-symbols-outlined">cancel</span>
+              Cancelar
 							</button>
 						</Form>
 					</div>
@@ -932,8 +944,18 @@
 	});
 
 	const contractValidateSchema = yup.object().shape({
-		name: yup.string().required().label('Nombre de el contrato').max(150),
-		comments: yup.string().label('Comentarios'),
+		contract_number: yup.string().required().label('Número de contrato').max(100),
+		contract_id: yup.string().required().label('ID de contrato').max(50),
+    admin_period_start: yup.number().required().label('Año de inicio de administración').min(1900).max(new Date().getFullYear()),
+    admin_period_end: yup.number().required().label('Año de fin de administración').min(1900).max(new Date().getFullYear() + 6),
+    fiscal_year: yup.number().required().label('Año fiscal o ejercicio').min(1900).max(new Date().getFullYear()),
+    period_id: yup.number().required().label('Periodo').max(11),
+    partida_type: yup.number().required().label('Tipo de partida').max(11),
+    partida_id: yup.string().when('partida_type', {
+      is: 2,
+      then: (contractValidateSchema) => contractValidateSchema.required().label('ID de partida').max(20),
+      otherwise: (contractValidateSchema) =>  contractValidateSchema.label('ID de partida').max(20)
+    }),
 	});
 
 	onBeforeRouteLeave((to, from, next) => {
@@ -1175,12 +1197,10 @@
       });
   }
 
-  // FUNCION PARA CONVERTIR UN STRING DE FECHA TIPO "YYYY-MM-DD" A UN OBJETO DE FECHA DE JAVASCRIPT
-  function parseDateString(dateString) {
-    const [year, month, day] = dateString.split('-').map(Number)
-    console.log(year, month, day);
-    return new Date(year, month - 1, day)
-  }
+  const fieldDisabled = computed(() => {
+    return contractEditBlocked.value && contract.value && contract.value.id ? true : false
+  })
+  
 </script>
 
 <style lang="sass">

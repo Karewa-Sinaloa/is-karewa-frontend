@@ -18,6 +18,11 @@
 	&__fieldset
 		border: none
 		padding: 0
+	// Disabled state for input for VueDatePicker component
+	.dp__disabled
+		border-color: var(--color-grayscale-50)
+		background-color: var(--color-grayscale-50)
+	.dp__input,
 	&__input
 		font-family: var(--ff1)
 		appearance: none
@@ -29,7 +34,7 @@
 		width: 100%
 		color: var(--text-color-primary-dark)
 		outline: none
-		padding: 0.3rem 0.8rem
+		padding: 0.45rem 0.8rem
 		@include mixins.font-size(--fs-regular)
 		&:read-only
 			background-color: var(--color-grayscale-50)
@@ -49,6 +54,8 @@
 			@include mixins.input-icon('/src/assets/icons/email.png')
 		&--password
 			@include mixins.input-icon('/src/assets/icons/padlock.png')
+	.dp__input
+		padding-left: 2rem
 	&__help-icon
 		color: var(--color-secondary)
 		border: none
@@ -163,7 +170,7 @@
 		display: block
 		border-radius: 0.2rem
 		width: 100%
-		padding: 0.47rem 0.8rem
+		padding: 0.45rem 0.8rem
 		position: relative
 		@include mixins.font-size(--fs-regular)
 		background:
@@ -171,7 +178,7 @@
 			repeat: no-repeat
 			size: 1rem 1rem
 			position: calc(100% - 0.5rem) center
-			color: var(--color-light)
+			color: var(--color-grayscale-15)
 		&--disabled
 			color: var(--text-color-primary-dark)
 			border-color: var(--color-grayscale-50)
