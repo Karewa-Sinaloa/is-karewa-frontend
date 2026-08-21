@@ -1,0 +1,6 @@
+tunnel: 8513e7b5-f9e3-44e7-a62d-23105820322a
+credentials-file: /etc/cloudflared/8513e7b5-f9e3-44e7-a62d-23105820322a.json
+ingress:
+  - hostname: kapp.chavodigital.com
+    service: http://proxy:80
+  - service: http_status:404
