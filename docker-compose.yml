@@ -54,7 +54,7 @@ services:
                 condition: service_healthy
         networks:
             - app_net
-        restart: unless-stopped
+        restart: no
         healthcheck:
             test:
                 - CMD

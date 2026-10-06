@@ -2,10 +2,10 @@ FROM node:20.19.5-alpine
 
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm@10.16.0 --activate
+RUN npm install -g pnpm@12.8.1
 RUN apk add --no-cache wget
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 RUN pnpm install --frozen-lockfile
 
