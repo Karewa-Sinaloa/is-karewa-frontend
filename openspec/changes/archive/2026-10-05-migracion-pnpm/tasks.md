@@ -34,7 +34,7 @@
 
 ## 5. Verificación Docker y cierre
 
-- [ ] 5.1 Ejecutar `docker compose build frontend` y verificar código 0 (valida que `pnpm-workspace.yaml` y `pnpm-lock.yaml` viajan en el build context)
-- [ ] 5.2 Levantar `docker compose up -d frontend` y verificar que el contenedor pasa healthcheck / `docker compose ps` lo muestra `healthy` o `running`
-- [ ] 5.3 Commit aislado: `git add` solo de los archivos pnpm (`package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `package-lock.json` borrado, `.gitignore`, `AGENTS.md`, `SPEC.md`, `.github/copilot-instructions.md`) y verificar con `git status --short`
+- [x] 5.1 Ejecutar `docker compose build frontend` y verificar código 0 (valida que `pnpm-workspace.yaml` y `pnpm-lock.yaml` viajan en el build context)
+- [x] 5.2 Levantar `docker compose up -d frontend` y verificar que el contenedor pasa healthcheck / `docker compose ps` lo muestra `healthy` o `running`
+- [x] 5.3 Commit aislado: `git add` solo de los archivos pnpm (`package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `package-lock.json` borrado, `.gitignore`, `AGENTS.md`, `SPEC.md`, `.github/copilot-instructions.md`) y verificar con `git status --short`
       que skills, `.serena/` y `docker-compose.yml` quedan fuera del stage
