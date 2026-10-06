@@ -2,25 +2,26 @@ schema: spec-driven
 
 # Project context (injected into every artifact creation).
 context: |
-    Tech stack: Vue 3 (Composition API) + Vite 7 + Pinia 3 + Vue Router 4 + Axios + Vee-Validate/Yup + Sass
-    (modern-compiler). Package manager: pnpm. Scripts: pnpm dev (puerto 5174), pnpm build, pnpm preview.
-    Sin test suite: la verificación es lectura de escenarios contra el código y `openspec validate`.
+  Tech stack: Vue 3 (Composition API) + Vite 7 + Pinia 3 + Vue Router 4 + Axios + Vee-Validate/Yup + Sass
+  (modern-compiler). Package manager: pnpm. Scripts: pnpm dev (puerto 5174), pnpm build, pnpm preview.
+  Sin test suite: la verificación es lectura de escenarios contra el código y `openspec validate`.
 
-    Convenciones: Prettier con tabs, printWidth 260, singleQuote, proseWrap always (ver .prettierrc.json).
-    SASS por capas: settings/ = tokens únicos (paleta, tipografía, breakpoints) exportados como CSS custom
-    properties; base/, objects/, components/ los consumen vía var(--...); nomenclatura BEM. Iconos Material
-    Symbols Outlined. Componentes: views/ (rutas) vs partials/ (reutilizables).
+  Convenciones: Prettier con tabs, printWidth 260, singleQuote, proseWrap always (ver .prettierrc.json).
+  SASS por capas: settings/ = tokens únicos (paleta, tipografía, breakpoints) exportados como CSS custom
+  properties; base/, objects/, components/ los consumen vía var(--...); nomenclatura BEM. Iconos Material
+  Symbols Outlined. Componentes: views/ (rutas) vs partials/ (reutilizables).
 
-    Mapa de módulos: acceso (login/recovery/reset/registro/verificación), organización, proveedores,
-    unidades administrativas, contratos (listado paginado + configuraciones: procedimientos, materia,
-    estatus, tipo, tipos de unidad, periodos).
+  Mapa de módulos: acceso (login/recovery/reset/registro/verificación), organización, proveedores,
+  unidades administrativas, contratos (listado paginado + configuraciones: procedimientos, materia,
+  estatus, tipo, tipos de unidad, periodos).
 
-    Documentación: SPEC.md = especificación técnica descriptiva (stack, estructura, store, seguridad);
-    openspec/specs/ = contrato de comportamiento canónico; CHANGELOG.md, NOTES.md, DEV_ENV_MANUAL.md,
-    README-docker.md, .env.example = operación.
+  Documentación: openspec/specs/ = fuente canónica de comportamiento; CHANGELOG.md, NOTES.md, DEV_ENV_MANUAL.md,
+  README-docker.md, .env.example = operación.
 
-    Specs: se redactan en español, requirements con SHALL y escenarios WHEN/THEN; rutas de capabilities en
-    kebab-case inglés. Flujo OpenSpec: openspec new change → proposal/specs/design/tasks → apply → archive.
+  Specs: se redactan en español, requirements con SHALL y escenarios WHEN/THEN; rutas de capabilities en
+  kebab-case inglés. Flujo OpenSpec: openspec new change → proposal/specs/design/tasks → apply → archive.
+githubCopilot:
+  cloudAgent: false
 
 # Project context (optional)
 # This is shown to AI when creating artifacts.

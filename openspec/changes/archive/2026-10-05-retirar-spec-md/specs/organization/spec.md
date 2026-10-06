@@ -22,7 +22,7 @@ El sistema SHALL mostrar el perfil de la organización desde los datos de la org
 
 ### Requirement: Actualización del perfil
 
-El sistema SHALL permitir editar el perfil solo cuando el usuario lo habilita, y SHALL guardar los cambios con validación en cliente: nombre, nombre corto, correo de contacto y calle obligatorios, y código postal numérico entre 1000 y 9999.
+El sistema SHALL permitir editar el perfil solo cuando el usuario lo habilita, y SHALL guardar los cambios con validación en cliente: nombre, nombre corto, correo de contacto y calle obligatorios, y código postal numérico entre 1000 y 99999.
 
 #### Scenario: Guardado exitoso
 

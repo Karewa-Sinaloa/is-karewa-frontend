@@ -32,6 +32,14 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - `sidebar.vue` — Corregido el enlace "Crear nuevo" de Contratos para abrir `contractCreate` en lugar de la vista de unidades administrativas.
 - `pagination.vue` — Eliminado un `console.log` residual del componente de paginación.
 
+### Documentación
+
+- `SPEC.md` — Archivo retirado; el comportamiento del sistema queda especificado canónicamente en `openspec/specs/` (una spec por capability con requirements y escenarios).
+- `openspec/specs/ui-construction/spec.md` — Capability nueva `ui-construction`: patrones de construcción de la UI (ubicación `views/` vs `partials/`, anatomía del componente, reutilización de parciales compartidos, composición por capas SASS y registro de
+  secciones en la navegación).
+- `openspec/specs/routing/spec.md` — Nuevo requisito "Rutas de nuevas secciones con CRUD": listado en `/seccion`, alta en `/seccion/nuevo`, edición en `/seccion/:id` con nombre de ruta camelCase y `meta.login`.
+- `AGENTS.md` — La tabla de capabilities y la convención de componentes ahora referencian `ui-construction`.
+
 ## [1.1.0] - 2026-04-08
 
 ### Agregado
