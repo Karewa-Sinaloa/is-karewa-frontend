@@ -37,6 +37,10 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ### Documentación
 
+- `openspec/changes/align-specs-with-programming-notes` — Alineación de los specs con las notas del área `Programación` del vault de Obsidian (solo specs, sin cambios de código): capability nueva `tooling` (bundler del proyecto, `pnpm` como administrador
+  único, separación de `src/` y `dist/`, minificación solo en producción y entorno de desarrollo editable fuera del contenedor), `design-system` suma los pesos tipográficos a la fuente única de tokens, `accessibility` la semántica HTML con ARIA mínimo,
+  `code-quality` la ausencia de regresiones al corregir superficies compartidas y `ui-construction` la modificación en sitio que conserva el comportamiento correcto más los vínculos y recursos externos; las brechas spec↔código quedan registradas en
+  `design.md`.
 - `openspec/changes/mejoras-frontend` — Capacidades nuevas y requisitos agregados (solo specs, sin cambios de código): `accessibility` (idioma del documento, nombres accesibles, diálogos anunciados, teclado y foco, texto alternativo) y `code-quality` (lint
   ejecutable, sin `console.log` en producción, dependencias y archivos sin uso); `performance` suma code-splitting por ruta e invalidación de artefactos tras despliegue y `routing` exige página en la ruta de todo listado paginado.
 - `openspec/changes/mejoras-seguridad` — Requisitos de seguridad agregados (solo specs, sin cambios de código): envío único sin doble envío y validación de archivos antes de subir en `form-validation`, autocompletado seguro de credenciales (`autocomplete`) en

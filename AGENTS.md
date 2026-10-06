@@ -32,6 +32,7 @@ Formato de código: Prettier con la configuración de `.prettierrc.json` (tabs, 
 | `form-validation`         | Validación en cliente antes del envío, mensajes en español, errores por campo                                                                             |
 | `contracts-configuration` | Dashboard de configuración (6 submódulos CRUD) y su uso en el formulario de contrato                                                                      |
 | `code-quality`            | Verificación de estilo ejecutable, sin `console.log` de depuración en producción, dependencias y archivos de código sin uso                               |
+| `tooling`                 | Bundler Vite y `pnpm`, separación de `src/` y artefactos en `dist/`, minificación solo en producción y entorno editable fuera del contenedor              |
 
 Cambios activos en `openspec/changes/` (ver con `openspec list`). Flujo: `openspec new change "<kebab-en>"` → proposal/specs/design/tasks → apply → archive (sincroniza los deltas a `openspec/specs/`).
 
@@ -46,6 +47,8 @@ openspec show <id>                    # Ver un change o spec
 
 - **SASS**: `settings/` es la única fuente de tokens (se exportan como `var(--...)` en `:root`); `base/`, `objects/` y `components/` solo los consumen. Nomenclatura BEM. Reglas completas en la spec `design-system`.
 - **Componentes**: `views/` = rutas de la aplicación; `partials/` = reutilizables. Reglas completas en la spec `ui-construction`.
+- **Procesamiento**: Vite es el bundler (`pnpm dev`, `pnpm build`) y `pnpm` el único administrador de paquetes; `src/` contiene solo fuentes de desarrollo y los artefactos compilados viven en `dist/` (sin versionar), minificados únicamente en el build de
+  producción. Reglas completas en la spec `tooling`.
 - **Estado**: store único `useAppStore` (ver la spec `app-store`).
 - **API**: el contrato OpenAPI publicado es la fuente canónica de módulos, rutas y campos: toda alta de módulo pasa por `pnpm api:sync` antes de darse por buena y sus divergencias se resuelven contra `docs/openapi-report.md` (spec `openapi-contract`).
 - **Sin suite de tests**: la verificación es contrastar escenarios/lógica contra el código + `openspec validate --all`.
