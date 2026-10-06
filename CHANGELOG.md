@@ -10,12 +10,15 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ### Agregado
 
+- Script `scripts/api-sync.mjs` (`pnpm api:sync`) — Descarga el contrato OpenAPI publicado, guarda su copia versionada en `docs/openapi.json` y genera `docs/openapi-report.md` clasificando cada módulo como conforme, desalineación de código, gap de contrato
+  (manifest `scripts/openapi-gaps.json`) o no resoluble estáticamente; la variable opcional `OPENAPI_URL` permite fijar otro origen.
 - Componente `periodos.vue` — Gestión inline de periodos de contratos con listado, popup de alta/edición y eliminación.
 - Componente `periodos_view.vue` — Formulario para crear o editar periodos de contratos.
 - Dependencia `@vueuse/core` — Soporte para formatear fechas en el listado de contratos.
 
 ### Modificado
 
+- `src/helpers/frontend.logs.js` — El módulo de la petición pasa de `frontend-logs/update` a `frontend-logs` para resolver en el endpoint documentado `POST /frontend-logs` (alineación detectada por `pnpm api:sync`; sin cambio de comportamiento visible).
 - `dash.vue` — Añadido el panel `Periodos de contratos` al dashboard de configuración de contratos.
 - `contract_list.vue` — El listado ahora consume el módulo `contracts`, muestra el identificador del contrato y enlaza a la vista `contractView`.
 - `contract_list.vue` — El listado ahora se presenta en una tabla con columnas de proveedor, unidades administrativas, materia, procedimiento, administración, estado, descripción, fecha y tipo; además solicita paginación embebida y ordena por fecha de contrato
@@ -34,6 +37,10 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ### Documentación
 
+- `openspec/changes/mejoras-frontend` — Capacidades nuevas y requisitos agregados (solo specs, sin cambios de código): `accessibility` (idioma del documento, nombres accesibles, diálogos anunciados, teclado y foco, texto alternativo) y `code-quality` (lint
+  ejecutable, sin `console.log` en producción, dependencias y archivos sin uso); `performance` suma code-splitting por ruta e invalidación de artefactos tras despliegue y `routing` exige página en la ruta de todo listado paginado.
+- `openspec/changes/mejoras-seguridad` — Requisitos de seguridad agregados (solo specs, sin cambios de código): envío único sin doble envío y validación de archivos antes de subir en `form-validation`, autocompletado seguro de credenciales (`autocomplete`) en
+  `authentication`, ayuda del servidor mostrada como texto en `app-store` y archivos de entorno no versionados en `code-quality`; las brechas spec↔código quedan registradas en `design.md`.
 - `SPEC.md` — Archivo retirado; el comportamiento del sistema queda especificado canónicamente en `openspec/specs/` (una spec por capability con requirements y escenarios).
 - `openspec/specs/ui-construction/spec.md` — Capability nueva `ui-construction`: patrones de construcción de la UI (ubicación `views/` vs `partials/`, anatomía del componente, reutilización de parciales compartidos, composición por capas SASS y registro de
   secciones en la navegación).

@@ -1,0 +1,25 @@
+[
+	{
+		"tipo": "endpoint",
+		"modulo": "organization",
+		"metodo": "DELETE",
+		"path": "/organization/{id}",
+		"archivo": "src/components/views/organization.vue",
+		"motivo": "el backend debe documentarlo"
+	},
+	{
+		"tipo": "endpoint",
+		"modulo": "access/user-validation",
+		"metodo": "POST",
+		"path": "/access/user-validation",
+		"archivo": "src/components/partials/verification.vue",
+		"motivo": "el backend debe documentarlo"
+	},
+	{
+		"tipo": "campo",
+		"campo": "comments",
+		"modulo": "proveedores",
+		"archivo": "src/components/views/proveedores/view.vue",
+		"motivo": "el backend debe documentarlo"
+	}
+]

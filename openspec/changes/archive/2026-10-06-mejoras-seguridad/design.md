@@ -6,7 +6,8 @@ Hallazgos verificados que motivan cada requisito (ver `proposal.md` — Why):
 
 - **Doble envío**: 14 componentes usan `<Form>` (`login`, `recovery`, `reset`, `registration`, `organization`, formularios de proveedores, unidades y los 8 view de configuración de contratos). Ninguno declara bandera de envío ni desactiva el control de envío;
   los botones de acceso son `type="submit"` con `@click.prevent="validate()…"` y una segunda pulsación emite otra petición.
-- **Ayuda con `v-html`**: `src/components/partials/help.popup.vue` renderiza `v-html="helpText"`; el texto llega de `store.help` y las alertas del servidor aportan `help` vía `push_alert` (`src/resources/errors.js` copia `notification.help`).
+- **Ayuda con `v-html`**: `src/components/partials/help.popup.vue` renderiza `v-html="helpText"`; el texto llega de `store.help` y las alertas del servidor aportan `help` vía `push_alert` (`src/store/index.js` copia `notification.help`;
+  `src/resources/errors.js` solo resuelve el mensaje por código).
 - **`.env` versionado**: `git ls-files` incluye `.env` desde el primer commit y no está en `.gitignore`; los documentos (`DEV_ENV_MANUAL.md`, `README-docker.md`) instruyen `cp .env.example .env` y `docker-compose.yml` lo usa como `env_file`, es decir, el flujo
   ya asume un archivo local.
 - **Subidas sin validar**: `drag_drop_file.vue` recibe `accept` como prop pero no valida tipo ni tamaño antes de `Upload(...)`; hoy ningún vista lo monta.

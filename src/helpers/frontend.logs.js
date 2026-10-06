@@ -1,8 +1,8 @@
-import { apiRequest } from '../api/requests'
+import { apiRequest } from '../api/requests';
 
-export const frontEndLogs = function(data = {}) {
+export const frontEndLogs = function (data = {}) {
 	let params = {
-		module: 'frontend-logs/update',
+		module: 'frontend-logs',
 		data: {
 			level: 10,
 			data: data,
@@ -14,10 +14,13 @@ export const frontEndLogs = function(data = {}) {
 				lang: navigator.language,
 				oscpu: navigator.oscpu,
 				userAgent: navigator.userAgent,
-				platform: navigator.platform
-			}
-		}
-	}
-	console.log(params)
-	new apiRequest().Post(params).then(response => console.log(response)).catch(error => console.log(error))
-}
+				platform: navigator.platform,
+			},
+		},
+	};
+	console.log(params);
+	new apiRequest()
+		.Post(params)
+		.then(response => console.log(response))
+		.catch(error => console.log(error));
+};
