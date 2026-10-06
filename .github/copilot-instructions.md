@@ -3,14 +3,15 @@
 ## Commands
 
 ```bash
-npm run dev       # Dev server on port 5174
-npm run build     # Production build
-npm run preview   # Preview production build
+pnpm run dev       # Dev server on port 5174
+pnpm run build     # Production build
+pnpm run preview   # Preview production build
 ```
 
 Format code with Prettier (no lint script exists):
+
 ```bash
-npx prettier --write src/
+pnpm exec prettier --write src/
 ```
 
 There is no test suite.
@@ -37,9 +38,11 @@ src/
 
 **Notifications:** After any API call, push alerts via `store.push_alert({ code: 'SOME_CODE' })`. The `code` must exist in `src/resources/errors.js`. Alerts auto-dismiss after 5 seconds.
 
-**Auth:** JWT stored in `localStorage` under the key `${VITE_LOCALSTORAGE_SUFFIX}bearer`. The `userSession` class (`src/helpers/set.session.js`) handles set/verify/unSet. The router guard checks `userSession.verify()` on every navigation; routes with `meta: { login: true }` require a valid, non-expired token.
+**Auth:** JWT stored in `localStorage` under the key `${VITE_LOCALSTORAGE_SUFFIX}bearer`. The `userSession` class (`src/helpers/set.session.js`) handles set/verify/unSet. The router guard checks `userSession.verify()` on every navigation; routes with
+`meta: { login: true }` require a valid, non-expired token.
 
 **Global state (Pinia store `KarewaAppStore`):**
+
 - `processing` — global loading flag (toggled by `apiRequest`)
 - `alerts` — notification queue consumed by `notifications.vue`
 - `popup` — modal dialog data consumed by `popups.vue`
@@ -60,19 +63,19 @@ src/
 - **Debug logging**: use `import.meta.env.VITE_DEBUG` (aliased as `$debug` on `app.config.globalProperties`) to guard `console` calls. Never log unconditionally in production paths.
 - **Frontend error logging**: call `frontEndLogs({ message, data })` (`src/helpers/frontend.logs.js`) for session/auth failures — it POSTs to the backend `frontend-logs/update` endpoint.
 - **API request shape**:
-  ```js
-  new apiRequest().Get({ module: 'some-endpoint', params: '/optional-suffix' })
-  new apiRequest().Post({ module: 'some-endpoint', data: { ... } })
-  new apiRequest().Put({ module: 'some-endpoint', data: { ... } }, id)
-  new apiRequest().Delete({ module: 'some-endpoint' }, id)
-  ```
+    ```js
+    new apiRequest().Get({ module: 'some-endpoint', params: '/optional-suffix' })
+    new apiRequest().Post({ module: 'some-endpoint', data: { ... } })
+    new apiRequest().Put({ module: 'some-endpoint', data: { ... } }, id)
+    new apiRequest().Delete({ module: 'some-endpoint' }, id)
+    ```
 - **Route naming**: camelCase, descriptive — e.g. `proveedoresView`, `unidadesAdministrativasList`. Protected routes set `meta: { login: true }`.
 - **View layout pattern**: authenticated views wrap content in `<div class="dash"><sidebar-component /><div class="content"><content-header /><main class="main">...</main></div></div>`.
 
 ## Environment Variables
 
-| Variable | Purpose |
-|---|---|
-| `VITE_API_ENDPOINT` | Base URL for all API requests |
-| `VITE_LOCALSTORAGE_SUFFIX` | Prefix for localStorage keys |
-| `VITE_DEBUG` | Enable verbose console logging |
+| Variable                   | Purpose                        |
+| -------------------------- | ------------------------------ |
+| `VITE_API_ENDPOINT`        | Base URL for all API requests  |
+| `VITE_LOCALSTORAGE_SUFFIX` | Prefix for localStorage keys   |
+| `VITE_DEBUG`               | Enable verbose console logging |
