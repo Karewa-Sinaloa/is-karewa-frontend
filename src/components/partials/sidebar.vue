@@ -116,14 +116,14 @@
 					:key="action.icon"
 					class="sidebar__footer-item"
 				>
-					<button
+					<router-link
 						class="sidebar__footer-button"
-						type="button"
+						:to="{ name: action.route }"
 						:title="action.label"
 						:aria-label="action.label"
 					>
 						<icon-set :icon="action.icon" />
-					</button>
+					</router-link>
 				</li>
 			</ul>
 		</div>
@@ -131,7 +131,7 @@
 </template>
 
 <script setup>
-	const footerActions = [{ icon: 'settings', label: 'Configuración' }];
+	const footerActions = [{ icon: 'settings', label: 'Configuración', route: 'configuracionView' }];
 
 	function showSubmenu(e, show) {
 		const submenu = e.currentTarget.querySelector('.nav__sub-container');

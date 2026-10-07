@@ -5,8 +5,8 @@
 
 ## Resumen
 
-- Módulos analizados: 68 llamadas, 19 módulos literales
-- Conformes: 46
+- Módulos analizados: 80 llamadas, 20 módulos literales
+- Conformes: 53
 - Desalineaciones de código: 0 desalineaciones pendientes
 - Gaps de contrato: 3
 - No resolubles estáticamente: 3
@@ -73,6 +73,10 @@ Llamadas cuyo módulo llega por propiedades y quedan clasificadas como no resolu
 | proveedores | Get | `/proveedores` | src/components/views/contracts/contract_view.vue:1164<br>src/components/views/proveedores/list.vue:119<br>src/components/views/proveedores/view.vue:242 |
 | proveedores | Post | `/proveedores` | src/components/views/proveedores/view.vue:208 |
 | proveedores | Put | `/proveedores` | src/components/views/proveedores/view.vue:222 |
+| roles | Delete | `/roles` | src/components/views/configuracion/roles.vue:121 |
+| roles | Get | `/roles` | src/components/views/configuracion/roles.vue:100<br>src/components/views/configuracion/roles_view.vue:125<br>src/components/views/configuracion/usuario_view.vue:423 |
+| roles | Post | `/roles` | src/components/views/configuracion/roles_view.vue:92 |
+| roles | Put | `/roles` | src/components/views/configuracion/roles_view.vue:106 |
 | tipo-contrato | Delete | `/tipo-contrato` | src/components/views/contracts/tipo.vue:94 |
 | tipo-contrato | Get | `/tipo-contrato` | src/components/views/contracts/contract_view.vue:1150<br>src/components/views/contracts/tipo.vue:76<br>src/components/views/contracts/tipo_view.vue:84 |
 | tipo-contrato | Post | `/tipo-contrato` | src/components/views/contracts/tipo_view.vue:61 |
@@ -85,4 +89,7 @@ Llamadas cuyo módulo llega por propiedades y quedan clasificadas como no resolu
 | unit-types | Get | `/unit-types` | src/components/views/contracts/contract_view.vue:1190<br>src/components/views/contracts/unit_types.vue:76<br>src/components/views/contracts/unit_types_view.vue:84 |
 | unit-types | Post | `/unit-types` | src/components/views/contracts/unit_types_view.vue:61 |
 | unit-types | Put | `/unit-types` | src/components/views/contracts/unit_types_view.vue:71 |
-| users | Post | `/users` | src/components/partials/registration.vue:74 |
+| users | Delete | `/users` | src/components/views/configuracion/usuario_view.vue:526<br>src/components/views/configuracion/usuarios.vue:135 |
+| users | Get | `/users` | src/components/views/configuracion/usuario_view.vue:439<br>src/components/views/configuracion/usuarios.vue:112 |
+| users | Post | `/users` | src/components/partials/registration.vue:74<br>src/components/views/configuracion/usuario_view.vue:472 |
+| users | Put | `/users` | src/components/views/configuracion/usuario_view.vue:491 |

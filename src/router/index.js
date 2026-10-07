@@ -17,6 +17,8 @@ import UnidadesAdministrativasView from '../components/views/admin_units/view.vu
 import ContractsConfigurations from '../components/views/contracts/dash.vue';
 import ContractList from '../components/views/contracts/contract_list.vue';
 import ContractView from '../components/views/contracts/contract_view.vue';
+import GeneralConfiguration from '../components/views/configuracion/dash.vue';
+import UserView from '../components/views/configuracion/usuario_view.vue';
 
 const routes = [
 	{
@@ -115,6 +117,34 @@ const routes = [
 		path: '/contratos/configuraciones',
 		component: ContractsConfigurations,
 		name: 'contractsConfigurations',
+		meta: {
+			login: true,
+		},
+	},
+	{
+		path: '/configuracion',
+		redirect: '/configuracion/p/1',
+	},
+	{
+		path: '/configuracion/p/:page',
+		component: GeneralConfiguration,
+		name: 'configuracionView',
+		meta: {
+			login: true,
+		},
+	},
+	{
+		path: '/configuracion/usuarios/nuevo',
+		component: UserView,
+		name: 'configuracionUsuariosCreate',
+		meta: {
+			login: true,
+		},
+	},
+	{
+		path: '/configuracion/usuarios/:id',
+		component: UserView,
+		name: 'configuracionUsuariosView',
 		meta: {
 			login: true,
 		},
