@@ -24,7 +24,8 @@
 				<button
 					class="user-menu__option"
 					type="button"
-					disabled
+					:disabled="!currentUserId"
+					@click="goToProfile"
 				>
 					<icon-set icon="view" />
 					<span class="user-menu__option-text">Ver perfil</span>
@@ -43,12 +44,22 @@
 </template>
 
 <script setup>
-	import { ref, onMounted, onBeforeUnmount } from 'vue';
+	import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
 	import { userSession } from '../../helpers/set.session.js';
+	import { useAppStore } from '../../store/index.js';
 	import { useRouter } from 'vue-router';
 
+	const store = useAppStore();
 	const router = useRouter();
 	const showMenu = ref(false);
+
+	const currentUserId = computed(() => (store.userData && store.userData.data ? store.userData.data.id : null));
+
+	function goToProfile() {
+		if (!currentUserId.value) return;
+		showMenu.value = false;
+		router.push({ name: 'configuracionUsuariosView', params: { id: currentUserId.value } });
+	}
 
 	function logOut() {
 		showMenu.value = false;

@@ -446,7 +446,7 @@
 			})
 			.catch(error => {
 				store.push_alert(error.data);
-				router.push({ name: 'configuracionView' });
+				router.push({ name: 'configuracionView', params: { page: 1 } });
 			});
 	}
 
@@ -478,7 +478,7 @@
 					if (createdId) {
 						router.push({ name: 'configuracionUsuariosView', params: { id: createdId } });
 					} else {
-						router.push({ name: 'configuracionView' });
+						router.push({ name: 'configuracionView', params: { page: 1 } });
 					}
 				})
 				.catch(error => {
@@ -530,7 +530,7 @@
 			.then(response => {
 				confirmDelete.value = false;
 				store.push_alert(response.data);
-				router.push({ name: 'configuracionView' });
+				router.push({ name: 'configuracionView', params: { page: 1 } });
 			})
 			.catch(error => {
 				confirmDelete.value = false;
