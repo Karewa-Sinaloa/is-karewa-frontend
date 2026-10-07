@@ -42,17 +42,17 @@ El sistema SHALL generar las escalas de color —rampa de grises y rampas por co
 
 ### Requirement: Tipografía por rol
 
-El sistema SHALL asignar la familia tipográfica por rol: encabezados en Oswald con peso 600; etiquetas, botones y leyendas en Lato con peso 500; texto corrido (párrafos, listas, texto inline) en Poppins con peso 400.
+El sistema SHALL asignar la familia tipográfica por rol: encabezados en Fira Sans con peso 600; etiquetas, botones y leyendas en Hind con peso 500; texto corrido (párrafos, listas, texto inline) en Poppins con peso 400.
 
 #### Scenario: Encabezado renderizado
 
 - **WHEN** se muestra un título (h1–h6)
-- **THEN** usa Oswald con peso 600
+- **THEN** usa Fira Sans con peso 600
 
 #### Scenario: Control renderizado
 
 - **WHEN** se muestra un botón o una etiqueta de formulario
-- **THEN** usa Lato con peso 500
+- **THEN** usa Hind con peso 500
 
 ### Requirement: Escala de tamaños de texto
 

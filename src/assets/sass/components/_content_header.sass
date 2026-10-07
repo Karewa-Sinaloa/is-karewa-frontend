@@ -6,27 +6,77 @@
 	background-color: var(--sidebar-bg)
 	display: flex
 	justify-content: flex-end
-.user-actions
-	border: none
-	cursor: pointer
-	margin: 0
-	padding: 0.3rem 0.5rem
-	text-align: center
+.user-menu
+	position: relative
 	display: flex
 	align-items: center
-	border-radius: 0.2rem
-	background-color: transparent
-	&:hover
-		background-color: var(--color-primary-100)
-	&__text
+	&__trigger
+		display: flex
+		align-items: center
+		justify-content: center
+		width: 2.5rem
+		height: 2.5rem
+		padding: 0
+		border: none
+		border-radius: 9999px
+		background-color: transparent
 		color: var(--text-color-primary-dark)
-		@include mix.font-size(--fs-small)
-		display: block
-		font:
-			family: var(--ff1)
-			weight: 600
-		padding: 0 0.2rem 0 0
-	&__icon
-		color: var(--text-color-primary-dark)
-		width: 1.5rem
-		height: 1.5rem
+		cursor: pointer
+		svg
+			display: block
+			width: 1.5rem
+			height: 1.5rem
+			color: inherit
+		&:hover
+			background-color: var(--color-primary-100)
+		&:focus-visible
+			outline: 2px solid var(--color-primary-700)
+			outline-offset: 2px
+	&__dropdown
+		display: none
+		position: absolute
+		top: calc(100% + 0.25rem)
+		right: 0
+		z-index: 20
+		min-width: 11rem
+		box-sizing: border-box
+		background-color: var(--color-light)
+		border: 1px solid var(--light-border-color)
+		border-radius: 0.3rem
+		box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.1)
+		overflow: hidden
+		&--active
+			display: block
+	&__option
+		display: flex
+		align-items: center
+		width: 100%
+		padding: 0.5rem 1rem
+		box-sizing: border-box
+		border: none
+		background-color: transparent
+		text-align: left
+		color: var(--color-secondary-700)
+		cursor: pointer
+		&:not(:last-child)
+			border-bottom: 1px solid var(--light-border-color)
+		&:hover:not(:disabled)
+			background-color: var(--color-primary-100)
+		&:disabled
+			color: var(--text-color-secondary-dark)
+			cursor: default
+		&:focus-visible
+			outline: 2px solid var(--color-primary-700)
+			outline-offset: -2px
+		svg
+			display: block
+			width: 1rem
+			height: 1rem
+			margin-right: 0.5rem
+			color: inherit
+		&-text
+			@include mix.font-size(--fs-small)
+			font:
+				family: var(--ff1)
+				weight: 500
+			white-space: nowrap

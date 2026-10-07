@@ -109,10 +109,30 @@
 				</div>
 			</span>
 		</div>
+		<div class="sidebar__footer">
+			<ul class="sidebar__footer-list">
+				<li
+					v-for="action in footerActions"
+					:key="action.icon"
+					class="sidebar__footer-item"
+				>
+					<button
+						class="sidebar__footer-button"
+						type="button"
+						:title="action.label"
+						:aria-label="action.label"
+					>
+						<icon-set :icon="action.icon" />
+					</button>
+				</li>
+			</ul>
+		</div>
 	</div>
 </template>
 
 <script setup>
+	const footerActions = [{ icon: 'settings', label: 'Configuración' }];
+
 	function showSubmenu(e, show) {
 		const submenu = e.currentTarget.querySelector('.nav__sub-container');
 		if (show) {

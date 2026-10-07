@@ -4,13 +4,13 @@
 @use "../mixins/_mixins"
 
 $fs-default: 16px
-$ff1: 'Lato', sans-serif
+$ff1: 'Hind', sans-serif
 $ff2: 'Poppins', sans-serif
-$ff3: 'Oswald', sans-serif
+$ff3: 'Fira Sans', sans-serif
 
 $breakpoints: ("bp1": 120rem, "bp2": 100rem, "bp3": 90rem, "bp4": 80rem, "bp5": 64rem, "bp6": 48rem, "bp7": 40rem, "bp8": 23rem)
 $fs-map: ("smaller": 0.75rem, "small": 0.85rem, "regular": 1rem, "mid": 1.27rem, "large": 1.6rem, "xl": 2.26rem, "xxl": 2.67rem, "xxxl": 3rem)
-$main-color-list: ("primary": #548474, "secondary": #02351E, "success": #5E8C26, "warning": #B55725, "danger": #750739, "info": #754A5D)
+$main-color-list: ("primary": #005C9C, "secondary": #9C6F00, "success": #9C6F00, "warning": #9C6F00, "danger": #750739, "info": #9C6F00)
 
 $main-colors-hue: ()
 $primary-colors: ()
@@ -28,4 +28,4 @@ $color-primary: map.get($main-color-list, primary)
 $color-secondary: map.get($main-color-list, secondary)
 $color-info: map.get($main-color-list, info)
 $overall-opaque-bg: color.adjust($color-light, $alpha: -0.5)
-$access-panel-bg: #0B0306
+$access-panel-bg: #1A2833
