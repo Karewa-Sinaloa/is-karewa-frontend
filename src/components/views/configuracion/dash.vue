@@ -7,6 +7,7 @@
 				<div class="main__dash-grid">
 					<users-card />
 					<roles-card />
+					<config-cards />
 				</div>
 			</main>
 		</div>
@@ -18,6 +19,7 @@
 	import contentHeader from '../../partials/content_header.vue';
 	import UsersCard from './usuarios.vue';
 	import RolesCard from './roles.vue';
+	import ConfigCards from './config.vue';
 </script>
 
 <style lang="sass">

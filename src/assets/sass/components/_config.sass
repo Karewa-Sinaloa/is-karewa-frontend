@@ -1,0 +1,33 @@
+@use "../mixins/_mixins" as mix
+
+.config-value
+	&__type
+		margin-left: 0.5rem
+		padding: 0.1rem 0.5rem
+		border-radius: 0.2rem
+		background-color: var(--color-grayscale-100)
+		color: var(--text-color-primary-dark)
+		@include mix.font-size(--fs-smaller)
+		&--json
+			background-color: var(--color-primary)
+			color: var(--color-light)
+	&__field
+		min-height: 10rem
+		white-space: pre
+		overflow-x: auto
+	&__toggle
+		display: inline-flex
+		align-items: center
+		margin-top: 0.6rem
+		padding: 0.35rem 0.8rem
+		border: 1px solid var(--color-grayscale-200)
+		border-radius: 0.2rem
+		background-color: var(--color-grayscale-25)
+		color: var(--text-color-primary-dark)
+		cursor: pointer
+		@include mix.font-size(--fs-small)
+		svg
+			display: block
+			width: 1rem
+			height: 1rem
+			margin-right: 0.4rem

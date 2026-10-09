@@ -1,49 +1,72 @@
 <template>
-	<button class="btn btn__icon btn__icon--regular btn__icon--rounded" @click="setShowOptions">
-		<icon-set icon="options"/>
-		<div class="result-actions" :class="{'result-actions--active': showOptions}" @click.stop>
+	<button
+		class="btn btn__icon btn__icon--regular btn__icon--rounded"
+		aria-label="Acciones de la fila"
+		@click="setShowOptions"
+	>
+		<icon-set icon="options" />
+		<div
+			class="result-actions"
+			:class="{ 'result-actions--active': showOptions }"
+			@click.stop
+		>
 			<span class="result-actions__triangle"></span>
-      <router-link :to="optionList.go" class="result-actions__option" v-if="optionList.go">
-				<icon-set icon="view"/>
+			<router-link
+				:to="optionList.go"
+				class="result-actions__option"
+				v-if="optionList.go"
+			>
+				<icon-set icon="view" />
 				<span>Ver</span>
 			</router-link>
-      <router-link :to="{name: optionList.go.name, params: optionList.go.params, query: {edit: true}}" class="result-actions__option" v-if="optionList.go">
-				<icon-set icon="edit"/>
+			<router-link
+				:to="{ name: optionList.go.name, params: optionList.go.params, query: { edit: true } }"
+				class="result-actions__option"
+				v-if="optionList.go"
+			>
+				<icon-set icon="edit" />
 				<span>Editar</span>
 			</router-link>
-      <button class="result-actions__option" @click="emits('showPopup')" v-if="optionList.pop">
-        <icon-set icon="edit"/>
-        <span>Editar</span>
-      </button>
+			<button
+				class="result-actions__option"
+				@click="emits('showPopup')"
+				v-if="optionList.pop"
+			>
+				<icon-set icon="edit" />
+				<span>Editar</span>
+			</button>
 
-			<button class="result-actions__option" @click="setDeleteItem">
-				<icon-set icon="delete"/>
+			<button
+				class="result-actions__option"
+				@click="setDeleteItem"
+				v-if="optionList.delete"
+			>
+				<icon-set icon="delete" />
 				<span>Eliminar</span>
 			</button>
 		</div>
 	</button>
 </template>
 
-
 <script setup>
-	import { onMounted, ref, watch, computed, defineEmits, defineProps } from 'vue'
+	import { onMounted, ref, watch, computed, defineEmits, defineProps } from 'vue';
 
-	const props = defineProps(['optionList'])
-	const emits = defineEmits(['deleteItem'])
-	const showOptions = ref(false)
+	const props = defineProps(['optionList']);
+	const emits = defineEmits(['deleteItem', 'showPopup']);
+	const showOptions = ref(false);
 
-document.addEventListener('click', () => {
-	showOptions.value = false
-})
+	document.addEventListener('click', () => {
+		showOptions.value = false;
+	});
 
-function setShowOptions() {
-	setTimeout(() => {
-		showOptions.value = true
-	}, 100)
-}
+	function setShowOptions() {
+		setTimeout(() => {
+			showOptions.value = true;
+		}, 100);
+	}
 
-function setDeleteItem() {
-	showOptions.value = false
-  emits('deleteItem')
-}
+	function setDeleteItem() {
+		showOptions.value = false;
+		emits('deleteItem');
+	}
 </script>

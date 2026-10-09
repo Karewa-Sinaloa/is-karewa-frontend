@@ -5,8 +5,8 @@
 
 ## Resumen
 
-- Módulos analizados: 80 llamadas, 20 módulos literales
-- Conformes: 53
+- Módulos analizados: 82 llamadas, 20 módulos literales
+- Conformes: 54
 - Desalineaciones de código: 0 desalineaciones pendientes
 - Gaps de contrato: 3
 - No resolubles estáticamente: 3
@@ -44,7 +44,8 @@ Llamadas cuyo módulo llega por propiedades y quedan clasificadas como no resolu
 | access/logout | Get | `/access/logout` | src/helpers/set.session.js:69 |
 | access/recovery | Post | `/access/recovery` | src/components/partials/recovery.vue:44 |
 | access/reset | Post | `/access/reset` | src/components/partials/reset.vue:51 |
-| config | Get | `/config` | src/helpers/site.config.vue:12 |
+| config | Get | `/config` | src/components/views/configuracion/config.vue:52<br>src/helpers/site.config.vue:12 |
+| config | Put | `/config` | src/components/views/configuracion/config_view.vue:198 |
 | contracts | Delete | `/contracts` | src/components/views/contracts/contract_list.vue:173<br>src/components/views/contracts/contract_view.vue:1064 |
 | contracts | Get | `/contracts` | src/components/views/contracts/contract_list.vue:148<br>src/components/views/contracts/contract_view.vue:1047 |
 | contracts | Post | `/contracts` | src/components/views/contracts/contract_view.vue:1013 |
