@@ -1,10 +1,6 @@
-# routing Specification
+# Spec Delta
 
-## Purpose
-
-Define qué rutas expone el Monitor Karewa, cómo se protegen con la sesión del usuario y cómo se comporta la navegación entre ellas.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Rutas de aplicación protegidas
 
@@ -70,15 +66,6 @@ El sistema SHALL exponer una ruta de alta (`/nuevo`) y una ruta de edición con 
 
 - **WHEN** se navega a `/admin/proveedores/123`
 - **THEN** se muestra el formulario con la entrada 123
-
-### Requirement: Navegación con scroll al inicio
-
-El sistema SHALL posicionar el scroll al inicio de la página en cada cambio de ruta.
-
-#### Scenario: Cambio de ruta con desplazamiento
-
-- **WHEN** el usuario navega de una ruta a otra estando desplazado al final de la página
-- **THEN** la nueva ruta muestra su contenido desde el inicio
 
 ### Requirement: Rutas de nuevas secciones con CRUD
 
@@ -153,6 +140,8 @@ El sistema SHALL exponer la configuración general con su base `/admin/configura
 
 - **WHEN** un usuario sin sesión navega a cualquiera de estas rutas
 - **THEN** es redirigido a `/admin/acceso/inicio-de-sesion` y la ruta solicitada no se muestra
+
+## ADDED Requirements
 
 ### Requirement: Prefijo `/admin` en las rutas del panel
 
