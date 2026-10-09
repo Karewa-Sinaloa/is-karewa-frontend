@@ -22,7 +22,7 @@ import UserView from '../components/views/configuracion/usuario_view.vue';
 
 const routes = [
 	{
-		path: '/',
+		path: '/admin',
 		name: 'homeView',
 		component: HomeView,
 		meta: {
@@ -30,7 +30,11 @@ const routes = [
 		},
 	},
 	{
-		path: '/organizacion/mi-organizacion',
+		path: '/',
+		redirect: '/admin',
+	},
+	{
+		path: '/admin/organizacion/mi-organizacion',
 		component: OrganizationView,
 		name: 'organizationView',
 		meta: {
@@ -38,7 +42,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/proveedores/nuevo',
+		path: '/admin/proveedores/nuevo',
 		component: ProveedoresView,
 		name: 'proveedoresCreate',
 		meta: {
@@ -46,7 +50,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/proveedores/:id',
+		path: '/admin/proveedores/:id',
 		component: ProveedoresView,
 		name: 'proveedoresView',
 		meta: {
@@ -54,7 +58,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/proveedores',
+		path: '/admin/proveedores',
 		component: ProveedoresList,
 		name: 'proveedoresList',
 		meta: {
@@ -62,7 +66,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/unidades-administrativas/nuevo',
+		path: '/admin/unidades-administrativas/nuevo',
 		component: UnidadesAdministrativasView,
 		name: 'unidadesAdministrativasCreate',
 		meta: {
@@ -70,7 +74,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/unidades-administrativas/:id',
+		path: '/admin/unidades-administrativas/:id',
 		component: UnidadesAdministrativasView,
 		name: 'unidadesAdministrativasView',
 		meta: {
@@ -78,7 +82,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/unidades-administrativas',
+		path: '/admin/unidades-administrativas',
 		component: UnidadesAdministrativasList,
 		name: 'unidadesAdministrativasList',
 		meta: {
@@ -86,7 +90,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/contratos/nuevo',
+		path: '/admin/contratos/nuevo',
 		component: ContractView,
 		name: 'contractCreate',
 		meta: {
@@ -94,7 +98,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/contratos/:id',
+		path: '/admin/contratos/:id',
 		component: ContractView,
 		name: 'contractView',
 		meta: {
@@ -102,7 +106,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/contratos/p/:page',
+		path: '/admin/contratos/p/:page',
 		component: ContractList,
 		name: 'contractList',
 		meta: {
@@ -110,11 +114,11 @@ const routes = [
 		},
 	},
 	{
-		path: '/contratos',
-		redirect: '/contratos/p/1',
+		path: '/admin/contratos',
+		redirect: '/admin/contratos/p/1',
 	},
 	{
-		path: '/contratos/configuraciones',
+		path: '/admin/contratos/configuraciones',
 		component: ContractsConfigurations,
 		name: 'contractsConfigurations',
 		meta: {
@@ -122,11 +126,11 @@ const routes = [
 		},
 	},
 	{
-		path: '/configuracion',
-		redirect: '/configuracion/p/1',
+		path: '/admin/configuracion',
+		redirect: '/admin/configuracion/p/1',
 	},
 	{
-		path: '/configuracion/p/:page',
+		path: '/admin/configuracion/p/:page',
 		component: GeneralConfiguration,
 		name: 'configuracionView',
 		meta: {
@@ -134,7 +138,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/configuracion/usuarios/nuevo',
+		path: '/admin/configuracion/usuarios/nuevo',
 		component: UserView,
 		name: 'configuracionUsuariosCreate',
 		meta: {
@@ -142,7 +146,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/configuracion/usuarios/:id',
+		path: '/admin/configuracion/usuarios/:id',
 		component: UserView,
 		name: 'configuracionUsuariosView',
 		meta: {
@@ -150,7 +154,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/acceso/',
+		path: '/admin/acceso/',
 		component: AccessView,
 		meta: {
 			login: false,
@@ -184,8 +188,12 @@ const routes = [
 		],
 	},
 	{
-		path: '/acceso/',
-		redirect: '/acceso/inicio-de-sesion',
+		path: '/admin/acceso/',
+		redirect: '/admin/acceso/inicio-de-sesion',
+	},
+	{
+		path: '/:pathMatch(.*)*',
+		redirect: '/admin',
 	},
 ];
 

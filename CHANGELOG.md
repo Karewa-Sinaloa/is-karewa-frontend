@@ -18,6 +18,11 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ### Modificado
 
+- `src/router/index.js` — Todas las URIs del panel pasan a servirse bajo el prefijo `/admin` (`/admin/contratos`, `/admin/acceso/inicio-de-sesion`, `/admin/configuracion/p/1`, etc.), con el dashboard declarado ahora en `/admin`.
+- `src/router/index.js` — La raíz `/` deja de declarar el dashboard y pasa a redirigir a `/admin`, reservando ese espacio para el frontend público.
+- `src/router/index.js` — Las formas antiguas sin prefijo dejan de resolver a su sección: una ruta comodín al final del árbol redirige cualquier URI no reconocida a `/admin` en lugar de dejar una pantalla en blanco.
+- `.env.example` — `VITE_PASS_RESET_URL` y `VITE_USER_VERIFICATION_URL` pasan a apuntar a `/admin/acceso/cambiar-contrasena` y `/admin/acceso/verificacion-de-usuario`, que son las URLs con las que el servidor construye los enlaces de recuperación y
+  verificación por correo; el `.env` real de cada despliegue debe acompañarlas.
 - `src/helpers/frontend.logs.js` — El módulo de la petición pasa de `frontend-logs/update` a `frontend-logs` para resolver en el endpoint documentado `POST /frontend-logs` (alineación detectada por `pnpm api:sync`; sin cambio de comportamiento visible).
 - `dash.vue` — Añadido el panel `Periodos de contratos` al dashboard de configuración de contratos.
 - `contract_list.vue` — El listado ahora consume el módulo `contracts`, muestra el identificador del contrato y enlaza a la vista `contractView`.
