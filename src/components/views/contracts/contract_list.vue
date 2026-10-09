@@ -10,6 +10,21 @@
 						<permission-notice section="contracts" />
 						<span class="section__help-text">Aquí podrás ver el listado de todos los contratos registrados en el sistema.</span>
 					</div>
+					<div class="section__filters">
+						<label
+							class="form__label"
+							for="contract-search"
+							>Buscar contratos</label
+						>
+						<input
+							id="contract-search"
+							class="form__input"
+							type="search"
+							placeholder="Buscar por cualquier campo"
+							autocomplete="off"
+							v-model="searchText"
+						/>
+					</div>
 					<div
 						class="section__content"
 						v-if="contracts && contracts.length > 0"
@@ -75,10 +90,21 @@
 						v-else-if="contracts && contracts.length === 0"
 					>
 						<div class="results">
-							<p class="results__no-results">No se encontraron contratos.</p>
+							<p
+								class="results__no-results"
+								v-if="search"
+							>
+								No se encontraron contratos que coincidan con «{{ search }}».
+							</p>
+							<p
+								class="results__no-results"
+								v-else
+							>
+								No se encontraron contratos.
+							</p>
 							<button
 								class="btn btn--small btn__default btn__default--primary"
-								v-if="store.can('contracts', 'create')"
+								v-if="!search && store.can('contracts', 'create')"
 								@click="router.push({ name: 'contractCreate' })"
 							>
 								<icon-set icon="add" />
@@ -102,7 +128,7 @@
 	import permissionNotice from '../../partials/permission_notice.vue';
 	import sidebarComponent from '../../partials/sidebar.vue';
 	import contentHeader from '../../partials/content_header.vue';
-	import { onMounted, ref, watch, computed } from 'vue';
+	import { onMounted, onUnmounted, ref, watch, computed } from 'vue';
 	import { useRouter, useRoute } from 'vue-router';
 	import { useAppStore } from '../../../store/index.js';
 	import { apiRequest } from '../../../api/requests.js';
@@ -119,6 +145,9 @@
 	const pagination = ref(null);
 	const maxResults = ref(12);
 	const itemToDelete = ref(null);
+	const searchText = ref('');
+	const search = ref('');
+	let searchTimeout = null;
 	const page = ref(
 		computed(() => {
 			return route.params.page ? parseInt(route.params.page) : 1;
@@ -145,11 +174,26 @@
 		}
 	);
 
+	watch(searchText, value => {
+		clearTimeout(searchTimeout);
+		searchTimeout = setTimeout(() => {
+			search.value = value.trim();
+			if (page.value !== 1) {
+				router.push({ name: 'contractList', params: { page: 1 } });
+			} else {
+				getContracts();
+			}
+		}, 300);
+	});
+
+	onUnmounted(() => clearTimeout(searchTimeout));
+
 	function getContracts() {
+		const searchParam = search.value ? `&search=${encodeURIComponent(search.value)}` : '';
 		new apiRequest()
 			.Get({
 				module: 'contracts',
-				params: `?page=${page.value}&limit=${maxResults.value}&embed=pagination&sort=-contract_date`,
+				params: `?page=${page.value}&limit=${maxResults.value}&embed=pagination&sort=-contract_date${searchParam}`,
 			})
 			.then(response => {
 				contracts.value = response.data.data;
@@ -195,4 +239,5 @@
 
 <style lang="sass">
 	@use "../../../assets/sass/components/_results.sass"
+	@use "../../../assets/sass/components/_section.sass"
 </style>

@@ -9,12 +9,23 @@ Define el listado y el formulario de contratos del Monitor Karewa: presentación
 
 ### Requirement: Listado de contratos
 
-El sistema SHALL presentar los contratos en una tabla paginada cuya ruta indica la página, ordenada por fecha de contrato descendente, con una columna de opciones que permite ver y eliminar cada contrato.
+El sistema SHALL presentar los contratos en una tabla paginada cuya ruta indica la página, ordenada por fecha de contrato descendente, con una columna de opciones que permite ver y eliminar cada contrato, y SHALL ofrecer una búsqueda libre de texto que la
+vista envía al servidor con el parámetro `search`.
 
 #### Scenario: Página con contratos
 
 - **WHEN** un usuario con sesión navega a una página del listado de contratos
 - **THEN** se muestran los contratos de esa página con sus datos de proveedor, unidades, materia, procedimiento, estado, fecha y tipo
+
+#### Scenario: Búsqueda libre de texto
+
+- **WHEN** el usuario escribe un término en el campo de búsqueda del listado
+- **THEN** la vista vuelve a pedir los contratos desde la primera página con el parámetro `search` y muestra únicamente los registros que coinciden
+
+#### Scenario: Búsqueda sin coincidencias
+
+- **WHEN** un término de búsqueda activo no coincide con ningún contrato
+- **THEN** la vista muestra el mensaje de sin resultados acompañado del término buscado y no ofrece el alta de contratos
 
 #### Scenario: Orden por fecha
 
