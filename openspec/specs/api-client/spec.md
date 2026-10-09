@@ -1,6 +1,7 @@
 # api-client Specification
 
 ## Purpose
+
 Define el contrato del cliente HTTP del frontend: operaciones disponibles, autenticación automática, estados de carga global y manejo de errores.
 
 ## Requirements
@@ -69,3 +70,22 @@ El sistema SHALL cerrar la sesión local ante cualquier respuesta 401: eliminar 
 
 - **WHEN** una petición responde 401
 - **THEN** el token se elimina, los datos de usuario se limpian y se muestra la alerta del código devuelto
+
+### Requirement: Permisos de autorización en las respuestas
+
+El sistema SHALL extraer de cada respuesta autenticada que incluya `allowed_roles` los roles autorizados para crear, editar y borrar en el recurso de esa petición, y SHALL entregarlos al store sin alterar los permisos ya conocidos de otras secciones.
+
+#### Scenario: Respuesta con permisos
+
+- **WHEN** una respuesta autenticada incluye `allowed_roles`
+- **THEN** sus conjuntos de roles por acción quedan registrados para la sección correspondiente al recurso consultado
+
+#### Scenario: Respuesta sin permisos
+
+- **WHEN** una respuesta autenticada no incluye `allowed_roles`
+- **THEN** los permisos ya conocidos de esa sección quedan intactos y no se registra ninguna restricción nueva
+
+#### Scenario: Respuesta de error
+
+- **WHEN** una petición falla o devuelve un error
+- **THEN** no se actualizan los permisos de ninguna sección
