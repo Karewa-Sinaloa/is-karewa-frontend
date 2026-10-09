@@ -10,14 +10,16 @@
 				>
 					<div class="section__top">
 						<h1 class="section__title">{{ title }}</h1>
+						<permission-notice section="users" />
 						<span class="section__help-text">Agrega o edita la información del usuario del sistema</span>
 						<div
 							class="section__options btn__grouped"
-							v-if="user.id && readOnly"
+							v-if="user.id && readOnly && (store.can('users', 'edit') || store.can('users', 'delete'))"
 						>
 							<button
 								class="btn btn__default btn--smaller btn__default--primary"
 								type="button"
+								v-if="store.can('users', 'edit')"
 								@click="readOnly = false"
 							>
 								<icon-set icon="edit" />
@@ -26,6 +28,7 @@
 							<button
 								class="btn btn__default btn--smaller btn__default--primary"
 								type="button"
+								v-if="store.can('users', 'delete')"
 								@click="confirmDelete = true"
 							>
 								<icon-set icon="delete" />
@@ -308,6 +311,7 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import { computed, onMounted, ref, watch } from 'vue';
 	import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router';
 	import * as yup from 'yup';

@@ -3,6 +3,7 @@
 		<section class="section section--wide section--no-border">
 			<div class="section__top">
 				<h1 class="section__title">Parámetros de configuración</h1>
+				<permission-notice section="config" />
 			</div>
 			<div class="section__content">
 				<span class="results__loading">Cargando parámetros de configuración....</span>
@@ -13,6 +14,7 @@
 		<section class="section section--wide section--no-border">
 			<div class="section__top">
 				<h1 class="section__title">Parámetros de configuración</h1>
+				<permission-notice section="config" />
 				<span class="section__help-text">Consulta y edita los parámetros con los que opera el sistema.</span>
 			</div>
 			<div class="section__content">
@@ -33,6 +35,7 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import { onMounted, ref } from 'vue';
 	import { useAppStore } from '../../../store/index.js';
 	import { apiRequest } from '../../../api/requests.js';

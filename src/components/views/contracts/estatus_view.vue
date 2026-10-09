@@ -2,6 +2,7 @@
   <section class="section section--wide" v-if="estatus">
       <div class="section__top">
         <h1 class="section__title">{{estatus.name || 'Crear nuevo estatus'}}</h1>
+        <permission-notice section="estatus-contrato" />
         <span class="section__help-text">Agrega o edita la información de los estatus de contratos</span>
       </div>
       <div class="section__content">
@@ -23,6 +24,7 @@
 </template>
 
 <script setup>
+import permissionNotice from '../../partials/permission_notice.vue';
 import { onMounted, ref, computed, defineProps, defineEmits } from 'vue'
 import * as yup from 'yup'
 import { useAppStore } from '../../../store/index.js'

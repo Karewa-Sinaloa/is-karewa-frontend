@@ -2,10 +2,12 @@
 	<section class="section section--wide section--no-border">
 		<div class="section__top">
 			<h1 class="section__title">Usuarios del sistema</h1>
+			<permission-notice section="users" />
 			<span class="section__help-text">Agrega, elimina o edita los usuarios registrados en el sistema desde esta sección.</span>
 			<button
 				class="btn btn--small btn__default btn__default--primary"
 				type="button"
+				v-if="store.can('users', 'create')"
 				@click="router.push({ name: 'configuracionUsuariosCreate' })"
 			>
 				<icon-set icon="add" />
@@ -27,7 +29,7 @@
 						<span class="result__description">{{ user.email }}</span>
 					</div>
 					<result-options
-						:optionList="{ go: { name: 'configuracionUsuariosView', params: { id: user.id } }, delete: true }"
+						:optionList="{ go: { name: 'configuracionUsuariosView', params: { id: user.id } }, edit: store.can('users', 'edit'), delete: store.can('users', 'delete') }"
 						@deleteItem="deleteConfirmation(user.id)"
 					></result-options>
 				</div>
@@ -62,6 +64,7 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import { computed, onMounted, ref, watch } from 'vue';
 	import { useRoute, useRouter } from 'vue-router';
 	import { useAppStore } from '../../../store/index.js';

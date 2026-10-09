@@ -7,6 +7,7 @@
 				<section class="section section--wide section--no-border">
 					<div class="section__top">
 						<h1 class="section__title">Listado de proveedores</h1>
+						<permission-notice section="proveedores" />
 						<span class="section__help-text">Aquí puedes ver y administrar los proveedores de servicios asociados a tu organización.</span>
 					</div>
 					<div
@@ -24,7 +25,7 @@
 									<span class="result__info">RFC: {{ provider.rfc }}</span>
 								</div>
 								<result-options
-									:optionList="{ go: { name: 'proveedoresView', params: { id: provider.id } }, delete: true }"
+									:optionList="{ go: { name: 'proveedoresView', params: { id: provider.id } }, edit: store.can('proveedores', 'edit'), delete: store.can('proveedores', 'delete') }"
 									@deleteItem="deleteConfirmation(provider.id)"
 								></result-options>
 							</div>
@@ -49,6 +50,7 @@
 							<p class="results__no-results">No se encontraron proveedores</p>
 							<button
 								class="btn btn--small btn__default btn__default--primary"
+								v-if="store.can('proveedores', 'create')"
 								@click="router.push({ name: 'proveedoresCreate' })"
 							>
 								<icon-set icon="add" />
@@ -69,6 +71,7 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import sidebarComponent from '../../partials/sidebar.vue';
 	import contentHeader from '../../partials/content_header.vue';
 	import { onMounted, ref, watch, computed } from 'vue';
@@ -102,7 +105,7 @@
 	};
 
 	onMounted(() => {
-		store.new_elements([{ name: 'proveedoresCreate', text: 'Nuevo proveedor' }]);
+		store.new_elements([{ name: 'proveedoresCreate', text: 'Nuevo proveedor', section: 'proveedores' }]);
 		getProviders();
 	});
 

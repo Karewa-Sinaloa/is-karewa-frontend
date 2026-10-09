@@ -15,6 +15,9 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - Componente `periodos.vue` — Gestión inline de periodos de contratos con listado, popup de alta/edición y eliminación.
 - Componente `periodos_view.vue` — Formulario para crear o editar periodos de contratos.
 - Dependencia `@vueuse/core` — Soporte para formatear fechas en el listado de contratos.
+- Store `allowedRoles` y acción `can(sección, acción)` — Evaluación por sección de los roles autorizados para crear, editar y borrar a partir del `allowed_roles` que declara la API, con fail-open mientras la sección no tenga permisos declarados; el mapa se
+  conserva en `localStorage` (`${VITE_LOCALSTORAGE_SUFFIX}permissions`) durante la sesión —incluida una recarga— y se descarta al cerrarla.
+- Componente `permission_notice.vue` — Aviso bajo el título de una sección restringida que indica al usuario que sólo tiene ciertos permisos; no se pinta cuando su rol está autorizado a las tres acciones.
 
 ### Modificado
 
@@ -33,6 +36,14 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - `sidebar.vue` — El menú de contratos actualiza el enlace del listado para incluir la página inicial y el acceso de creación para dirigir al formulario de contratos.
 - `_results.sass` y `_section.sass` — Añadidos estilos para tablas de resultados con desplazamiento horizontal y mejor aprovechamiento del ancho disponible.
 - `proveedores/list.vue` y `proveedores/view.vue` — Se eliminó el campo `shortname` del formulario y de la tarjeta de resultados de proveedores.
+- `src/api/requests.js` — Cada respuesta autenticada que incluya `allowed_roles` registra en el store los roles autorizados para crear, editar y borrar en la sección del módulo consultado; las respuestas sin el campo y las fallidas no alteran lo ya conocido.
+- `src/helpers/set.session.js` — La sesión ahora hidrata, serializa y limpia el mapa de permisos junto a los datos de usuario.
+- `src/store/index.js` — Estado `allowedRoles` con las acciones `setSectionPermissions`, `setAllowedRoles`, `clearAllowedRoles` y `can(section, action)`.
+- `result_options.vue` y sus doce padres — El menú de opciones de cada fila oculta "Editar" y "Eliminar" cuando el rol no está autorizado; la entrada "Ver" queda siempre disponible y `optionList.edit` es opcional con valor por defecto `true`.
+- `add_new_element.vue` — El FAB de alta sólo ofrece los accesos cuya sección autoriza crear al rol de la sesión.
+- `sidebar.vue` — Los enlaces "Crear nuevo" de Proveedores, Unidades administrativas y Contratos se ocultan cuando el rol no puede crear en esa sección.
+- Vistas de listado, detalle y tarjetas de configuración — Se ocultan los botones de crear, editar y borrar no autorizados y se inserta el aviso de permisos bajo el título de la sección.
+- `_section.sass` — Nuevo elemento `.section__notice` con `color: var(--color-danger)`.
 
 ### Corregido
 

@@ -5,6 +5,7 @@
 	>
 		<div class="section__top">
 			<h1 class="section__title">{{ periodo.name || 'Crear nuevo periodo' }}</h1>
+			<permission-notice section="periodos-contratos" />
 			<span class="section__help-text">Agrega o edita la información de los periodos de contratos</span>
 		</div>
 		<div class="section__content">
@@ -54,6 +55,7 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import { onMounted, ref, computed, defineProps, defineEmits } from 'vue';
 	import * as yup from 'yup';
 	import { useAppStore } from '../../../store/index.js';

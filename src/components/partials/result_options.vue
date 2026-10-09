@@ -22,7 +22,7 @@
 			<router-link
 				:to="{ name: optionList.go.name, params: optionList.go.params, query: { edit: true } }"
 				class="result-actions__option"
-				v-if="optionList.go"
+				v-if="optionList.go && optionList.edit !== false"
 			>
 				<icon-set icon="edit" />
 				<span>Editar</span>
@@ -30,7 +30,7 @@
 			<button
 				class="result-actions__option"
 				@click="emits('showPopup')"
-				v-if="optionList.pop"
+				v-if="optionList.pop && optionList.edit !== false"
 			>
 				<icon-set icon="edit" />
 				<span>Editar</span>

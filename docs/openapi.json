@@ -201,6 +201,21 @@
 					}
 				}
 			},
+			"Error901009": {
+				"description": "Not allowed to modify this entry",
+				"content": {
+					"application/json": {
+						"example": {
+							"message": "Not allowed to modify this entry",
+							"http_code": 403,
+							"code": "APP_AUTH_ROW_FORBIDDEN",
+							"meta": {
+								"session_id": "uuid"
+							}
+						}
+					}
+				}
+			},
 			"Error902002": {
 				"description": "Entry asociated to another entry or table, you should remove that first",
 				"content": {
@@ -755,6 +770,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -1242,10 +1274,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -1329,6 +1415,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -1457,10 +1560,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -1527,7 +1684,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -1541,10 +1735,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -1609,10 +1857,62 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [],
+										"edit": [
+											1,
+											2,
+											3,
+											4,
+											5
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -2085,7 +2385,7 @@
 						"name": "phone_verified",
 						"in": "query",
 						"schema": {
-							"type": "string"
+							"type": "boolean"
 						},
 						"description": "Filter on phone_verified using campo=op:valor with operators eq, lt, gt, gte, lte, ne, lk, isn, non, in. Boolean.",
 						"example": "eq:1",
@@ -2307,6 +2607,21 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [],
+										"edit": [
+											1,
+											2,
+											3,
+											4,
+											5
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -2394,10 +2709,62 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [],
+										"edit": [
+											1,
+											2,
+											3,
+											4,
+											5
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -2557,10 +2924,62 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [],
+										"edit": [
+											1,
+											2,
+											3,
+											4,
+											5
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -2627,7 +3046,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -2641,10 +3097,62 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [],
+										"edit": [
+											1,
+											2,
+											3,
+											4,
+											5
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -2709,10 +3217,58 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1
+										],
+										"edit": [
+											1
+										],
+										"delete": [
+											1
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -2954,10 +3510,58 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1
+										],
+										"edit": [
+											1
+										],
+										"delete": [
+											1
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -3035,10 +3639,58 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1
+										],
+										"edit": [
+											1
+										],
+										"delete": [
+											1
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -3136,10 +3788,58 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1
+										],
+										"edit": [
+											1
+										],
+										"delete": [
+											1
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -3206,7 +3906,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -3220,10 +3957,58 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1
+										],
+										"edit": [
+											1
+										],
+										"delete": [
+											1
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -3288,10 +4073,59 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -3816,10 +4650,59 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -3904,6 +4787,18 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -4041,10 +4936,59 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -4109,6 +5053,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -5464,7 +6425,7 @@
 						"name": "amount_was_exceeded",
 						"in": "query",
 						"schema": {
-							"type": "string"
+							"type": "boolean"
 						},
 						"description": "Filter on amount_was_exceeded using campo=op:valor with operators eq, lt, gt, gte, lte, ne, lk, isn, non, in. Boolean.",
 						"example": "eq:1",
@@ -6192,7 +7153,7 @@
 									"amount_was_exceeded": {
 										"type": "boolean",
 										"description": "Optional. Boolean.",
-										"default": 0
+										"default": false
 									},
 									"exceeded_amount": {
 										"type": "number",
@@ -6274,10 +7235,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -6403,6 +7418,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -6618,7 +7650,7 @@
 									"amount_was_exceeded": {
 										"type": "boolean",
 										"description": "Boolean.",
-										"default": 0
+										"default": false
 									},
 									"exceeded_amount": {
 										"type": "number",
@@ -6683,10 +7715,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -6753,7 +7839,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -6767,10 +7890,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -6835,6 +8012,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -7107,10 +8301,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -7189,6 +8437,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -7290,10 +8555,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -7360,7 +8679,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -7374,10 +8730,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -7442,6 +8852,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -7714,10 +9141,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -7796,6 +9277,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -7897,10 +9395,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -7967,7 +9519,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -7981,10 +9570,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -8049,6 +9692,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -8321,10 +9981,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -8403,6 +10117,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -8504,10 +10235,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -8574,7 +10359,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -8588,10 +10410,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -8656,6 +10532,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -8928,10 +10821,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -9010,6 +10957,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -9111,10 +11075,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -9181,7 +11199,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -9195,10 +11250,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -9263,6 +11372,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -9535,10 +11661,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -9617,6 +11797,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -9718,10 +11915,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -9788,7 +12039,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -9802,10 +12090,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -9870,6 +12212,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -10222,10 +12581,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -10306,6 +12719,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -10417,10 +12847,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -10487,7 +12971,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -10501,10 +13022,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -10569,6 +13144,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -10841,10 +13433,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -10923,6 +13569,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -11024,10 +13687,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -11094,7 +13811,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -11108,10 +13862,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -11176,6 +13984,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -11446,10 +14271,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -11528,6 +14407,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -11628,10 +14524,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -11698,7 +14648,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -11712,10 +14699,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -11780,6 +14821,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -12052,10 +15110,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -12134,6 +15246,23 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -12235,10 +15364,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -12305,7 +15488,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -12319,10 +15539,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -12387,6 +15661,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -12450,7 +15741,7 @@
 						"schema": {
 							"type": "string"
 						},
-						"description": "Comma-separated sort list, prefix each field with + (ascending) or - (descending). Allowed fields: id, name, slug, value.",
+						"description": "Comma-separated sort list, prefix each field with + (ascending) or - (descending). Allowed fields: id, name, slug, value, is_private, edit_roles.",
 						"example": "+id,-name",
 						"examples": {
 							"ascending": {
@@ -12469,7 +15760,7 @@
 						"schema": {
 							"type": "string"
 						},
-						"description": "Comma-separated grouping fields. Allowed fields: id, name, slug, value.",
+						"description": "Comma-separated grouping fields. Allowed fields: id, name, slug, value, is_private, edit_roles.",
 						"example": "id"
 					},
 					{
@@ -12490,7 +15781,7 @@
 						"schema": {
 							"type": "string"
 						},
-						"description": "Comma-separated output fields. Allowed fields: id, name, slug, value.",
+						"description": "Comma-separated output fields. Allowed fields: id, name, slug, value, is_private, edit_roles.",
 						"example": "id,name"
 					},
 					{
@@ -12636,19 +15927,82 @@
 								"value": "in:texto1,texto2"
 							}
 						}
+					},
+					{
+						"name": "is_private",
+						"in": "query",
+						"schema": {
+							"type": "boolean"
+						},
+						"description": "Filter on is_private using campo=op:valor with operators eq, lt, gt, gte, lte, ne, lk, isn, non, in.",
+						"example": "eq:1",
+						"examples": {
+							"equals": {
+								"summary": "Equal",
+								"value": "eq:1"
+							},
+							"notEqual": {
+								"summary": "Not equal",
+								"value": "ne:0"
+							},
+							"isNull": {
+								"summary": "Is null",
+								"value": "isn"
+							},
+							"notNull": {
+								"summary": "Is not null",
+								"value": "non"
+							}
+						}
+					},
+					{
+						"name": "edit_roles",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						},
+						"description": "Filter on edit_roles using campo=op:valor with operators eq, lt, gt, gte, lte, ne, lk, isn, non, in. Read-only field (not writable on POST/PUT).",
+						"example": "lk:texto",
+						"examples": {
+							"equals": {
+								"summary": "Equal",
+								"value": "eq:texto"
+							},
+							"like": {
+								"summary": "Contains",
+								"value": "lk:texto"
+							},
+							"notEqual": {
+								"summary": "Not equal",
+								"value": "ne:texto"
+							},
+							"isNull": {
+								"summary": "Is null",
+								"value": "isn"
+							},
+							"notNull": {
+								"summary": "Is not null",
+								"value": "non"
+							},
+							"inList": {
+								"summary": "In list",
+								"value": "in:texto1,texto2"
+							}
+						}
 					}
 				],
+				"description": "Row visibility: entries with is_private = 1 are only returned to callers authenticated with role 1, 2 or 3. Every other caller only sees entries with is_private = 0.",
 				"operationId": "get_config",
 				"x-codeSamples": [
 					{
 						"lang": "Shell",
 						"label": "cURL",
-						"source": "curl \\\n  --url 'https://kapi.chavodigital.com/api/v5/config?page=1&limit=25&search=texto&sort=+id,-name&groupby=id&embed=pagination&fields=id,name&id=eq:1&name=lk:texto&slug=lk:texto&value=lk:texto'"
+						"source": "curl \\\n  --url 'https://kapi.chavodigital.com/api/v5/config?page=1&limit=25&search=texto&sort=+id,-name&groupby=id&embed=pagination&fields=id,name&id=eq:1&name=lk:texto&slug=lk:texto&value=lk:texto&is_private=eq:1&edit_roles=lk:texto'"
 					},
 					{
 						"lang": "JavaScript",
 						"label": "axios",
-						"source": "import axios from 'axios';\n\nconst options = {\n  method: 'GET',\n  url: 'https://kapi.chavodigital.com/api/v5/config?page=1&limit=25&search=texto&sort=+id,-name&groupby=id&embed=pagination&fields=id,name&id=eq:1&name=lk:texto&slug=lk:texto&value=lk:texto',\n  params: {\n    page: \"1\",\n    limit: \"25\",\n    search: \"texto\",\n    sort: \"+id,-name\",\n    groupby: \"id\",\n    embed: \"pagination\",\n    fields: \"id,name\",\n    id: \"eq:1\",\n    name: \"lk:texto\",\n    slug: \"lk:texto\",\n    value: \"lk:texto\"\n  },\n};\n\ntry {\n  const { data } = await axios.request(options);\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+						"source": "import axios from 'axios';\n\nconst options = {\n  method: 'GET',\n  url: 'https://kapi.chavodigital.com/api/v5/config?page=1&limit=25&search=texto&sort=+id,-name&groupby=id&embed=pagination&fields=id,name&id=eq:1&name=lk:texto&slug=lk:texto&value=lk:texto&is_private=eq:1&edit_roles=lk:texto',\n  params: {\n    page: \"1\",\n    limit: \"25\",\n    search: \"texto\",\n    sort: \"+id,-name\",\n    groupby: \"id\",\n    embed: \"pagination\",\n    fields: \"id,name\",\n    id: \"eq:1\",\n    name: \"lk:texto\",\n    slug: \"lk:texto\",\n    value: \"lk:texto\",\n    is_private: \"eq:1\",\n    edit_roles: \"lk:texto\"\n  },\n};\n\ntry {\n  const { data } = await axios.request(options);\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
 					}
 				]
 			},
@@ -12677,6 +16031,11 @@
 									"value": {
 										"type": "string",
 										"description": "Optional field."
+									},
+									"is_private": {
+										"type": "boolean",
+										"description": "Optional field.",
+										"default": true
 									}
 								},
 								"additionalProperties": true,
@@ -12689,7 +16048,8 @@
 							"example": {
 								"name": "Example name",
 								"slug": "example-slug",
-								"value": "example"
+								"value": "example",
+								"is_private": true
 							}
 						}
 					}
@@ -12708,16 +16068,73 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
 					},
 					"400": {
 						"$ref": "#/components/responses/Error400000"
+					},
+					"403": {
+						"$ref": "#/components/responses/Error901009"
 					},
 					"404": {
 						"$ref": "#/components/responses/Error404000"
@@ -12748,12 +16165,12 @@
 					{
 						"lang": "Shell",
 						"label": "cURL",
-						"source": "curl \\\n  --request POST \\\n  --url 'https://kapi.chavodigital.com/api/v5/config' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"name\": \"Example name\",\n    \"slug\": \"example-slug\",\n    \"value\": \"example\"\n}' \\\n  --header 'Authorization: Bearer YOUR_SECRET_TOKEN'"
+						"source": "curl \\\n  --request POST \\\n  --url 'https://kapi.chavodigital.com/api/v5/config' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"name\": \"Example name\",\n    \"slug\": \"example-slug\",\n    \"value\": \"example\",\n    \"is_private\": true\n}' \\\n  --header 'Authorization: Bearer YOUR_SECRET_TOKEN'"
 					},
 					{
 						"lang": "JavaScript",
 						"label": "axios",
-						"source": "import axios from 'axios';\n\nconst options = {\n  method: 'POST',\n  url: 'https://kapi.chavodigital.com/api/v5/config',\n  data: {\n    name: \"Example name\",\n    slug: \"example-slug\",\n    value: \"example\"\n  },\n  headers: {\n    \"Content-Type\": \"application/json\",\n    Authorization: \"Bearer YOUR_SECRET_TOKEN\"\n  },\n};\n\ntry {\n  const { data } = await axios.request(options);\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+						"source": "import axios from 'axios';\n\nconst options = {\n  method: 'POST',\n  url: 'https://kapi.chavodigital.com/api/v5/config',\n  data: {\n    name: \"Example name\",\n    slug: \"example-slug\",\n    value: \"example\",\n    is_private: true\n  },\n  headers: {\n    \"Content-Type\": \"application/json\",\n    Authorization: \"Bearer YOUR_SECRET_TOKEN\"\n  },\n};\n\ntry {\n  const { data } = await axios.request(options);\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
 					}
 				]
 			}
@@ -12787,10 +16204,29 @@
 										"id": 1,
 										"name": "Example name",
 										"slug": "example-slug",
-										"value": "example"
+										"value": "example",
+										"is_private": true,
+										"edit_roles": "1,2,3"
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -12821,22 +16257,18 @@
 						"$ref": "#/components/responses/Error902003"
 					}
 				},
-				"security": [
-					{
-						"bearerAuth": []
-					}
-				],
+				"description": "Row visibility: requesting an entry with is_private = 1 answers 404000 (APP_RESULTS_NOT_FOUND) to callers that are not authenticated with role 1, 2 or 3, as if the id did not exist.",
 				"operationId": "get_config_id",
 				"x-codeSamples": [
 					{
 						"lang": "Shell",
 						"label": "cURL",
-						"source": "curl \\\n  --url 'https://kapi.chavodigital.com/api/v5/config/1' \\\n  --header 'Authorization: Bearer YOUR_SECRET_TOKEN'"
+						"source": "curl \\\n  --url 'https://kapi.chavodigital.com/api/v5/config/1'"
 					},
 					{
 						"lang": "JavaScript",
 						"label": "axios",
-						"source": "import axios from 'axios';\n\nconst options = {\n  method: 'GET',\n  url: 'https://kapi.chavodigital.com/api/v5/config/1',\n  headers: {\n    Authorization: \"Bearer YOUR_SECRET_TOKEN\"\n  },\n};\n\ntry {\n  const { data } = await axios.request(options);\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+						"source": "import axios from 'axios';\n\nconst options = {\n  method: 'GET',\n  url: 'https://kapi.chavodigital.com/api/v5/config/1',\n};\n\ntry {\n  const { data } = await axios.request(options);\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
 					}
 				]
 			},
@@ -12875,6 +16307,11 @@
 									"value": {
 										"type": "string",
 										"description": "Optional field."
+									},
+									"is_private": {
+										"type": "boolean",
+										"description": "Optional field.",
+										"default": true
 									}
 								},
 								"additionalProperties": true,
@@ -12883,7 +16320,8 @@
 							"example": {
 								"name": "Example name",
 								"slug": "example-slug",
-								"value": "example"
+								"value": "example",
+								"is_private": true
 							}
 						}
 					}
@@ -12902,16 +16340,73 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
 					},
 					"400": {
 						"$ref": "#/components/responses/Error400000"
+					},
+					"403": {
+						"$ref": "#/components/responses/Error901009"
 					},
 					"404": {
 						"$ref": "#/components/responses/Error404000"
@@ -12942,12 +16437,12 @@
 					{
 						"lang": "Shell",
 						"label": "cURL",
-						"source": "curl \\\n  --request PUT \\\n  --url 'https://kapi.chavodigital.com/api/v5/config/1' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"name\": \"Example name\",\n    \"slug\": \"example-slug\",\n    \"value\": \"example\"\n}' \\\n  --header 'Authorization: Bearer YOUR_SECRET_TOKEN'"
+						"source": "curl \\\n  --request PUT \\\n  --url 'https://kapi.chavodigital.com/api/v5/config/1' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"name\": \"Example name\",\n    \"slug\": \"example-slug\",\n    \"value\": \"example\",\n    \"is_private\": true\n}' \\\n  --header 'Authorization: Bearer YOUR_SECRET_TOKEN'"
 					},
 					{
 						"lang": "JavaScript",
 						"label": "axios",
-						"source": "import axios from 'axios';\n\nconst options = {\n  method: 'PUT',\n  url: 'https://kapi.chavodigital.com/api/v5/config/1',\n  data: {\n    name: \"Example name\",\n    slug: \"example-slug\",\n    value: \"example\"\n  },\n  headers: {\n    \"Content-Type\": \"application/json\",\n    Authorization: \"Bearer YOUR_SECRET_TOKEN\"\n  },\n};\n\ntry {\n  const { data } = await axios.request(options);\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+						"source": "import axios from 'axios';\n\nconst options = {\n  method: 'PUT',\n  url: 'https://kapi.chavodigital.com/api/v5/config/1',\n  data: {\n    name: \"Example name\",\n    slug: \"example-slug\",\n    value: \"example\",\n    is_private: true\n  },\n  headers: {\n    \"Content-Type\": \"application/json\",\n    Authorization: \"Bearer YOUR_SECRET_TOKEN\"\n  },\n};\n\ntry {\n  const { data } = await axios.request(options);\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
 					}
 				]
 			},
@@ -12972,7 +16467,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -12986,16 +16518,73 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
 					},
 					"400": {
 						"$ref": "#/components/responses/Error400000"
+					},
+					"403": {
+						"$ref": "#/components/responses/Error901009"
 					},
 					"404": {
 						"$ref": "#/components/responses/Error404000"
@@ -13069,6 +16658,19 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -13138,6 +16740,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -13288,10 +16907,64 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -13372,6 +17045,23 @@
 									"data": [],
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
@@ -13443,7 +17133,44 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -13457,10 +17184,64 @@
 									"http_code": 202,
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1,
+											2,
+											3
+										],
+										"edit": [
+											1,
+											2,
+											3
+										],
+										"delete": [
+											1,
+											2,
+											3
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -13540,6 +17321,9 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": []
 									}
 								},
 								"schema": {
@@ -13848,10 +17632,52 @@
 									},
 									"meta": {
 										"session_id": "uuid"
+									},
+									"allowed_roles": {
+										"create": [
+											1
+										]
 									}
 								},
 								"schema": {
-									"$ref": "#/components/schemas/ResponseEnvelope"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ResponseEnvelope"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"allowed_roles": {
+													"type": "object",
+													"description": "Roles allowed to create, edit and delete this resource; present only on authenticated responses.",
+													"properties": {
+														"create": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to create (empty array = any authenticated role)"
+														},
+														"edit": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to edit (empty array = any authenticated role)"
+														},
+														"delete": {
+															"type": "array",
+															"items": {
+																"type": "integer"
+															},
+															"description": "Role IDs allowed to delete (empty array = any authenticated role)"
+														}
+													},
+													"additionalProperties": false
+												}
+											}
+										}
+									]
 								}
 							}
 						}

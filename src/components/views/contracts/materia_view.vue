@@ -2,6 +2,7 @@
   <section class="section section--wide" v-if="materia">
       <div class="section__top">
         <h1 class="section__title">{{materia.name || 'Crear nuevo materia'}}</h1>
+        <permission-notice section="materias" />
         <span class="section__help-text">Agrega o edita la información de los materias de contratos</span>
       </div>
       <div class="section__content">
@@ -23,6 +24,7 @@
 </template>
 
 <script setup>
+import permissionNotice from '../../partials/permission_notice.vue';
 import { onMounted, ref, computed, defineProps, defineEmits } from 'vue'
 import * as yup from 'yup'
 import { useAppStore } from '../../../store/index.js'

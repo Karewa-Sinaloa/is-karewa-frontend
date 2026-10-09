@@ -2,11 +2,12 @@
 	<section class="section section--wide section--no-border">
 		<div class="section__top">
 			<h1 class="section__title">Periodos de contratos</h1>
+			<permission-notice section="periodos-contratos" />
 			<span class="section__help-text">Agrega, edita o elimina periodos de contratos, estos aparecerán a la hora de crear nuevos contratos o editarlos.</span>
 			<button
 				class="btn btn--small btn__default btn__default--primary"
 				@click="choosenId = 'new'"
-				v-if="periodos && periodos.length > 0"
+				v-if="periodos && periodos.length > 0 && store.can('periodos-contratos', 'create')"
 			>
 				<icon-set icon="add" />
 				Crear nuevo periodo
@@ -26,7 +27,7 @@
 						<h3 class="result__title">{{ periodo.name }}</h3>
 					</div>
 					<result-options
-						:optionList="{ pop: true, delete: true }"
+						:optionList="{ pop: true, edit: store.can('periodos-contratos', 'edit'), delete: store.can('periodos-contratos', 'delete') }"
 						@showPopup="choosenId = periodo.id"
 						@deleteItem="deleteConfirmation(periodo.id)"
 					></result-options>
@@ -53,7 +54,7 @@
 				<button
 					class="btn btn--small btn__default btn__default--primary"
 					@click="choosenId = 'new'"
-					v-if="periodos && periodos.length === 0"
+					v-if="periodos && periodos.length === 0 && store.can('periodos-contratos', 'create')"
 				>
 					<icon-set icon="add" />
 					Crear nuevo periodo
@@ -80,6 +81,7 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import { onMounted, ref } from 'vue';
 	import { useAppStore } from '../../../store/index.js';
 	import { apiRequest } from '../../../api/requests.js';

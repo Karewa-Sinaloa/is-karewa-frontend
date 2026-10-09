@@ -10,13 +10,15 @@
 				>
 					<div class="section__top">
 						<h1 class="section__title">{{ myProvider.name || 'Crear nuevo proveedor' }}</h1>
+						<permission-notice section="proveedores" />
 						<span class="section__help-text">Agrega o edita la información del proveedores de servicios</span>
 						<div
 							class="section__options btn__grouped"
-							v-if="providerEditBlocked && myProvider.id"
+							v-if="providerEditBlocked && myProvider.id && (store.can('proveedores', 'edit') || store.can('proveedores', 'delete'))"
 						>
 							<button
 								class="btn btn__default btn--smaller btn__default--primary"
+								v-if="store.can('proveedores', 'edit')"
 								@click.prevent="providerEditBlocked = false"
 							>
 								<span class="material-symbols-outlined">edit_square</span>
@@ -24,6 +26,7 @@
 							</button>
 							<button
 								class="btn btn__default btn--smaller btn__default--primary"
+								v-if="store.can('proveedores', 'delete')"
 								@click.prevent="confirmDelete = true"
 							>
 								<span class="material-symbols-outlined">delete</span>
@@ -138,6 +141,7 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import sidebarComponent from '../../partials/sidebar.vue';
 	import contentHeader from '../../partials/content_header.vue';
 	import { onMounted, ref, watch, computed } from 'vue';
@@ -193,7 +197,7 @@
 			if (!route.params.id || route.params.id === 0) {
 				router.push({ name: 'proveedoresCreate' });
 			} else {
-				store.new_elements([{ name: 'proveedoresCreate', text: 'Nuevo proveedor' }]);
+				store.new_elements([{ name: 'proveedoresCreate', text: 'Nuevo proveedor', section: 'proveedores' }]);
 				getProvider();
 			}
 		} else {

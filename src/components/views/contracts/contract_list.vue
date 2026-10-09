@@ -7,6 +7,7 @@
 				<section class="section section--full section--no-border">
 					<div class="section__top">
 						<h1 class="section__title">Listado de contratos</h1>
+						<permission-notice section="contracts" />
 						<span class="section__help-text">Aquí podrás ver el listado de todos los contratos registrados en el sistema.</span>
 					</div>
 					<div
@@ -49,7 +50,7 @@
 										<td class="r-table__center-align">{{ contract.contract_type_name }}</td>
 										<td>
 											<result-options
-												:optionList="{ go: { name: 'contractView', params: { id: contract.id } }, delete: true }"
+												:optionList="{ go: { name: 'contractView', params: { id: contract.id } }, edit: store.can('contracts', 'edit'), delete: store.can('contracts', 'delete') }"
 												@deleteItem="deleteConfirmation(contract.id)"
 											></result-options>
 										</td>
@@ -77,6 +78,7 @@
 							<p class="results__no-results">No se encontraron contratos.</p>
 							<button
 								class="btn btn--small btn__default btn__default--primary"
+								v-if="store.can('contracts', 'create')"
 								@click="router.push({ name: 'contractCreate' })"
 							>
 								<icon-set icon="add" />
@@ -97,6 +99,7 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import sidebarComponent from '../../partials/sidebar.vue';
 	import contentHeader from '../../partials/content_header.vue';
 	import { onMounted, ref, watch, computed } from 'vue';
@@ -131,7 +134,7 @@
 	};
 
 	onMounted(() => {
-		store.new_elements([{ name: 'contractCreate', text: 'Nuevo contrato' }]);
+		store.new_elements([{ name: 'contractCreate', text: 'Nuevo contrato', section: 'contracts' }]);
 		getContracts();
 	});
 

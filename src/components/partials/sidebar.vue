@@ -43,6 +43,7 @@
 					<router-link
 						class="nav__element"
 						:to="{ name: 'proveedoresCreate' }"
+						v-if="store.can('proveedores', 'create')"
 					>
 						<icon-set icon="add" />
 						<span class="nav__element-text">Crear nuevo</span>
@@ -69,6 +70,7 @@
 					<router-link
 						class="nav__element"
 						:to="{ name: 'unidadesAdministrativasCreate' }"
+						v-if="store.can('unidades-administrativas', 'create')"
 					>
 						<icon-set icon="add" />
 						<span class="nav__element-text">Crear nueva</span>
@@ -95,6 +97,7 @@
 					<router-link
 						class="nav__element"
 						:to="{ name: 'contractCreate' }"
+						v-if="store.can('contracts', 'create')"
 					>
 						<icon-set icon="add" />
 						<span class="nav__element-text">Crear nuevo</span>
@@ -131,6 +134,9 @@
 </template>
 
 <script setup>
+	import { useAppStore } from '../../store/index.js';
+
+	const store = useAppStore();
 	const footerActions = [{ icon: 'settings', label: 'Configuración', to: { name: 'configuracionView', params: { page: 1 } } }];
 
 	function showSubmenu(e, show) {

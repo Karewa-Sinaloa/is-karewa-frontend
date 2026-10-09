@@ -2,10 +2,12 @@
 	<section class="section section--wide section--no-border">
 		<div class="section__top">
 			<h1 class="section__title">Roles del sistema</h1>
+			<permission-notice section="roles" />
 			<span class="section__help-text">Agrega, elimina o edita los roles que se asignan a los usuarios en esta sección.</span>
 			<button
 				class="btn btn--small btn__default btn__default--primary"
 				type="button"
+				v-if="store.can('roles', 'create')"
 				@click="choosenId = 'new'"
 			>
 				<icon-set icon="add" />
@@ -26,7 +28,7 @@
 						<h3 class="result__title">{{ role.name }}</h3>
 					</div>
 					<result-options
-						:optionList="{ pop: true, delete: true }"
+						:optionList="{ pop: true, edit: store.can('roles', 'edit'), delete: store.can('roles', 'delete') }"
 						@showPopup="choosenId = role.id"
 						@deleteItem="deleteConfirmation(role.id)"
 					></result-options>
@@ -67,6 +69,7 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import { onMounted, ref } from 'vue';
 	import { useAppStore } from '../../../store/index.js';
 	import { apiRequest } from '../../../api/requests.js';

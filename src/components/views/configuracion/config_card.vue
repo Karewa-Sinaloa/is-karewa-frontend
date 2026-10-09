@@ -2,6 +2,7 @@
 	<section class="section section--wide section--no-border">
 		<div class="section__top">
 			<h1 class="section__title">{{ entry.name }}</h1>
+			<permission-notice section="config" />
 			<span class="section__help-text">Clave: {{ entry.slug }} · {{ modeText }}</span>
 		</div>
 		<div
@@ -19,7 +20,7 @@
 						<span class="result__description">{{ row.display }}</span>
 					</div>
 					<result-options
-						:optionList="{ pop: true }"
+						:optionList="{ pop: true, edit: store.can('config', 'edit') }"
 						@showPopup="popupOpen = true"
 					></result-options>
 				</div>
@@ -47,11 +48,15 @@
 </template>
 
 <script setup>
+	import permissionNotice from '../../partials/permission_notice.vue';
 	import { computed, ref } from 'vue';
 	import resultOptions from '../../partials/result_options.vue';
 	import sectionPopupSlot from '../../partials/section_popup_slot.vue';
 	import configView from './config_view.vue';
+	import { useAppStore } from '../../../store/index.js';
 	import { MASK_BULLETS, detectValueMode, isSecretKey, maskForDisplay, parseJsonObject } from '../../../helpers/config.value.js';
+
+	const store = useAppStore();
 
 	const popupOpen = ref(false);
 	const emits = defineEmits(['changed']);
