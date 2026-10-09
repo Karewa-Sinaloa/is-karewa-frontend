@@ -25,3 +25,6 @@ package-lock.json
 .gitsecret/keys/random_seed
 !*.secret
 resources/cloudflared/09f9684c-7fa2-4bec-a5a7-7f5f1b7c65c7.json
+
+# Variables de entorno con valores reales (solo se versiona .env.example)
+.env
