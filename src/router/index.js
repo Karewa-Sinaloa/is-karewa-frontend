@@ -19,6 +19,12 @@ import ContractList from '../components/views/contracts/contract_list.vue';
 import ContractView from '../components/views/contracts/contract_view.vue';
 import GeneralConfiguration from '../components/views/configuracion/dash.vue';
 import UserView from '../components/views/configuracion/usuario_view.vue';
+import PublicHome from '../components/views/public/home.vue';
+import PublicContracts from '../components/views/public/contracts.vue';
+import PublicProviders from '../components/views/public/providers.vue';
+import PublicAbout from '../components/views/public/about.vue';
+import PublicAdminUnits from '../components/views/public/admin_units.vue';
+import PublicContact from '../components/views/public/contact.vue';
 
 const routes = [
 	{
@@ -31,7 +37,37 @@ const routes = [
 	},
 	{
 		path: '/',
-		redirect: '/admin',
+		name: 'publicHomeView',
+		component: PublicHome,
+	},
+	{
+		path: '/inicio',
+		redirect: '/',
+	},
+	{
+		path: '/contratos',
+		name: 'publicContractsView',
+		component: PublicContracts,
+	},
+	{
+		path: '/proveedores',
+		name: 'publicProvidersView',
+		component: PublicProviders,
+	},
+	{
+		path: '/quienes-somos',
+		name: 'publicAboutView',
+		component: PublicAbout,
+	},
+	{
+		path: '/unidades-administrativas',
+		name: 'publicAdminUnitsView',
+		component: PublicAdminUnits,
+	},
+	{
+		path: '/contacto',
+		name: 'publicContactView',
+		component: PublicContact,
 	},
 	{
 		path: '/admin/organizacion/mi-organizacion',

@@ -1,0 +1,46 @@
+@use "sass:map"
+@use "../settings/_variables" as vars
+@use "../mixins/_mixins" as mix
+@use "../objects/_public_layout"
+
+.public-header
+	width: 100%
+	min-height: 4rem
+	box-sizing: border-box
+	background-color: var(--color-light)
+	border-bottom: 1px solid var(--light-border-color)
+	&__inner
+		display: flex
+		flex-wrap: wrap
+		align-items: center
+		justify-content: space-between
+		gap: 1rem
+		padding-block: 0.75rem
+	&__brand
+		display: inline-flex
+		align-items: center
+	&__logo
+		display: block
+		height: 2.5rem
+		width: auto
+		object-fit: contain
+	&__menu
+		display: flex
+		flex-wrap: wrap
+		align-items: center
+		gap: calc(var(--fs-regular) * 1.5)
+		margin: 0
+		padding: 0
+		list-style: none
+	&__link
+		@include mix.font-size(--fs-regular)
+		font-family: var(--ff1)
+		color: var(--text-color-primary-dark)
+		text-decoration: none
+		&:hover
+			color: var(--color-primary-700)
+		&:focus-visible
+			outline: 2px solid var(--color-primary-700)
+			outline-offset: 2px
+		&.router-link-active
+			color: var(--color-primary-700)
