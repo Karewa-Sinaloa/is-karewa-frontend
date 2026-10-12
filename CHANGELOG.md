@@ -10,6 +10,9 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ### Agregado
 
+- Componente `partials/list_sort_selector.vue` — Selector de orden reutilizable para listados: etiqueta asociada por `id`, `v-model` y lista de opciones `{ label, value }` que la vista declara; pinta un `<select class="form__select">` alineado con el campo de
+  búsqueda.
+- Componente `partials/list_search.vue` — Campo de búsqueda reutilizable para listados: etiqueta asociada por `id`, `v-model` con debounce configurable (300 ms por defecto) y limpieza del temporizador al desmontarse.
 - Script `scripts/api-sync.mjs` (`pnpm api:sync`) — Descarga el contrato OpenAPI publicado, guarda su copia versionada en `docs/openapi.json` y genera `docs/openapi-report.md` clasificando cada módulo como conforme, desalineación de código, gap de contrato
   (manifest `scripts/openapi-gaps.json`) o no resoluble estáticamente; la variable opcional `OPENAPI_URL` permite fijar otro origen.
 - Componente `periodos.vue` — Gestión inline de periodos de contratos con listado, popup de alta/edición y eliminación.
@@ -21,6 +24,11 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ### Modificado
 
+- `contract_list.vue` — El listado añade un selector de orden junto al campo de búsqueda (materia, tipo de procedimiento, estado y tipo en ambas direcciones alfabéticas; fecha de inicio de administración y fecha de contrato en ambas direcciones cronológicas);
+  la elección se envía en el parámetro `sort` de la petición, restablece la página a la primera y conserva el texto de búsqueda.
+- `contract_list.vue` y `_section.sass` — El buscador y el selector de orden del listado comparten línea con el modificador `section__filters--inline` (flex, controles alineados por la base): el campo de búsqueda se limita a 25rem de ancho máximo y el selector
+  adopta el ancho de su opción más larga.
+- `contract_list.vue` — El campo de búsqueda del listado pasa del bloque inline al parcial `list_search.vue`; el debounce y el parámetro `search` quedan encapsulados en el componente, sin cambio de comportamiento visible.
 - `src/router/index.js` — Todas las URIs del panel pasan a servirse bajo el prefijo `/admin` (`/admin/contratos`, `/admin/acceso/inicio-de-sesion`, `/admin/configuracion/p/1`, etc.), con el dashboard declarado ahora en `/admin`.
 - `src/router/index.js` — La raíz `/` deja de declarar el dashboard y pasa a redirigir a `/admin`, reservando ese espacio para el frontend público.
 - `src/router/index.js` — Las formas antiguas sin prefijo dejan de resolver a su sección: una ruta comodín al final del árbol redirige cualquier URI no reconocida a `/admin` en lugar de dejar una pantalla en blanco.

@@ -10,19 +10,18 @@
 						<permission-notice section="contracts" />
 						<span class="section__help-text">Aquí podrás ver el listado de todos los contratos registrados en el sistema.</span>
 					</div>
-					<div class="section__filters">
-						<label
-							class="form__label"
-							for="contract-search"
-							>Buscar contratos</label
-						>
-						<input
+					<div class="section__filters section__filters--inline">
+						<list-search
 							id="contract-search"
-							class="form__input"
-							type="search"
+							label="Buscar contratos"
 							placeholder="Buscar por cualquier campo"
-							autocomplete="off"
 							v-model="searchText"
+						/>
+						<list-sort-selector
+							id="contract-sort"
+							label="Ordenar por"
+							:options="sortOptions"
+							v-model="sort"
 						/>
 					</div>
 					<div
@@ -128,13 +127,15 @@
 	import permissionNotice from '../../partials/permission_notice.vue';
 	import sidebarComponent from '../../partials/sidebar.vue';
 	import contentHeader from '../../partials/content_header.vue';
-	import { onMounted, onUnmounted, ref, watch, computed } from 'vue';
+	import { onMounted, ref, watch, computed } from 'vue';
 	import { useRouter, useRoute } from 'vue-router';
 	import { useAppStore } from '../../../store/index.js';
 	import { apiRequest } from '../../../api/requests.js';
 	import confirmationPopup from '../../partials/confirmation_popup.vue';
 	import resultOptions from '../../partials/result_options.vue';
 	import paginationContainer from '../../partials/pagination.vue';
+	import listSearch from '../../partials/list_search.vue';
+	import listSortSelector from '../../partials/list_sort_selector.vue';
 	import { useDateFormat } from '@vueuse/core';
 
 	const store = useAppStore();
@@ -147,7 +148,21 @@
 	const itemToDelete = ref(null);
 	const searchText = ref('');
 	const search = ref('');
-	let searchTimeout = null;
+	const sort = ref('-contract_date');
+	const sortOptions = [
+		{ label: 'Fecha (más reciente primero)', value: '-contract_date' },
+		{ label: 'Fecha (más antigua primero)', value: '+contract_date' },
+		{ label: 'Fecha de inicio de administración (más antigua primero)', value: '+admin_period_start' },
+		{ label: 'Fecha de inicio de administración (más reciente primero)', value: '-admin_period_start' },
+		{ label: 'Materia (A-Z)', value: '+subject_name' },
+		{ label: 'Materia (Z-A)', value: '-subject_name' },
+		{ label: 'Tipo de procedimiento (A-Z)', value: '+procedure_name' },
+		{ label: 'Tipo de procedimiento (Z-A)', value: '-procedure_name' },
+		{ label: 'Estado (A-Z)', value: '+status_name' },
+		{ label: 'Estado (Z-A)', value: '-status_name' },
+		{ label: 'Tipo de contrato (A-Z)', value: '+contract_type_name' },
+		{ label: 'Tipo de contrato (Z-A)', value: '-contract_type_name' },
+	];
 	const page = ref(
 		computed(() => {
 			return route.params.page ? parseInt(route.params.page) : 1;
@@ -175,25 +190,28 @@
 	);
 
 	watch(searchText, value => {
-		clearTimeout(searchTimeout);
-		searchTimeout = setTimeout(() => {
-			search.value = value.trim();
-			if (page.value !== 1) {
-				router.push({ name: 'contractList', params: { page: 1 } });
-			} else {
-				getContracts();
-			}
-		}, 300);
+		search.value = value.trim();
+		if (page.value !== 1) {
+			router.push({ name: 'contractList', params: { page: 1 } });
+		} else {
+			getContracts();
+		}
 	});
 
-	onUnmounted(() => clearTimeout(searchTimeout));
+	watch(sort, () => {
+		if (page.value !== 1) {
+			router.push({ name: 'contractList', params: { page: 1 } });
+		} else {
+			getContracts();
+		}
+	});
 
 	function getContracts() {
 		const searchParam = search.value ? `&search=${encodeURIComponent(search.value)}` : '';
 		new apiRequest()
 			.Get({
 				module: 'contracts',
-				params: `?page=${page.value}&limit=${maxResults.value}&embed=pagination&sort=-contract_date${searchParam}`,
+				params: `?page=${page.value}&limit=${maxResults.value}&embed=pagination&sort=${encodeURIComponent(sort.value)}${searchParam}`,
 			})
 			.then(response => {
 				contracts.value = response.data.data;

@@ -9,8 +9,8 @@ Define el listado y el formulario de contratos del Monitor Karewa: presentación
 
 ### Requirement: Listado de contratos
 
-El sistema SHALL presentar los contratos en una tabla paginada cuya ruta indica la página, ordenada por fecha de contrato descendente, con una columna de opciones que permite ver y eliminar cada contrato, y SHALL ofrecer una búsqueda libre de texto que la
-vista envía al servidor con el parámetro `search`.
+El sistema SHALL presentar los contratos en una tabla paginada cuya ruta indica la página, con una columna de opciones que permite ver y eliminar cada contrato, una búsqueda libre de texto que la vista envía al servidor con el parámetro `search` y un selector
+de orden, colocado junto al campo de búsqueda, cuya elección se envía al servidor en el parámetro `sort` (por defecto `-contract_date`) y reordena el listado desde la primera página.
 
 #### Scenario: Página con contratos
 
@@ -29,8 +29,23 @@ vista envía al servidor con el parámetro `search`.
 
 #### Scenario: Orden por fecha
 
-- **WHEN** se carga el listado
-- **THEN** los contratos aparecen ordenados del más reciente al más antiguo por fecha de contrato
+- **WHEN** se carga el listado sin que el usuario haya elegido un orden
+- **THEN** los contratos se piden al servidor con `sort=-contract_date` y aparecen del más reciente al más antiguo por fecha de contrato
+
+#### Scenario: Opciones del selector de orden
+
+- **WHEN** el usuario abre el selector de orden del listado
+- **THEN** ofrece materia, tipo de procedimiento, estado y tipo de contrato en ambas direcciones alfabéticas, y fecha de inicio de administración y fecha de contrato en ambas direcciones cronológicas
+
+#### Scenario: Ordenamiento seleccionado
+
+- **WHEN** el usuario elige una opción distinta en el selector de orden
+- **THEN** la vista vuelve a pedir los contratos desde la primera página con el parámetro `sort` que corresponde al campo y la dirección elegidos y la tabla refleja ese orden
+
+#### Scenario: Orden con búsqueda activa
+
+- **WHEN** el usuario cambia el orden mientras hay un término de búsqueda vigente
+- **THEN** la nueva solicitud conserva el parámetro `search` junto al nuevo parámetro `sort`
 
 #### Scenario: Sin contratos
 
