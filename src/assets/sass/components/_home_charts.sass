@@ -1,0 +1,74 @@
+@use "sass:map"
+@use "../settings/_variables" as vars
+@use "../mixins/_mixins" as mix
+
+// Sección de gráficas de la portada pública de inicio: barra de filtros sobre dos columnas
+// (izquierda 65% con la gráfica de barras, derecha 35% con la de pastel).
+.home-charts
+	display: flex
+	flex-direction: column
+	gap: var(--fs-regular)
+	width: 100%
+	box-sizing: border-box
+	// La portada pública no tiene main con margen: la sección lleva su propio aire.
+	padding: var(--public-gutter)
+	&__columns
+		display: flex
+		align-items: stretch
+		flex-wrap: wrap
+		gap: var(--fs-regular)
+	@media all and (max-width: map.get(vars.$breakpoints, bp5))
+		&__columns
+			flex-direction: column
+
+// Panel de una columna de la sección: contenedor de la gráfica o del mensaje de sin datos.
+.chart-panel
+	display: flex
+	flex-direction: column
+	gap: var(--fs-small)
+	box-sizing: border-box
+	min-width: 0
+	flex: 1 1 auto
+	padding: var(--public-gutter)
+	background-color: var(--color-light)
+	border: 1px solid var(--light-border-color)
+	border-radius: 0.5rem
+	&--wide
+		flex: 65 1 0
+	&--narrow
+		flex: 35 1 0
+	&__figure
+		position: relative
+		width: 100%
+		height: 24rem
+		box-sizing: border-box
+	&__chart
+		width: 100%
+		height: 100%
+	&__empty
+		margin: auto
+		text-align: center
+
+// Barra de filtros sobre las columnas: selectores etiquetados y botón de aplicación.
+.chart-filters
+	display: flex
+	flex-wrap: wrap
+	align-items: flex-end
+	gap: var(--fs-regular)
+	padding: var(--fs-regular) 0
+	box-sizing: border-box
+	.form__select:focus-visible,
+	.form__btn:focus-visible
+		outline: 2px solid var(--color-primary)
+		outline-offset: 2px
+	&__field
+		display: flex
+		flex-direction: column
+		flex: 1 1 10rem
+		min-width: 9rem
+		box-sizing: border-box
+		.form__select
+			min-width: 0
+	&__actions
+		display: flex
+		align-items: center

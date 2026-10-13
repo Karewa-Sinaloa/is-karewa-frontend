@@ -18,6 +18,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 - Componente `periodos.vue` — Gestión inline de periodos de contratos con listado, popup de alta/edición y eliminación.
 - Componente `periodos_view.vue` — Formulario para crear o editar periodos de contratos.
 - Dependencia `@vueuse/core` — Soporte para formatear fechas en el listado de contratos.
+- Dependencias `echarts` y `vue-echarts` — Primer uso de una librería de gráficas en el proyecto (origen npm): `echarts` aporta los tipos `BarChart` y `PieChart` registrados desde `echarts/core` y `vue-echarts` el componente `<v-chart>` para renderizarlas en la portada pública de inicio.
 - Store `allowedRoles` y acción `can(sección, acción)` — Evaluación por sección de los roles autorizados para crear, editar y borrar a partir del `allowed_roles` que declara la API, con fail-open mientras la sección no tenga permisos declarados; el mapa se
   conserva en `localStorage` (`${VITE_LOCALSTORAGE_SUFFIX}permissions`) durante la sesión —incluida una recarga— y se descarta al cerrarla.
 - Componente `permission_notice.vue` — Aviso bajo el título de una sección restringida que indica al usuario que sólo tiene ciertos permisos; no se pinta cuando su rol está autorizado a las tres acciones.
