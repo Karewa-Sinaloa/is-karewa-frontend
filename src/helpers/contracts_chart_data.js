@@ -1,7 +1,7 @@
 import { apiRequest } from '../api/requests.js';
 
 /*-- Campos mínimos que alimentan las gráficas de la vista de inicio--*/
-const CHART_FIELDS = 'period_id,period_name,procedure_id,procedure_name,total_amount,admin_period_start,admin_period_end,fiscal_year';
+const CHART_FIELDS = 'period_id,period_name,procedure_id,procedure_name,total_amount,admin_period_start,admin_period_end,fiscal_year,contract_date';
 const PAGE_LIMIT = 500;
 const BATCH_SIZE = 10;
 const MAX_PAGES = 200;
@@ -88,22 +88,45 @@ export async function fetchContractsForCharts(filters = {}) {
 	return rows;
 }
 
-/*-- Suma de total_amount por period_id; los periodos recibidos en allPeriods que no tengan contratos quedan con total 0.--*/
-export function aggregateByPeriod(rows = [], allPeriods = []) {
-	const totals = new Map();
-	allPeriods.forEach(period => {
-		totals.set(String(period.id), { periodId: period.id, periodName: period.name, total: 0 });
-	});
+/*-- Trimestre (Q1..Q4) derivado del mes de una fecha YYYY-MM-DD; sin fecha o mes inválido, null.--*/
+function quarterFromDate(value) {
+	if (!value) {
+		return null;
+	}
+	const month = Number(String(value).slice(5, 7));
+	if (!Number.isInteger(month) || month < 1 || month > 12) {
+		return null;
+	}
+	return `Q${Math.ceil(month / 3)}`;
+}
+
+/*--
+	Suma de total_amount por año fiscal (fiscal_year) y trimestre (derivado de contract_date).
+	Se conservan los maxYears más recientes y se devuelven en orden ascendente
+	(izquierda: año más lejano, derecha: más reciente); cada año expone los cuatro trimestres (en cero si no hubo contratos).
+--*/
+export function aggregateByYearQuarter(rows = [], maxYears = 6) {
+	const byYear = new Map();
 	rows.forEach(row => {
-		const key = String(row.period_id);
-		const entry = totals.get(key) || { periodId: row.period_id, periodName: row.period_name, total: 0 };
-		if (!entry.periodName && row.period_name) {
-			entry.periodName = row.period_name;
+		const rawYear = row.fiscal_year;
+		if (rawYear === null || rawYear === undefined || rawYear === '') {
+			return;
 		}
-		entry.total += Number(row.total_amount) || 0;
-		totals.set(key, entry);
+		const year = String(rawYear);
+		let entry = byYear.get(year);
+		if (!entry) {
+			entry = { year, Q1: 0, Q2: 0, Q3: 0, Q4: 0, total: 0 };
+			byYear.set(year, entry);
+		}
+		const amount = Number(row.total_amount) || 0;
+		entry.total += amount;
+		const quarter = quarterFromDate(row.contract_date);
+		if (quarter) {
+			entry[quarter] += amount;
+		}
 	});
-	return [...totals.values()];
+	// Ascendente (más lejano → más reciente) tomando solo los maxYears más recientes.
+	return [...byYear.values()].sort((a, b) => Number(a.year) - Number(b.year)).slice(-maxYears);
 }
 
 /*-- Suma de total_amount por procedure_id; la gráfica de pastel descarta después los totales en cero.--*/
@@ -150,6 +173,15 @@ export function readChartPalette() {
 		splitLine: read('--color-grayscale-100'),
 		text: read('--text-color-primary-dark'),
 	};
+}
+
+/*-- Un token por trimestre, elegidos por tono realmente distinto entre sí: azul, dorado, vino y pizarra (D5: sin literales).--*/
+const QUARTER_TOKENS = ['--color-primary', '--color-secondary', '--color-danger', '--color-grayscale-600'];
+
+/*-- Lee los colores de los cuatro trimestres desde :root en tiempo de ejecución (una entrada por T1..T4).--*/
+export function readQuarterColors() {
+	const rootStyle = getComputedStyle(document.documentElement);
+	return QUARTER_TOKENS.map(token => rootStyle.getPropertyValue(token).trim() || undefined);
 }
 
 /*-- Opciones de administración: pares distintos admin_period_start-admin_period_end, etiqueta "<inicio>-<fin>", inicio descendente.--*/

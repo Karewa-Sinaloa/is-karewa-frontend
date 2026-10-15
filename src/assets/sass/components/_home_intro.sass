@@ -1,0 +1,32 @@
+@use "sass:map"
+@use "../settings/_variables" as vars
+@use "../mixins/_mixins" as mix
+
+// Sección de presentación de la portada pública: bloque de texto centrado
+// entre el hero y la sección de gráficas, con el acento de la paleta
+// como separador visual del título.
+.home-intro
+	width: 100%
+	box-sizing: border-box
+	padding: calc(var(--public-gutter) * 2) var(--public-gutter)
+	text-align: center
+	&__accent
+		display: block
+		width: 3.5rem
+		height: 0.25rem
+		margin: 0 auto calc(var(--fs-regular) * 1.25)
+		border-radius: 9999px
+		background-color: var(--color-primary)
+	&__title
+		@include mix.font-size(--fs-xl)
+		color: var(--text-color-primary-dark)
+		margin: 0 0 calc(var(--fs-regular) * 0.75)
+	&__text
+		@include mix.font-size(--fs-regular)
+		line-height: calc(var(--fs-regular) * 1.7)
+		max-width: 62ch
+		margin: 0 auto
+		color: var(--text-color-secondary-dark)
+	@media all and (max-width: map.get(vars.$breakpoints, bp5))
+		&__title
+			@include mix.font-size(--fs-large)

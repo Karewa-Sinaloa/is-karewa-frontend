@@ -15,8 +15,29 @@
 			<div class="home-hero__overlay"></div>
 			<div class="home-hero__content">
 				<h1 class="home-hero__title">Somos Monitor Karewa</h1>
-				<p class="home-hero__text">Monitor Karewa es una plataforma digital e independiente de vigilancia ciudadana que mide y hace pública la información sobre el gasto y las contrataciones públicas de los gobiernos (como compras, rentas, servicios y obras públicas).</p>
+				<p class="home-hero__text">
+					Monitor Karewa es una plataforma digital e independiente de vigilancia ciudadana que mide y hace pública la información sobre el gasto y las contrataciones públicas de los gobiernos (como compras, rentas, servicios y obras públicas).
+				</p>
 			</div>
+		</section>
+		<section
+			class="home-intro"
+			aria-labelledby="home-intro-title"
+		>
+			<span
+				class="home-intro__accent"
+				aria-hidden="true"
+			></span>
+			<h2
+				id="home-intro-title"
+				class="home-intro__title"
+			>
+				Vista general
+			</h2>
+			<p class="home-intro__text">
+				Explora los montos globales de las contrataciones públicas, organizados por año y por periodo. Utiliza los filtros disponibles para acotar la consulta por administración, año fiscal, periodo, tipo de procedimiento, unidad administrativa o
+				proveedor y obtener así la información que te interesa.
+			</p>
 		</section>
 		<section
 			class="home-charts"
@@ -31,7 +52,7 @@
 				<div class="chart-panel chart-panel--wide">
 					<contracts-period-bar-chart
 						v-if="hasRows"
-						:data="periodTotals"
+						:data="yearTotals"
 					/>
 					<p
 						v-else-if="showEmpty"
@@ -65,7 +86,7 @@
 	import chartFiltersBar from '../../partials/chart_filters_bar.vue';
 	import contractsPeriodBarChart from '../../partials/contracts_period_bar_chart.vue';
 	import proceduresPieChart from '../../partials/procedures_pie_chart.vue';
-	import { fetchContractsForCharts, aggregateByPeriod, aggregateByProcedure, deriveAdminOptions, deriveFiscalYearOptions } from '../../../helpers/contracts_chart_data.js';
+	import { fetchContractsForCharts, aggregateByYearQuarter, aggregateByProcedure, deriveAdminOptions, deriveFiscalYearOptions } from '../../../helpers/contracts_chart_data.js';
 
 	const store = useAppStore();
 
@@ -88,9 +109,8 @@
 		providers: [],
 	});
 
-	// Catálogo de periodos sin filtrar: siembra las barras de periodos sin contratos.
-	const periodsCatalog = ref([]);
-	const periodTotals = ref([]);
+	// Totales por año y trimestre para la gráfica de barras (sin catálogo previo).
+	const yearTotals = ref([]);
 	const procedureTotals = ref([]);
 	const hasRows = ref(false);
 	const showEmpty = ref(false);
@@ -104,19 +124,16 @@
 	}
 
 	function fetchCatalog(module) {
-		return new apiRequest()
-			.Get({ module })
-			.catch(error => {
-				store.push_alert(error.data);
-				return null;
-			});
+		return new apiRequest().Get({ module }).catch(error => {
+			store.push_alert(error.data);
+			return null;
+		});
 	}
 
 	// Catálogos de los selectores: se cargan una sola vez al montar (D3).
 	async function loadCatalogs() {
 		const [periodsResponse, proceduresResponse, providersResponse, adminUnitsResponse] = await Promise.all([fetchCatalog('periodos-contratos'), fetchCatalog('procedimientos'), fetchCatalog('proveedores'), fetchCatalog('unidades-administrativas')]);
 		if (periodsResponse) {
-			periodsCatalog.value = toCatalogItems(periodsResponse);
 			filterOptions.value.periods = toOptions(periodsResponse);
 		}
 		if (proceduresResponse) {
@@ -131,7 +148,7 @@
 	}
 
 	function updateCharts(rows) {
-		periodTotals.value = aggregateByPeriod(rows, periodsCatalog.value);
+		yearTotals.value = aggregateByYearQuarter(rows);
 		procedureTotals.value = aggregateByProcedure(rows);
 		hasRows.value = rows.length > 0;
 		showEmpty.value = rows.length === 0;
@@ -139,7 +156,7 @@
 
 	// Fallo de la consulta: alerta del código devuelto y sección sin datos hasta el siguiente intento.
 	function clearCharts(error) {
-		periodTotals.value = [];
+		yearTotals.value = [];
 		procedureTotals.value = [];
 		hasRows.value = false;
 		showEmpty.value = false;
@@ -176,6 +193,7 @@
 
 <style lang="sass" scoped>
 	@use "../../../assets/sass/components/_home_hero.sass"
+	@use "../../../assets/sass/components/_home_intro.sass"
 	@use "../../../assets/sass/components/_home_charts.sass"
 	@use "../../../assets/sass/components/_results.sass"
 </style>
