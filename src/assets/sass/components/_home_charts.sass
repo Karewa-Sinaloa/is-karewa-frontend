@@ -49,7 +49,7 @@
 		margin: auto
 		text-align: center
 
-// Barra de filtros sobre las columnas: selectores etiquetados y botón de aplicación.
+// Barra de filtros sobre las columnas: selectores con buscador etiquetados y botón de aplicación.
 .chart-filters
 	display: flex
 	flex-wrap: wrap
@@ -57,18 +57,13 @@
 	gap: var(--fs-regular)
 	padding: var(--fs-regular) 0
 	box-sizing: border-box
-	.form__select:focus-visible,
 	.form__btn:focus-visible
 		outline: 2px solid var(--color-primary)
 		outline-offset: 2px
-	&__field
-		display: flex
-		flex-direction: column
+	// Cada campo (filter-select) ocupa el sitio que ocupaba el div wrapper del selector nativo.
+	> .filter-select
 		flex: 1 1 10rem
 		min-width: 9rem
-		box-sizing: border-box
-		.form__select
-			min-width: 0
 	&__actions
 		display: flex
 		align-items: center

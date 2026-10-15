@@ -1,0 +1,88 @@
+@use "sass:map"
+@use "../settings/_variables" as vars
+@use "../mixins/_mixins" as mix
+
+// Campo de filtro con buscador (vue-multiselect): etiqueta + control con lista filtrable.
+// El CSS base del multiselect se importa una sola vez desde el parcial (filter_select.vue);
+// aquí se sobre-escriben sus clases con tokens del sistema, encapsulado bajo .filter-select.
+.filter-select
+	display: flex
+	flex-direction: column
+	&__label
+		padding: 0 0 0.4rem 0
+		@include mix.font-size(--fs-small)
+		display: flex
+		align-items: center
+		color: var(--text-color-primary-dark)
+	&__no-result
+		@include mix.font-size(--fs-small)
+		color: var(--text-color-secondary-dark)
+	// Control: mismo tratamiento visual que .form__select del sistema.
+	.multiselect
+		font-family: var(--ff1)
+		@include mix.font-size(--fs-regular)
+		color: var(--text-color-primary-dark)
+		min-height: auto
+	.multiselect__tags
+		margin: 0
+		padding: 0.45rem 2.2rem 0.45rem 0.8rem
+		min-height: auto
+		border: 1px solid var(--color-grayscale-200)
+		border-radius: 0.2rem
+		background-color: var(--color-grayscale-15)
+		font-size: inherit
+		&:focus-within
+			outline: 2px solid var(--color-primary)
+			outline-offset: 2px
+	.multiselect__input,
+	.multiselect__single
+		margin: 0
+		padding: 0
+		min-height: auto
+		line-height: inherit
+		width: 100%
+		border: none
+		border-radius: 0
+		background-color: transparent
+		color: inherit
+		&:hover,
+		&:focus
+			border: none
+			outline: none
+	.multiselect__input::placeholder
+		color: var(--color-grayscale-500)
+	.multiselect__placeholder
+		margin: 0
+		padding: 0
+		color: var(--color-grayscale-500)
+	.multiselect__select::before
+		border-color: var(--color-grayscale-600) transparent transparent transparent
+		color: var(--color-grayscale-600)
+	// Desplegable: fondo claro del sistema, borde y texto del tema.
+	.multiselect__content-wrapper
+		border: 1px solid var(--color-grayscale-200)
+		background-color: var(--color-light)
+		border-radius: 0 0 0.2rem 0.2rem
+	.multiselect__option
+		padding: 0.45rem 0.8rem
+		min-height: auto
+		line-height: 1.3
+		white-space: normal
+		font-family: var(--ff1)
+		@include mix.font-size(--fs-small)
+		color: var(--text-color-primary-dark)
+	.multiselect__option::after
+		content: none
+	.multiselect__option--highlight
+		background-color: var(--color-primary)
+		color: var(--color-light)
+	.multiselect__option--highlight::after
+		background-color: var(--color-primary)
+		color: var(--color-light)
+	.multiselect__option--selected
+		background-color: var(--color-grayscale-25)
+		color: var(--text-color-primary-dark)
+		font-weight: 500
+	.multiselect__option--selected.multiselect__option--highlight
+		background-color: var(--color-primary-700)
+		color: var(--color-light)

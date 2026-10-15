@@ -22,6 +22,7 @@
 		"vue": "^3.5.43",
 		"vue-axios": "^3.6.0",
 		"vue-echarts": "^8.3.2",
+		"vue-multiselect": "^3.5.0",
 		"vue-router": "^4.6.4",
 		"yup": "^1.7.1"
 	},
