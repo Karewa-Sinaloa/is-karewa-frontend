@@ -1,10 +1,9 @@
 <template>
-	<div class="public-view">
-		<public-header />
+	<public-shell>
 		<!-- vista pública en blanco: pendiente de definición -->
-	</div>
+	</public-shell>
 </template>
 
 <script setup>
-	import PublicHeader from '../../partials/public_header.vue';
+	import PublicShell from '../../partials/public_shell.vue';
 </script>

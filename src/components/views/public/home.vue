@@ -1,6 +1,5 @@
 <template>
-	<div class="public-view">
-		<public-header />
+	<public-shell>
 		<section class="home-hero">
 			<picture class="home-hero__media">
 				<source
@@ -75,14 +74,14 @@
 				</div>
 			</div>
 		</section>
-	</div>
+	</public-shell>
 </template>
 
 <script setup>
 	import { onMounted, ref } from 'vue';
 	import { useAppStore } from '../../../store/index.js';
 	import { apiRequest } from '../../../api/requests.js';
-	import PublicHeader from '../../partials/public_header.vue';
+	import PublicShell from '../../partials/public_shell.vue';
 	import chartFiltersBar from '../../partials/chart_filters_bar.vue';
 	import contractsPeriodBarChart from '../../partials/contracts_period_bar_chart.vue';
 	import proceduresPieChart from '../../partials/procedures_pie_chart.vue';
