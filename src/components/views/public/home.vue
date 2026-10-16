@@ -148,7 +148,9 @@
 	}
 
 	function updateCharts(rows) {
-		yearTotals.value = aggregateByYearQuarter(rows);
+		// El eje de la gráfica de barras se completa con el catálogo congelado de años fiscales: todos los años conocidos aparecen (máx. 6) aunque los filtros los dejen sin contratos.
+		const knownYears = filterOptions.value.fiscalYears.map(option => option.value);
+		yearTotals.value = aggregateByYearQuarter(rows, knownYears);
 		procedureTotals.value = aggregateByProcedure(rows);
 		hasRows.value = rows.length > 0;
 		showEmpty.value = rows.length === 0;

@@ -56,7 +56,8 @@ export async function fetchContractsForCharts(filters = {}) {
 	const body = first.data;
 	const rows = Array.isArray(body.data) ? [...body.data] : [];
 	const meta = body.meta || {};
-	const pagination = meta.pagination || meta;
+	// La paginación llega en la raíz de la respuesta (body.pagination); meta solo expone session_id. Sin leerla aquí pages queda en 1 y solo se agrega la primera página, dejando años y montos fuera de la gráfica.
+	const pagination = body.pagination || meta.pagination || meta;
 	let pages = Number(pagination.pages) || 1;
 	const results = Number(pagination.results) || 0;
 
@@ -102,31 +103,57 @@ function quarterFromDate(value) {
 
 /*--
 	Suma de total_amount por año fiscal (fiscal_year) y trimestre (derivado de contract_date).
-	Se conservan los maxYears más recientes y se devuelven en orden ascendente
-	(izquierda: año más lejano, derecha: más reciente); cada año expone los cuatro trimestres (en cero si no hubo contratos).
+	El eje de años se completa con knownYears (años fiscales del conjunto sin filtrar) para que todo
+	año sin contratos bajo los filtros aplicados conserve su barra en cero identificada en el eje X.
+	Nunca se devuelven más de maxYears años: primero los que tienen contratos (los más recientes) y,
+	si queda hueco, los años conocidos en cero más recientes; orden ascendente (izquierda: año más
+	lejano, derecha: más reciente); cada año expone los cuatro trimestres (en cero si no hubo contratos).
 --*/
-export function aggregateByYearQuarter(rows = [], maxYears = 6) {
+export function aggregateByYearQuarter(rows = [], knownYears = [], maxYears = 6) {
 	const byYear = new Map();
+	const withContracts = new Set();
+	const ensureYear = year => {
+		let entry = byYear.get(year);
+		if (!entry) {
+			entry = { year, Q1: 0, Q2: 0, Q3: 0, Q4: 0, total: 0 };
+			byYear.set(year, entry);
+		}
+		return entry;
+	};
+	// Años fiscales conocidos sin contratos bajo los filtros vigentes: nacen en cero para conservar su barra en el eje.
+	knownYears.forEach(year => {
+		if (year !== null && year !== undefined && year !== '') {
+			ensureYear(String(year));
+		}
+	});
 	rows.forEach(row => {
 		const rawYear = row.fiscal_year;
 		if (rawYear === null || rawYear === undefined || rawYear === '') {
 			return;
 		}
 		const year = String(rawYear);
-		let entry = byYear.get(year);
-		if (!entry) {
-			entry = { year, Q1: 0, Q2: 0, Q3: 0, Q4: 0, total: 0 };
-			byYear.set(year, entry);
-		}
+		ensureYear(year);
+		withContracts.add(year);
 		const amount = Number(row.total_amount) || 0;
+		const entry = byYear.get(year);
 		entry.total += amount;
 		const quarter = quarterFromDate(row.contract_date);
 		if (quarter) {
 			entry[quarter] += amount;
 		}
 	});
-	// Ascendente (más lejano → más reciente) tomando solo los maxYears más recientes.
-	return [...byYear.values()].sort((a, b) => Number(a.year) - Number(b.year)).slice(-maxYears);
+	const allYears = [...byYear.values()].sort((a, b) => Number(a.year) - Number(b.year));
+	if (allYears.length <= maxYears) {
+		return allYears;
+	}
+	// Con más de maxYears años en juego se conservan primero los que sí tienen contratos (los más recientes) y, si queda hueco, los años conocidos en cero más recientes: el eje nunca excede maxYears.
+	const dataYears = allYears.filter(entry => withContracts.has(entry.year)).slice(-maxYears);
+	const emptyYears = allYears.filter(entry => !withContracts.has(entry.year));
+	const selected = [...dataYears];
+	for (let index = emptyYears.length - 1; index >= 0 && selected.length < maxYears; index--) {
+		selected.push(emptyYears[index]);
+	}
+	return selected.sort((a, b) => Number(a.year) - Number(b.year));
 }
 
 /*-- Suma de total_amount por procedure_id; la gráfica de pastel descarta después los totales en cero.--*/
