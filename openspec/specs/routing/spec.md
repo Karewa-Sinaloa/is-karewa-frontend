@@ -180,7 +180,7 @@ El sistema SHALL servir la raíz `/` como punto de entrada del frontend público
 #### Scenario: Redirección de la raíz
 
 - **WHEN** se navega a `/`
-- **THEN** la URL permanece en `/` y se muestra la vista pública de inicio con su header, sin redirigir a `/admin`
+- **THEN** se muestra el frontend público de visualización de datos y la URL no redirige a `/admin`
 
 #### Scenario: Compatibilidad de `/inicio`
 
@@ -190,7 +190,7 @@ El sistema SHALL servir la raíz `/` como punto de entrada del frontend público
 #### Scenario: Sin vistas del panel en la raíz
 
 - **WHEN** se revisa el árbol de rutas del panel
-- **THEN** ninguna vista del panel está declarada en `/`
+- **THEN** ninguna vista del panel administrativo está declarada en `/`
 
 #### Scenario: Dashboard administrativo preservado
 

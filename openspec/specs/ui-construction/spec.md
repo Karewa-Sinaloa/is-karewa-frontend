@@ -46,13 +46,17 @@ El sistema SHALL construir los componentes con Composition API en `<script setup
 
 ### Requirement: Reutilización de los parciales compartidos
 
-El sistema SHALL componer las secciones con los parciales compartidos ya existentes —navegación lateral, encabezado de contenido, notificaciones, popups, popup de confirmación, indicador de carga, paginación, opciones de resultado y ayuda— antes de crear un
-componente equivalente nuevo.
+El sistema SHALL componer las secciones con los parciales compartidos ya existentes de su superficie correspondiente: el panel administrativo reutiliza navegación lateral, encabezado de contenido, notificaciones, popups, popup de confirmación, indicador de carga, paginación, opciones de resultado y ayuda; el frontend público reutiliza su propio header, menú y footer compartidos antes de crear equivalentes nuevos.
 
 #### Scenario: Sección nueva compuesta
 
-- **WHEN** se crea una sección nueva de la aplicación
+- **WHEN** se crea una sección nueva del panel administrativo
 - **THEN** reutiliza la navegación lateral y el encabezado de contenido compartidos en lugar de recrearlos
+
+#### Scenario: Sección pública compuesta
+
+- **WHEN** se crea una sección nueva del frontend público
+- **THEN** reutiliza el header, el menú y el footer públicos compartidos en lugar de implementar variantes duplicadas
 
 #### Scenario: Diálogo o confirmación
 
@@ -81,16 +85,21 @@ consumiendo cada capa lo que necesita mediante `@use`.
 
 ### Requirement: Registro de secciones nuevas en la navegación
 
-El sistema SHALL registrar cada sección nueva en la navegación lateral con enlaces que apuntan por nombre de ruta a su listado y a su alta, siguiendo el agrupamiento de secciones existente.
+El sistema SHALL registrar cada sección nueva en la navegación compartida de la superficie a la que pertenece: el panel administrativo la expone en la navegación lateral con enlaces por nombre de ruta a su listado y a su alta, y el frontend público la expone en su menú público sin depender de sidebar.
 
 #### Scenario: Sección registrada
 
-- **WHEN** una sección nueva queda declarada en el router
+- **WHEN** una sección nueva del panel queda declarada en el router
 - **THEN** la navegación lateral muestra sus enlaces de listado y de alta
+
+#### Scenario: Sección pública registrada
+
+- **WHEN** una sección nueva del frontend público queda declarada en el router
+- **THEN** el menú público incorpora el enlace correspondiente a esa vista sin usar la navegación lateral administrativa
 
 #### Scenario: Enlace por nombre de ruta
 
-- **WHEN** la navegación lateral enlaza una sección
+- **WHEN** una navegación compartida enlaza una sección
 - **THEN** lo hace por el nombre de la ruta declarada, no por la URL en texto
 
 ### Requirement: Vínculos y recursos externos
@@ -154,3 +163,17 @@ El sistema SHALL componer las vistas públicas que usen este header sin incorpor
 
 - **WHEN** se muestre una vista del frontend público que incluya el header minimalista
 - **THEN** la composición visible usa el header público compartido y omite la navegación lateral administrativa
+
+### Requirement: Hojas de estilo separadas para la superficie pública
+
+El sistema SHALL mantener los estilos del frontend público en archivos Sass separados de los del panel administrativo, reutilizando los mismos tokens y objetos compartidos sin mezclar reglas específicas de ambas superficies en una sola hoja.
+
+#### Scenario: Estilo específico del frontend público
+
+- **WHEN** una vista o parcial público necesita estilos propios
+- **THEN** sus reglas viven en archivos Sass específicos de la superficie pública y consumen los tokens y objetos compartidos mediante `@use`
+
+#### Scenario: Estilo del panel sin contaminación pública
+
+- **WHEN** se revisan las hojas del panel administrativo
+- **THEN** no contienen reglas exclusivas del header, menú o footer del frontend público

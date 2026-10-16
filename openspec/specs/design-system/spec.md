@@ -92,17 +92,22 @@ El sistema SHALL nombrar los estilos de componentes con la convención bloque `_
 
 ### Requirement: Superficies nuevas reutilizan el sistema
 
-El sistema SHALL exigir que cualquier superficie nueva —incluida la futura área de acceso público— reutilice los tokens, la tipografía y la iconografía existentes; los tokens que no existan se agregan primero a la configuración de diseño antes de usarse.
+El sistema SHALL exigir que cualquier superficie nueva —incluido el frontend público— reutilice los tokens, la tipografía, la iconografía y los estilos de botones existentes; los tokens que no existan se agregan primero a la configuración de diseño antes de usarse.
 
 #### Scenario: La superficie pública necesita un color inexistente
 
-- **WHEN** el área de acceso público requiere un color o tamaño aún no definido en el sistema
+- **WHEN** el área pública requiere un color o tamaño aún no definido en el sistema
 - **THEN** el token se agrega a la capa de configuración y queda expuesto como variable CSS antes de usarse en la interfaz
+
+#### Scenario: Botón público alineado con el panel
+
+- **WHEN** el frontend público muestra una acción con botón
+- **THEN** ese botón reutiliza las mismas variantes visuales base del sistema en lugar de introducir un estilo de botón ajeno al panel administrativo
 
 #### Scenario: Intento de salirse de la línea visual
 
-- **WHEN** un cambio de interfaz intenta usar una paleta, tipografía o fuente de iconos distinta a la del sistema
-- **THEN** el cambio no cumple el contrato y debe resolverse extendiendo los tokens del sistema, no añadiendo estilos ajenos
+- **WHEN** un cambio de interfaz intenta usar una paleta, tipografía, fuente de iconos o estilo de botón distinto a los del sistema
+- **THEN** el cambio no cumple el contrato y debe resolverse extendiendo los tokens u objetos compartidos, no añadiendo estilos ajenos
 
 ### Requirement: Alineación horizontal pública reutilizable
 
