@@ -61,9 +61,11 @@ busquedas en caso de ser necesario. Este valor vendra desde el backend y debe ac
 - Cada seccion debe estar separada de la otra de forma vertical de forma que se note la diferencia entre ellas, pero sin que se vea un espacio demasiado grande entre ellas.
 - Los cada tipo de adjudicacion tendrá un color asignado en cual deberá ser utilizado en bordes o fondos dependiendo de la necesidad.
 - Colores: (Ver en la paleta de colores de la aplicacion)
-  - Adjudicación Directa: `Rojo`
-  - Invitación: `Amarillo`
-  - Licitación Pública: `Verde`
-  - Totales: `Azul`
+    - Adjudicación Directa: `Danger`
+    - Invitación: `Warning`
+    - Licitación Pública: `Success`
+    - Totales: `Primary`
 - Utilizar formatos numericos y de moneda utilizando pesos mexicanos como base
 - Continuar el estilo visual y grafico que ya se utiliza en la aplicacion, como tipografias, tamaños de texto, colores, bordes, sombras, etc. para mantener una coherencia visual en toda la aplicacion.
+- En la lista de resultados, los elementos de la columna procedimientos deben tener el color de fondo segun el tipo como se indica en el punto anterior, no es fondo de la celda es un fondo del texto que asemeje un boton con los bordes laterales redondeados y
+  centrado en la celda

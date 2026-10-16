@@ -80,7 +80,7 @@ function onSubmit(values, actions) {
 			title: "¡Solo un paso más!",
 			text: "Te hemos enviando un mensaje a tu dirección de correo, sigue los pasos ahí indicados para verificar tu cuenta y empezar a utilizarla.",
 			type: "route",
-			button_text: "ENTERADO",
+			button_text: 'Enterado',
 			route: {
 				name: "accessViewLogin"
 			},

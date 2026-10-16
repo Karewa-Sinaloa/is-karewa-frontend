@@ -106,7 +106,7 @@ export class apiRequest {
 								route: {
 									name: 'accessViewLogin',
 								},
-								button_text: 'ENTENDIDO',
+								button_text: 'Entendido',
 								icon: 'expired.png',
 							});
 						}

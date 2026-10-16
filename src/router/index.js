@@ -21,6 +21,7 @@ import GeneralConfiguration from '../components/views/configuracion/dash.vue';
 import UserView from '../components/views/configuracion/usuario_view.vue';
 import PublicHome from '../components/views/public/home.vue';
 import PublicContracts from '../components/views/public/contracts.vue';
+import PublicContractDetail from '../components/views/public/contract_detail.vue';
 import PublicProviders from '../components/views/public/providers.vue';
 import PublicAbout from '../components/views/public/about.vue';
 import PublicAdminUnits from '../components/views/public/admin_units.vue';
@@ -48,6 +49,11 @@ const routes = [
 		path: '/contratos',
 		name: 'publicContractsView',
 		component: PublicContracts,
+	},
+	{
+		path: '/contratos/:id',
+		name: 'publicContractDetailView',
+		component: PublicContractDetail,
 	},
 	{
 		path: '/proveedores',

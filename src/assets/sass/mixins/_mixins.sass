@@ -13,10 +13,10 @@
 	font-size: var(#{$fs})
 	letter-spacing: calc(var(#{$fs}) * -0.01)
 
-@mixin set-button($fs)
+@mixin set-button($fs, $vertical-padding-ratio: 0.5)
 	line-height: calc(var(#{$fs}) * 1.15)
 	font-size: var(#{$fs})
-	padding: calc(var(#{$fs}) * 0.5) calc(var(#{$fs}) * 1.2) calc(var(#{$fs}) * 0.5) calc(var(#{$fs}) * 1.2)
+	padding: calc(var(#{$fs}) * $vertical-padding-ratio) calc(var(#{$fs}) * 1.2) calc(var(#{$fs}) * $vertical-padding-ratio) calc(var(#{$fs}) * 1.2)
 	border-radius: 9999px
 
 @mixin pallete-creator($hue, $name, $saturation)

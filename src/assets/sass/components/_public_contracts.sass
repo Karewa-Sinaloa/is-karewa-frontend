@@ -1,0 +1,509 @@
+@use "sass:map"
+@use "../settings/_variables" as vars
+
+.public-contracts
+	--contracts-gap: clamp(1rem, 2vw, 1.75rem)
+	display: flex
+	flex-direction: column
+	gap: var(--contracts-gap)
+	max-width: 100%
+	padding: var(--public-gutter)
+	color: var(--text-color-primary-dark)
+	&__header
+		display: flex
+		align-items: flex-start
+		justify-content: space-between
+		gap: 1.5rem
+		padding: clamp(1.5rem, 3.5vw, 3rem)
+		background: linear-gradient(120deg, var(--color-primary-900), var(--color-primary-700))
+		border-radius: 0.75rem
+		color: var(--text-color-primary-light)
+	&__eyebrow
+		margin: 0 0 0.5rem
+		font-family: var(--ff2)
+		font-size: var(--fs-small)
+		font-weight: 600
+		letter-spacing: 0.08em
+		text-transform: uppercase
+		color: var(--color-primary-200)
+	&__title
+		margin: 0
+		font-family: var(--ff2)
+		font-size: clamp(2rem, 4vw, 3.25rem)
+		line-height: 1.08
+	&__description
+		max-width: 45rem
+		margin: 0.85rem 0 0
+		font-size: var(--fs-mid)
+		line-height: 1.55
+	&__download
+		display: inline-flex
+		align-items: center
+		gap: 0.5rem
+		flex: 0 0 auto
+		&:disabled
+			cursor: not-allowed
+			opacity: 0.72
+	&__download-note
+		position: absolute
+		width: 1px
+		height: 1px
+		padding: 0
+		margin: -1px
+		overflow: hidden
+		clip: rect(0, 0, 0, 0)
+		white-space: nowrap
+		border: 0
+	&__filters,
+	&__summary,
+	&__results
+		min-width: 0
+		padding: clamp(1rem, 2vw, 1.5rem)
+		border: 1px solid var(--color-grayscale-100)
+		border-radius: 0.65rem
+		background: var(--color-light)
+		box-shadow: 0 0.2rem 0.8rem color-mix(in srgb, var(--color-grayscale-900) 4%, transparent)
+	&__section-heading
+		display: flex
+		align-items: center
+		gap: 0.6rem
+		margin-bottom: 0.5rem
+		color: var(--color-primary-800)
+		.material-symbols-outlined
+			font-size: 1.4rem
+		h2
+			margin: 0
+			font-family: var(--ff2)
+			font-size: var(--fs-mid)
+			font-weight: 600
+	&__search
+		display: flex
+		justify-content: flex-end
+		align-items: stretch
+		gap: 0.6rem
+		margin-top: 0.5rem
+	&__search-control
+		position: relative
+		width: min(100%, 34rem)
+		.material-symbols-outlined
+			position: absolute
+			left: 0.85rem
+			top: 50%
+			transform: translateY(-50%)
+			color: var(--color-grayscale-600)
+		input
+			width: 100%
+			min-height: 2.8rem
+			box-sizing: border-box
+			padding: 0.65rem 0.85rem 0.65rem 2.8rem
+			border: 1px solid var(--color-grayscale-300)
+			border-radius: 0.35rem
+			background: var(--color-grayscale-25)
+			color: var(--text-color-primary-dark)
+			font: inherit
+			font-family: var(--ff1)
+			font-size: var(--fs-regular)
+			font-weight: 400
+			&:focus-visible
+				outline: 3px solid var(--color-primary)
+				outline-offset: 2px
+	&__search-button,
+	&__retry
+		min-height: 2.8rem
+		white-space: nowrap
+		&:focus-visible
+			outline: 3px solid var(--color-primary-700)
+			outline-offset: 2px
+	&__cards
+		display: grid
+		grid-template-columns: repeat(4, minmax(0, 1fr))
+		gap: 0.8rem
+	&__card
+		--card-accent: var(--color-primary)
+		display: flex
+		align-items: flex-start
+		gap: 0.8rem
+		min-width: 0
+		padding: 1rem
+		border: 1px solid var(--color-grayscale-100)
+		border-top: 3px solid var(--card-accent)
+		border-radius: 0.5rem
+		background: var(--color-grayscale-25)
+		&--success
+			--card-accent: var(--color-success)
+		&--warning
+			--card-accent: var(--color-warning)
+		&--danger
+			--card-accent: var(--color-danger)
+	&__card-icon
+		display: grid
+		place-items: center
+		flex: 0 0 2.4rem
+		width: 2.4rem
+		height: 2.4rem
+		border-radius: 50%
+		background: color-mix(in srgb, var(--card-accent) 13%, var(--color-light))
+		color: var(--card-accent)
+		.material-symbols-outlined
+			font-size: 1.35rem
+	&__card h3
+		margin: 0
+		font-size: var(--fs-small)
+		font-weight: 600
+	&__card p
+		margin: 0.3rem 0
+		font-family: var(--ff2)
+		font-size: clamp(1.05rem, 1.5vw, 1.4rem)
+		font-weight: 700
+		font-variant-numeric: tabular-nums
+	&__card span:not(.material-symbols-outlined)
+		font-size: var(--fs-smaller)
+		color: var(--color-grayscale-700)
+	&__results-heading
+		display: flex
+		flex-direction: column
+		align-items: stretch
+		gap: 0.5rem
+		margin-bottom: 0.75rem
+	&__results-heading .public-contracts__section-heading
+		margin: 0
+	&__result-controls
+		display: flex
+		align-items: center
+		justify-content: space-between
+		flex-wrap: wrap
+		gap: 0.45rem
+		font-size: var(--fs-small)
+		p
+			margin: 0 auto 0 0
+			font-weight: 600
+	&__page-size
+		display: flex
+		align-items: center
+		gap: 0.45rem
+		select
+			min-height: 2.25rem
+			padding: 0.7rem 1.6rem 0.7rem 0.5rem
+			border: 1px solid var(--color-grayscale-300)
+			border-radius: 0.3rem
+			background: var(--color-light)
+			color: var(--text-color-primary-dark)
+			font: inherit
+			font-family: var(--ff1)
+			font-size: var(--fs-regular)
+			font-weight: 400
+			&:focus-visible
+				outline: 3px solid var(--color-primary)
+				outline-offset: 2px
+	&__status,
+	&__message
+		margin: 0
+		padding: 2rem 1rem
+		border-radius: 0.45rem
+		background: var(--color-grayscale-25)
+		text-align: center
+	&__message--error
+		border: 1px solid var(--color-danger)
+		background: color-mix(in srgb, var(--color-danger) 7%, var(--color-light))
+	&__message p
+		margin: 0 0 1rem
+	&__table-scroll
+		max-height: min(68vh, 48rem)
+		overflow: auto
+		border: 1px solid var(--color-grayscale-200)
+		border-radius: 0.45rem
+	&__table
+		width: 100%
+		min-width: 78rem
+		border-collapse: separate
+		border-spacing: 0
+		font-family: var(--ff2)
+		font-size: var(--fs-small)
+		font-weight: 400
+		text-align: left
+		th,
+		td
+			padding: 0.8rem
+			border-bottom: 1px solid var(--color-grayscale-100)
+			vertical-align: top
+		th
+			position: sticky
+			top: 0
+			z-index: 1
+			background: var(--color-grayscale-50)
+			color: var(--text-color-primary-dark)
+			font-weight: 700
+			white-space: nowrap
+		tbody tr:nth-child(even)
+			background: var(--color-grayscale-25)
+		tbody tr:hover
+			background: var(--color-primary-50)
+	&__more
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		white-space: nowrap
+		text-decoration: none
+		&:hover
+			background: var(--color-primary-50)
+		&:focus-visible
+			outline: 3px solid var(--color-primary-700)
+			outline-offset: 2px
+	&__procedure
+		display: inline-block
+		max-width: 15rem
+		padding: 0.35rem 0.7rem
+		border-radius: 999px
+		background: var(--color-grayscale-100)
+		color: var(--text-color-primary-dark)
+		text-align: center
+		&--success
+			background: color-mix(in srgb, var(--color-success) 16%, var(--color-light))
+			color: var(--color-success-900)
+		&--warning
+			background: color-mix(in srgb, var(--color-warning) 17%, var(--color-light))
+			color: var(--color-warning-900)
+		&--danger
+			background: color-mix(in srgb, var(--color-danger) 13%, var(--color-light))
+			color: var(--color-danger-900)
+		&--neutral
+			background: var(--color-grayscale-100)
+	&__description-cell
+		max-width: 24rem
+		min-width: 16rem
+		white-space: normal
+	&__pagination
+		display: flex
+		align-items: center
+		justify-content: center
+		gap: 0.45rem
+		margin-top: 1rem
+		button
+			display: grid
+			place-items: center
+			min-width: 2.6rem
+			min-height: 2.6rem
+			border: 1px solid var(--color-grayscale-300)
+			border-radius: 0.35rem
+			background: var(--color-light)
+			color: var(--color-primary-800)
+			cursor: pointer
+			&:disabled
+				color: var(--color-grayscale-400)
+				cursor: not-allowed
+			&:focus-visible
+				outline: 3px solid var(--color-primary)
+				outline-offset: 2px
+		span[aria-live]
+			padding: 0 0.5rem
+			font-size: var(--fs-small)
+			font-weight: 600
+	&__sr-only
+		position: absolute
+		width: 1px
+		height: 1px
+		padding: 0
+		margin: -1px
+		overflow: hidden
+		clip: rect(0, 0, 0, 0)
+		white-space: nowrap
+		border: 0
+	@media all and (max-width: map.get(vars.$breakpoints, bp5))
+		&__cards
+			grid-template-columns: repeat(2, minmax(0, 1fr))
+		&__results-heading
+			align-items: flex-start
+			flex-direction: column
+		&__result-controls
+			justify-content: flex-start
+	@media all and (max-width: map.get(vars.$breakpoints, bp7))
+		padding: 0.75rem
+		&__header
+			flex-direction: column
+		&__download
+			align-self: flex-start
+		&__cards
+			grid-template-columns: 1fr
+		&__search
+			flex-direction: column
+		&__search-control
+			width: 100%
+		&__search-button
+			align-self: flex-end
+		&__pagination
+			gap: 0.2rem
+			button
+				min-width: 2.25rem
+				min-height: 2.25rem
+
+.public-contract-detail
+	font-family: var(--ff2)
+	display: flex
+	flex-direction: column
+	gap: 1.25rem
+	max-width: 84rem
+	margin: 0 auto
+	padding: var(--public-gutter)
+	color: var(--text-color-primary-dark)
+	&__breadcrumb
+		display: flex
+		align-items: center
+		gap: 0.55rem
+		font-size: var(--fs-small)
+		color: var(--color-grayscale-700)
+		a
+			color: var(--color-primary-800)
+			font-weight: 600
+			&:focus-visible
+				outline: 3px solid var(--color-primary)
+				outline-offset: 2px
+	&__header,
+	&__content,
+	&__message
+		padding: clamp(1.25rem, 3vw, 2.25rem)
+		border: 1px solid var(--color-grayscale-100)
+		border-radius: 0.65rem
+		background: var(--color-light)
+		box-shadow: 0 0.2rem 0.8rem color-mix(in srgb, var(--color-grayscale-900) 4%, transparent)
+	&__header
+		display: flex
+		align-items: flex-start
+		justify-content: space-between
+		gap: 1.5rem
+		background: linear-gradient(120deg, var(--color-primary-900), var(--color-primary-700))
+		color: var(--text-color-primary-light)
+		h1
+			margin: 0
+			font-size: clamp(1.8rem, 3.5vw, 2.75rem)
+			line-height: 1.15
+	&__eyebrow
+		margin: 0 0 0.45rem
+		font-family: var(--ff2)
+		font-size: var(--fs-small)
+		font-weight: 600
+		letter-spacing: 0.08em
+		text-transform: uppercase
+		color: var(--color-primary-200)
+	&__number
+		margin: 0.65rem 0 0
+		font-family: var(--ff2)
+		font-size: var(--fs-mid)
+		font-weight: 700
+	&__summary
+		max-width: 52rem
+		margin: 0.8rem 0 0
+		line-height: 1.6
+	&__button
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		gap: 0.5rem
+		min-height: 2.7rem
+		padding: 0.6rem 0.9rem
+		border: 1px solid var(--color-primary)
+		border-radius: 0.35rem
+		background: var(--color-primary)
+		color: var(--text-color-primary-light)
+		font: inherit
+		font-weight: 600
+		text-decoration: none
+		cursor: pointer
+		&:hover
+			background: var(--color-primary-700)
+		&:focus-visible
+			outline: 3px solid var(--color-primary-700)
+			outline-offset: 3px
+	&__content
+		min-width: 0
+	&__section-title
+		display: flex
+		align-items: center
+		gap: 0.6rem
+		margin-bottom: 1rem
+		color: var(--color-primary-800)
+		h2
+			margin: 0
+			font-size: var(--fs-mid)
+	&__grid
+		display: grid
+		grid-template-columns: repeat(3, minmax(0, 1fr))
+		gap: 0.8rem
+		margin: 0
+	&__field
+		min-width: 0
+		padding: 0.85rem
+		border-radius: 0.4rem
+		background: var(--color-grayscale-25)
+		dt
+			margin-bottom: 0.35rem
+			font-size: var(--fs-small)
+			font-weight: 600
+			color: var(--color-grayscale-700)
+		dd
+			margin: 0
+			line-height: 1.5
+			overflow-wrap: anywhere
+			a
+				color: var(--color-primary-800)
+				font-weight: 600
+				&:focus-visible
+					outline: 3px solid var(--color-primary)
+					outline-offset: 2px
+	&__note-text
+		white-space: pre-wrap
+	&__amount-status
+		display: inline-block
+		max-width: 100%
+		padding: 0.22rem 0.65rem
+		border-radius: 999px
+		font-size: var(--fs-small)
+		font-weight: 600
+		line-height: 1.4
+		&--success
+			background: color-mix(in srgb, var(--color-success) 16%, var(--color-light))
+			color: var(--color-success-900)
+		&--danger
+			background: color-mix(in srgb, var(--color-danger) 13%, var(--color-light))
+			color: var(--color-danger-900)
+	&__expand
+		display: block
+		width: fit-content
+		margin-top: 0.4rem
+		padding: 0
+		border: 0
+		background: transparent
+		color: var(--color-primary-800)
+		font: inherit
+		font-weight: 600
+		text-decoration: underline
+		text-underline-offset: 0.15em
+		cursor: pointer
+		&:focus-visible
+			outline: 3px solid var(--color-primary)
+			outline-offset: 3px
+	&__message
+		text-align: center
+		p
+			margin: 0 0 1rem
+	&__message--error
+		border-color: var(--color-danger)
+		background: color-mix(in srgb, var(--color-danger) 7%, var(--color-light))
+	&__sr-only
+		position: absolute
+		width: 1px
+		height: 1px
+		padding: 0
+		margin: -1px
+		overflow: hidden
+		clip: rect(0, 0, 0, 0)
+		white-space: nowrap
+		border: 0
+	@media all and (max-width: map.get(vars.$breakpoints, bp6))
+		&__header
+			flex-direction: column
+		&__grid
+			grid-template-columns: repeat(2, minmax(0, 1fr))
+	@media all and (max-width: map.get(vars.$breakpoints, bp7))
+		padding: 0.75rem
+		&__grid
+			grid-template-columns: 1fr

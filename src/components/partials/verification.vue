@@ -31,7 +31,7 @@ onMounted(() => {
 				type: "close",
 				title: "Cuenta verificada",
 				text: "¡Hemos verificado tu cuenta! Ya puedes ingresar con tu correo y contraseña, recuerda que tienes 5 creditos gratuidos para poder utilizarlos en en sistema y así probar las funcionalidades.",
-				button_text: "ENTERADO",
+				button_text: 'Enterado',
 				icon: "verified.png"
 			})
 			router.push({name: 'accessViewLogin'})

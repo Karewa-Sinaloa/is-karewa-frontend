@@ -51,7 +51,7 @@ function onSubmit(values, action) {
 			store.showPopup({
 				title: "Revisa tu correo",
 				text: "Hemos enviado un mensaje a tu correo, sigue los pasos que se indican para cambiar tu contraseña y recuperar tu acceso a la cuenta.",
-				button_text: "ENTERADO",
+				button_text: 'Enterado',
 				type: "route",
 				route: {
 					name: "accessViewLogin"
